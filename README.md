@@ -1,2 +1,2 @@
 # z-notes
-notes structured as org-mode files
+notes structured as org-mode, Markdown, or LaTeX files
