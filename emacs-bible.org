@@ -1,0 +1,234 @@
+# -*- mode: org -*-
+#+TITLE: GNU Emacs Bible - Return to the Essence of Text Editing
+#+AUTHOR: 胡志飞 <WisdomFusion#gmail.com>
+#+DATE: 2012-06-16
+#+STARTUP: showeverything
+
+* 安装
+- 官网：http://www.gnu.org/software/emacs/
+- 下载：http://ftp.gnu.org/pub/gnu/emacs/
+
+* 基础操作
+
+** 按键
+- C    Ctrl
+- M    Meta，通常是Alt
+
+** 文件操作
+| 按键    | 命令                    | 描述                                    |
+|---------+-------------------------+-----------------------------------------|
+| C-x C-f | find-file               | 打开文件                                |
+| C-x C-v | find-alternate-file     | 重新打开另一文件，替换C-x C-f打开的文件 |
+| C-x i   | insert-file             | 在光标处插入文件                        |
+| C-x C-s | save-buffer             | 保存当前buffer                          |
+| C-x s   | save-some-buffers       | 全部保存                                |
+| C-x C-w | write-file              | 保存到文件（另存）                      |
+| C-x C-c | save-buffers-kill-emacs | 保存并关闭                              |
+|         | kill-emacs              | 强关（不推荐）                          |
+| C-z     |                         | 最小化                                  |
+
+** 帮助
+| 按键  | 命令                         | 描述                               |
+|-------+------------------------------+------------------------------------|
+| C-h f | describe-function            | 解释函数                           |
+| C-h k | describe-key                 | 解释按键                           |
+| C-h c | describe-key-briefly         | 在minibuffer中显示命令对应的函数名 |
+| C-h t | help-with-tutorial           | 打开Emacs教程                      |
+| C-h a | apropos                      | 相关命令搜索                       |
+| C-h v | describe-variable            | 显示Emacs变量文档                  |
+| C-h i | info-goto-emacs-command-node | 查看info                           | 
+
+- [[http://www.gnu.org/software/emacs/manual/emacs.html][GNU Emacs manual]]
+- [[http://www.gnu.org/software/emacs/emacs-lisp-intro/][An Introduction to Programming in Emacs Lisp (Third Edition)]]
+- [[http://club.topsage.com/thread-2884533-1-1.html][Emacs 编辑环境系列教程]]
+
+** 移动光标
+| 按键  | 命令                | 描述                     |
+|-------+---------------------+--------------------------|
+| C-f   | forward-char        | 前一字符                 |
+| C-b   | backward-char       | 后一字符                 |
+| C-p   | previous-line       | 上一行                   |
+| C-n   | next-line           | 下一行                   |
+| M-f   | forward-word        | 前一单词                 |
+| M-b   | backward-word       | 后一单词                 |
+| C-a   | beginning-of-line   | 行首                     |
+| C-e   | end-of-line         | 行尾                     |
+| M-e   | forward-sentence    | 前一句                   |
+| M-a   | backward-sentence   | 后一句                   |
+| M-}   | forward-paragraph   | 前一段落                 |
+| M-{   | backward-paragraph  | 后一段落                 |
+| C-v   | scroll-up           | 上翻                     |
+| M-v   | scroll-down         | 下翻                     |
+| M-<   | beginning-of-buffer | 缓存区首                 |
+| M->   | end-of-buffer       | 缓存区尾                 |
+|       | goto-line           | 跳转到某行               |
+|       | goto-char           | 跳转到某字符             |
+| C-l   | recenter            | 将光标所在处置于窗口中央 |
+| M-n   | digit-argument      | 重复后面的命令           |
+| C-u n | universal-argument  |                          |
+
+** 删除
+| 按键    | 命令                    | 描述             |
+|---------+-------------------------+------------------|
+| C-d     | delete-char             | 删除光标处字符   |
+| Del     | delete-backward-char    | 删除光标前字符   |
+| M-d     | kill-word               | 删除单词         |
+| M-Del   | backword-kill-word      | 删除前一个单词   |
+| C-k     | kill-line               | 删除光标处至行尾 |
+| M-k     | kill-sentence           | 删除句子         |
+| C-x Del | backward-kill-sentence  | 删除前一个句子   |
+| C-y     | yank                    | 粘贴             |
+| C-w     | kill-region             | 剪切             |
+|         | kill-paragraph          | 删除下一段落     |
+|         | backward-kill-paragraph | 删除上一段落     |
+
+** 标记及操作
+| 按键    | 命令                    | 描述                   |
+|---------+-------------------------+------------------------|
+| C-@     | set-mark-command        | 标记                   |
+| C-x C-x | exchange-point-and-mark |                        |
+| C-w     | kill-region             | 剪切                   |
+| C-y     | yank                    | 粘贴                   |
+| M-w     | kill-ring-save          | 复制                   |
+| M-h     | mark-paragraph          | 标记段落               |
+| C-x C-p | mark-page               | 标记当前页             |
+| C-x h   | mark-whole-buffer       | 标记整个缓冲区（全选） |
+| M-y     | yank-pop                |                        |
+
+** 书签
+| 按键    | 命令               | 描述       |
+|---------+--------------------+------------|
+| C-x r m | bookmark-set       | 设置书签   |
+| C-x r b | bookmark-jump      | 跳转到书签 |
+| C-x r l | bookmark-menu-list | 书签列表   |
+
+** 文本交换
+| 按键    | 命令                 | 描述                   |
+|---------+----------------------+------------------------|
+| C-t     | transpose-chars      | 交换光标处和光标前字符 |
+| M-t     | transpose-words      | 交换光标处和光标后单词 |
+| C-x C-t | transpose-lines      | 交换光标处和光标前句子 |
+|         | transpose-sentences  |                        |
+|         | transpose-paragraphs |                        |
+
+** 大小写转换
+| 按键 | 命令            | 描述               |
+|------+-----------------+--------------------|
+| M-c  | capitalize-word | 首字母大写         |
+| M-u  | upcase-word     | 光标处到单词尾大写 |
+| M-l  | downcase-word   | 光标处到单词尾小写 |
+
+** 撤消
+| 按键  | 命令            | 描述     |
+|-------+-----------------+----------|
+| C-g   | keyboard-quit   | 取消命令 |
+| C-x u | advertised-undo | 撤消更改 |
+| C-_   | undo            |          |
+| C-/   | undo            |          |
+
+** 搜索
+| 按键  | 命令             | 描述                   |
+|-------+------------------+------------------------|
+| C-s   | isearch-forward  | 渐进式搜索             |
+| C-r   | isearch-backward | 反向渐进式搜索         |
+| Enter | isearch-exit     | 渐进式搜索状态取消搜索 |
+| C-g   | keyboard-quit    | 取消                   |
+
+** 正则表达式搜索
+| 按键  | 命令               | 描述                       |
+|-------+--------------------+----------------------------|
+| C-M-s | re-search-forward  | 正向正则表达式搜索         |
+| C-M-r | re-search-backward | 反向正则表达式搜索         |
+| C-M-% | query-replace      | 查询搜索（正则表达式搜索） |
+|       | replace-regexp     | 正则表达式替换             |
+
+** 正则表达式
+| 按键   | 描述               |
+|--------+--------------------|
+| ^      |                    |
+| $      |                    |
+| .      |                    |
+| .*     |                    |
+| \<     | 单词分界，单词开始 |
+| \>     | 单词分界，单词结束 |
+| [ ]    |                    |
+| \s, \S |                    |
+| \d, \D |                    |
+| \w, \W |                    |
+
+** 三个概念
+- buffer
+- window
+- frame
+
+*** buffer和window的一些操作
+| 按键    | 命令                          | 描述                     |
+|---------+-------------------------------+--------------------------|
+| C-x b   | switch-to-buffer              | 切换buffer               |
+| C-x C-b | list-buffer                   | 打开buffers列表          |
+| C-x k   | kill-buffer                   | 关闭当前buffer           |
+|         | kill-some-buffers             |                          |
+|         | rename-buffer                 |                          |
+| C-x 1   | delete-other-window           | 关闭其他窗口             |
+| C-x 2   | split-window-vertically       | 水平拆分窗口（垂直排列） |
+| C-x 3   | split-window-horizontally     | 垂直拆分窗口（水平排列） |
+| C-x 0   | delete-window                 | 关闭当前窗口             |
+| C-x o   | other-window                  | 切换到其他窗口           |
+| C-M-v   | scroll-other-window           | 滚动其他窗口             |
+| C-x 4 f | find-file-other-window        | 新窗口中打开文件         |
+| C-x 4 b | switch-to-buffer-other-window | 新窗口中打开buffer       |
+
+** 其他命令
+ | 按键          | 命令                     | 描述                                       |
+ |---------------+--------------------------+--------------------------------------------|
+ | C-x r k       | kill-rectangle           |                                            |
+ | M-x           | execute-extended-command |                                            |
+ | C-x C-v       |                          | 重新加载文件                               |
+ | C-S-Backspace | kill-whole-line          | 删除当前行                                 |
+ |               | align-regexp             | C-u M-x align-regexp RET SPC RET RET RET y |
+ |               | toggle-truncate-lines    | 换行切换                                   |
+
+* 设定
+- 详见 ~/_emacs
++ 不重启emacs面让dotemacs生效
+  - 用 emacs 打开 .emacs 文件，C-x C-e 光标前面的运行一条语句。立即生效。
+  - 选择一个 region, M-x eval-region
+  - M-x load-file ~/.emacs
+  - M-x eval-buffer
+
+* 扩展
+- color-theme
+- tabbar
+- php-mode
+- auto-complete
+- htmlize
+
+* 常用 mode
+** mode 简介
+- calc
+- calendar
+- shell-mode
+- eshell-mode
+- dired-mode
+- ido-mode
+- grep-mode
+
+** org-mode
++ 文档结构
+  - 标题
+  - 列表
+  - 脚注
++ 表格
+  - 表格操作
+  - spreadsheet
+- 超链接
++ TODO
+  - TODO keywords
+  - 优先级
+- Tags
+- Agenda
++ 输出
+  - HTML
+  - LaTeX/PDF
+  - DocBook
+  - OpenDocument

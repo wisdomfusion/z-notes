@@ -1,18 +1,58 @@
-% -*- encoding: utf-8 -*-
-%
 \documentclass[12pt,a4paper,twoside]{ctexart}
-\usepackage[paperwidth=185mm,paperheight=230mm,textheight=190mm,textwidth=145mm,left=20mm,right=20mm, top=25mm, bottom=15mm]{geometry}
+%
+\usepackage[landscape,textheight=190mm,textwidth=145mm,left=20mm,right=20mm,top=20mm,bottom=20mm]{geometry}
 \usepackage{fontspec}
 \usepackage{fancybox}
 \usepackage{colortbl}
 \usepackage{fancyhdr}
 \usepackage[CJKbookmarks, colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=black]{hyperref}
-
-\begin{document}
-\pagenumbering{Roman}
+\usepackage{tabularx}
 \renewcommand\contentsname{目\qquad{} 录}
 
+\begin{document}
+
+\title{正则表达式快速参考手册}
+\author{胡志飞 <WisdomFusion\#gmail.com>}
+\maketitle{}
+\thispagestyle{empty}
+\clearpage{}
+
 \tableofcontents{}
+\thispagestyle{empty}
+\clearpage{}
+
+\setcounter{page}{1}
+
+\section[简介]{简介 Introduction}
+\label{sec:intro}
+
+\section[基本语法]{基本语法 Basic Syntax}
+\label{sec:basic-syntax}
+
+\begin{table}
+\centering{}
+\begin{tabularx}{\textwidth}{llXX}
+\caption{字符}\\
+\hline{}
+语法 & 特性 & 描述 & 举个栗子 \\
+\hline{}
+除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & Literal character & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，{和}也是文字文本，除了下面说到的成对出现的量词语法，如{n}和{m,n}等。 & a匹配about中的a\\
+\hline{}
+\end{tabularx}
+\end{table}
+
+\section[高级语法]{高级语法 Advanced Syntax}
+\label{sec:adv-syntax}
+
+
+\section[正则表达式“流派”]{正则表达式“流派” Regex Flavors}
+\label{sec:flavor}
+
+
+\section[应用场景]{应用场景 Application Scenarios}
+\label{sec:scenarios}
+
+
 
 
 
