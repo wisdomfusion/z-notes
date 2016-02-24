@@ -10,6 +10,7 @@
 *.out
 *.toc
 *.fmt
+*.rel
 
 ## Intermediate documents:
 *.dvi
