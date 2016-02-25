@@ -12,7 +12,17 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{lipsum}
+%--------------------
+\setmainfont{Times New Roman}   % 缺省字体
+\setCJKfamilyfont{song}{SimSun}
+\setCJKfamilyfont{hei}{SimHei}
+\setCJKfamilyfont{kai}{KaiTi}
+\setCJKfamilyfont{fs}{FangSong}
+\setCJKfamilyfont{yahei}{Microsoft YaHei}
+
 \renewcommand\contentsname{目\qquad{} 录}
+\setlength{\tabcolsep}{0.5em}
+\renewcommand{\arraystretch}{1.5}
 %--------------------
 \colorlet{regexcolor}{orange!15}
 \colorlet{matchcolor}{cyan!50}
@@ -46,6 +56,7 @@
 \section[基本语法]{基本语法 Basic Syntax}
 \label{sec:basic-syntax}
 
+
 \centering
 \noindent
 \begin{longtable}{p{4em}p{9em}p{28em}p{15em}}
@@ -73,8 +84,8 @@
   & \cbregex{\textbackslash{}v} & & \\
   \midrule
   %--------------------
-  点 & \colorbox{regexcolor}{.}（点） & Matches any single character except line break characters. Most regex flavors have an option to make the dot match line break characters too. & . 匹配 about 中的任意一个字符 \\
-  管道 & \colorbox{regexcolor}{|} & & \\
+  点 & \cbregex{.}（点） & Matches any single character except line break characters. Most regex flavors have an option to make the dot match line break characters too. & . 匹配 about 中的任意一个字符 \\
+  管道 & \cbregex{|} & & \\
   \midrule
   %--------------------
   字符类 & \cbregex{[abc]}, \cbregex{[\textbackslash{}\^{}\textbackslash{}]]} & & \\
