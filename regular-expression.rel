@@ -27,6 +27,8 @@
 
 ("sec:basic-syntax" "s" nil "d:/zen/tex/z-notes/regular-expression.tex" nil "")
 
+("tab:basic-features" "t" nil "d:/zen/tex/z-notes/regular-expression.tex" nil "")
+
 (toc "toc" "    3 高级语法" "d:/zen/tex/z-notes/regular-expression.tex" nil 2 "3" "\\section{高级语法}" 930)
 
 ("sec:adv-syntax" "s" nil "d:/zen/tex/z-notes/regular-expression.tex" nil "")

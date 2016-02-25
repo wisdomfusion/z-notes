@@ -7,12 +7,20 @@
 \usepackage{fancyhdr}
 \usepackage[CJKbookmarks, colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=black]{hyperref}
 \usepackage{tabularx}
+\usepackage{longtable}          % 自动换行用 tabularx，自动换页用 longtable，二者兼得用 ltxtable
+\usepackage{multirow}
 \usepackage{xcolor}
-\usepackage{tcolorbox}
+\usepackage{booktabs}
 \usepackage{lipsum}
-\definecolor{patterncolor}{cmyk}{0.64,0,0.95,0.40}
-\definecolor{matchedcolor}{cmyk}{0.64,0,0.95,0.40}
 \renewcommand\contentsname{目\qquad{} 录}
+%--------------------
+\colorlet{regexcolor}{orange!15}
+\colorlet{matchcolor}{cyan!50}
+\colorlet{stringcolor}{green!20}
+
+\newcommand{\cbregex}[1]{\colorbox{orange!30}{\strut #1}}
+\newcommand{\cbmatch}[1]{\colorbox{cyan!50}{\strut #1}}
+\newcommand{\cbstring}[1]{\colorbox{green!30}{\strut #1}}
 
 \begin{document}
 
@@ -31,23 +39,96 @@
 \section[简介]{简介 Introduction}
 \label{sec:intro}
 
-\lipsum[1] \\
 \lipsum[1]
+
+\lipsum[2]
 
 \section[基本语法]{基本语法 Basic Syntax}
 \label{sec:basic-syntax}
 
+\centering
 \noindent
-\begin{table}
-  \centering{}
-  \begin{tabularx}{.9\textwidth}{llXX}
-  \hline{}
-    语法 & 特性 & 描述 & 举个栗子 \\ \hline{}
-    除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & Literal character & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，{和}也是文字文本，除了下面说到的成对出现的量词语法，如{n}和{m,n}等。& \colorbox{patterncolor}{a}匹配about中的\colorbox{matchedcolor}{a} \\ \hline{}
-    ddd & ddd & ddd & dddd \\ \hline{}
-  \end{tabularx}
-  \caption{字符}
-\end{table}
+\begin{longtable}{p{4em}p{9em}p{28em}p{15em}}
+  \toprule
+  \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
+  \midrule
+  \endfirsthead                 %
+  \multicolumn{4}{l}{（续表）} \\
+  \toprule
+  \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
+  \midrule
+  \endhead                      %
+  \midrule
+  \multicolumn{4}{c}{To be continued...} \\[2ex]
+  \endfoot                      %
+  \bottomrule
+  \endlastfoot                  %
+  %--------------------
+  字符 & 除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，{和}也是文字文本，除了下面说到的成对出现的量词语法，如{n}和{m,n}等。& \cbregex{a}匹配\cbstring{about}中的\cbmatch{a} \\
+  & ddd & ddd & dddd \\
+  & \cbregex{\textbackslash{}n}, \cbregex{\textbackslash{}r} & & \\
+  & \cbregex{\textbackslash{}cA}到\cbregex{\textbackslash{}cZ}, \cbregex{\textbackslash{}ca}到\cbregex{\textbackslash{}cz} & & \\
+  & \cbregex{\textbackslash{}a} & & \\
+  & \cbregex{\textbackslash{}f} & & \\
+  & \cbregex{\textbackslash{}v} & & \\
+  \midrule
+  %--------------------
+  点 & \colorbox{regexcolor}{.}（点） & Matches any single character except line break characters. Most regex flavors have an option to make the dot match line break characters too. & . 匹配 about 中的任意一个字符 \\
+  管道 & \colorbox{regexcolor}{|} & & \\
+  \midrule
+  %--------------------
+  字符类 & \cbregex{[abc]}, \cbregex{[\textbackslash{}\^{}\textbackslash{}]]} & & \\
+  & \cbregex{\textbackslash{}d}, \cbregex{\textbackslash{}D} & & \\
+  & \cbregex{\textbackslash{}w}, \cbregex{\textbackslash{}W} & & \\
+  & \cbregex{\textbackslash{}s}, \cbregex{\textbackslash{}S} & & \\
+  \midrule
+  %--------------------
+  POSIX & \cbregex{[:alnum:]} & & \\
+  & \cbregex{[:alpha:]} & & \\
+  & \cbregex{[:ascii:]} & & \\
+  & \cbregex{[:blank:]} & & \\
+  & \cbregex{[:cntrl:]} & & \\
+  & \cbregex{[:digit:]} & & \\
+  & \cbregex{[:graph:]} & & \\
+  & \cbregex{[:lower:]} & & \\
+  & \cbregex{[:print:]} & & \\
+  & \cbregex{[:punct:]} & & \\
+  & \cbregex{[:space:]} & & \\
+  & \cbregex{[:upper:]} & & \\
+  & \cbregex{[:word:]} & & \\
+  & \cbregex{[:xdigit:]} & & \\
+  \midrule
+  %--------------------
+  锚点 & \cbregex{\^{}} & & \\
+  & \cbregex{\$} & & \\
+  & \cbregex{\textbackslash{}A} & & \\
+  & \cbregex{\textbackslash{}G} & & \\
+  & \cbregex{\textbackslash{}Z} & & \\
+  & \cbregex{\textbackslash{}b} & & \\
+  & \cbregex{\textbackslash{}B} & & \\
+  & \cbregex{\textbackslash{}<} & & \\
+  & \cbregex{\textbackslash{}>} & & \\
+  & \cbregex{\textbackslash{}`} & & \\
+  & \cbregex{\textbackslash{}\&} & & \\
+  & \cbregex{\textbackslash{}'} & & \\
+  \midrule
+  %--------------------
+  量词 & ? & \\
+  & 2 & & \\
+  & 3 & & \\
+  & 4 & & \\
+  & 5 & & \\
+  & 6 & & \\
+  & 7 & & \\
+  & 8 & \\
+  & 9 & & \\
+  & 10 & & \\
+  & 11 & & \\
+  & 12 & & \\
+  & 13 & & \\
+  & 14 & & \\
+  
+\end{longtable}
 
 
 \section[高级语法]{高级语法 Advanced Syntax}
@@ -60,11 +141,6 @@
 
 \section[应用场景]{应用场景 Application Scenarios}
 \label{sec:scenarios}
-
-
-
-
-
 
 
 \end{document}
