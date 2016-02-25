@@ -7,6 +7,11 @@
 \usepackage{fancyhdr}
 \usepackage[CJKbookmarks, colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=black]{hyperref}
 \usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{lipsum}
+\definecolor{patterncolor}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{matchedcolor}{cmyk}{0.64,0,0.95,0.40}
 \renewcommand\contentsname{目\qquad{} 录}
 
 \begin{document}
@@ -26,20 +31,24 @@
 \section[简介]{简介 Introduction}
 \label{sec:intro}
 
+\lipsum[1] \\
+\lipsum[1]
+
 \section[基本语法]{基本语法 Basic Syntax}
 \label{sec:basic-syntax}
 
+\noindent
 \begin{table}
-\centering{}
-\begin{tabularx}{\textwidth}{llXX}
-\caption{字符}\\
-\hline{}
-语法 & 特性 & 描述 & 举个栗子 \\
-\hline{}
-除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & Literal character & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，{和}也是文字文本，除了下面说到的成对出现的量词语法，如{n}和{m,n}等。 & a匹配about中的a\\
-\hline{}
-\end{tabularx}
+  \centering{}
+  \begin{tabularx}{.9\textwidth}{llXX}
+  \hline{}
+    语法 & 特性 & 描述 & 举个栗子 \\ \hline{}
+    除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & Literal character & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，{和}也是文字文本，除了下面说到的成对出现的量词语法，如{n}和{m,n}等。& \colorbox{patterncolor}{a}匹配about中的\colorbox{matchedcolor}{a} \\ \hline{}
+    ddd & ddd & ddd & dddd \\ \hline{}
+  \end{tabularx}
+  \caption{字符}
 \end{table}
+
 
 \section[高级语法]{高级语法 Advanced Syntax}
 \label{sec:adv-syntax}
