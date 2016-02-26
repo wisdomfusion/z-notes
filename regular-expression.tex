@@ -1,5 +1,4 @@
 \documentclass[12pt,a4paper,twoside]{ctexart}
-%
 \usepackage[landscape,textheight=190mm,textwidth=145mm,left=20mm,right=20mm,top=20mm,bottom=20mm]{geometry}
 \usepackage{fontspec}
 \usepackage{fancybox}
@@ -11,18 +10,47 @@
 \usepackage{multirow}
 \usepackage{xcolor}
 \usepackage{booktabs}
+\usepackage{multicol}
 \usepackage{lipsum}
+
+\usepackage{listings}
+\lstset{
+  upquote,
+  keepspaces=true,
+  columns=spaceflexible,
+  numbers=left,
+  basicstyle=\ttfamily\footnotesize,
+  numberstyle=\ttfamily\tiny,
+  keywordstyle=\color{blue}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  commentstyle=\color{green}\ttfamily,
+  commentstyle=\sffamily\itshape\smaller\color{SeaGreen4},
+  emphstyle=\bfseries\color{RoyalBlue3},
+  emphstyle={[2]{\bfseries\color{Sienna2}}},
+  backgroundcolor=\color{yellow!5},
+  frameround=ftft,
+  frame=trBL
+}
+
 %--------------------
-\setmainfont{Times New Roman}   % 缺省字体
+%\setmainfont{Times New Roman}   % 缺省字体
+\setmainfont{Georgia}   % 缺省字体
 \setCJKfamilyfont{song}{SimSun}
 \setCJKfamilyfont{hei}{SimHei}
 \setCJKfamilyfont{kai}{KaiTi}
 \setCJKfamilyfont{fs}{FangSong}
 \setCJKfamilyfont{yahei}{Microsoft YaHei}
 
+\ctexset{
+  section/format+=\raggedright
+}
+
 \renewcommand\contentsname{目\qquad{} 录}
-\setlength{\tabcolsep}{0.5em}
-\renewcommand{\arraystretch}{1.5}
+
+\setlength\columnsep{20pt}        % multicolumns 栏间距
+
+\setlength{\tabcolsep}{0.5em}     % 水平padding
+\renewcommand{\arraystretch}{1.5} % 垂直padding
 %--------------------
 \colorlet{regexcolor}{orange!15}
 \colorlet{matchcolor}{cyan!50}
@@ -46,19 +74,19 @@
 
 \setcounter{page}{1}
 
-\section[简介]{简介 Introduction}
+\section[简介]{简介 \textcolor{lightgray}{\textsc{Introduction}}}
 \label{sec:intro}
 
-\lipsum[1]
+中文文字 \par
+中文文字 \par
+\lipsum[1] \par
+\lipsum[2] \par
 
-\lipsum[2]
-
-\section[基本语法]{基本语法 Basic Syntax}
+\section[基本语法]{基本语法 \textcolor{lightgray}{\textsc{Basic Syntax}}}
 \label{sec:basic-syntax}
 
-
-\centering
-\noindent
+\begin{center}
+  
 \begin{longtable}{p{4em}p{9em}p{28em}p{15em}}
   \toprule
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
@@ -70,13 +98,13 @@
   \midrule
   \endhead                      %
   \midrule
-  \multicolumn{4}{c}{To be continued...} \\[2ex]
+  \multicolumn{4}{c}{To be continued\ldots} \\[2ex]
   \endfoot                      %
   \bottomrule
   \endlastfoot                  %
   %--------------------
   字符 & 除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，{和}也是文字文本，除了下面说到的成对出现的量词语法，如{n}和{m,n}等。& \cbregex{a}匹配\cbstring{about}中的\cbmatch{a} \\
-  & ddd & ddd & dddd \\
+  & 转义 & \textbackslash{}t, \textbackslash{}?, \textbackslash{}*, \textbackslash{}+, \textbackslash{}., \textbackslash{}|, \textbackslash{}\{, \textbackslash{}\}, \textbackslash{}\textbackslash{}, \textbackslash{}[, \textbackslash{}], \textbackslash{}(, \textbackslash{}) & \\
   & \cbregex{\textbackslash{}n}, \cbregex{\textbackslash{}r} & & \\
   & \cbregex{\textbackslash{}cA}到\cbregex{\textbackslash{}cZ}, \cbregex{\textbackslash{}ca}到\cbregex{\textbackslash{}cz} & & \\
   & \cbregex{\textbackslash{}a} & & \\
@@ -84,11 +112,12 @@
   & \cbregex{\textbackslash{}v} & & \\
   \midrule
   %--------------------
-  点 & \cbregex{.}（点） & Matches any single character except line break characters. Most regex flavors have an option to make the dot match line break characters too. & . 匹配 about 中的任意一个字符 \\
-  管道 & \cbregex{|} & & \\
+  基本特性 & \cbregex{.}（点） & Matches any single character except line break characters. Most regex flavors have an option to make the dot match line break characters too. & . 匹配 about 中的任意一个字符 \\
+  & \cbregex{|} & & \\
   \midrule
   %--------------------
   字符类 & \cbregex{[abc]}, \cbregex{[\textbackslash{}\^{}\textbackslash{}]]} & & \\
+  & \cbregex{[\^{}abc]]} & & \\
   & \cbregex{\textbackslash{}d}, \cbregex{\textbackslash{}D} & & \\
   & \cbregex{\textbackslash{}w}, \cbregex{\textbackslash{}W} & & \\
   & \cbregex{\textbackslash{}s}, \cbregex{\textbackslash{}S} & & \\
@@ -119,40 +148,178 @@
   & \cbregex{\textbackslash{}B} & & \\
   & \cbregex{\textbackslash{}<} & & \\
   & \cbregex{\textbackslash{}>} & & \\
-  & \cbregex{\textbackslash{}`} & & \\
+  & \cbregex{\textbackslash{}\`{}} & & \\
   & \cbregex{\textbackslash{}\&} & & \\
   & \cbregex{\textbackslash{}'} & & \\
+  & & & \\
   \midrule
   %--------------------
-  量词 & ? & \\
-  & 2 & & \\
-  & 3 & & \\
-  & 4 & & \\
-  & 5 & & \\
-  & 6 & & \\
-  & 7 & & \\
-  & 8 & \\
-  & 9 & & \\
-  & 10 & & \\
-  & 11 & & \\
-  & 12 & & \\
-  & 13 & & \\
-  & 14 & & \\
-  
+  量词 & \cbregex{?} & \\
+  & \cbregex{??} & & \\
+  & \cbregex{?+} & & \\
+  & \cbregex{*} & & \\
+  & \cbregex{*?} & & \\
+  & \cbregex{*+} & & \\
+  & \cbregex{+} & & \\
+  & \cbregex{+?} & \\
+  & \cbregex{++} & & \\
+  & \cbregex{\{n\}} & & \\
+  & \cbregex{\{n,m\}} & & \\
+  & \cbregex{\{n,\}} & & \\
+  & \cbregex{\{,m\}} & & \\
+  & \cbregex{\{n,m\}?} & & \\
+  & \cbregex{\{n,m\}+} & & \\
 \end{longtable}
+\end{center}
 
-
-\section[高级语法]{高级语法 Advanced Syntax}
+\section[高级语法]{高级语法 \textcolor{lightgray}{\textsc{Advanced Syntax}}}
 \label{sec:adv-syntax}
 
+\begin{center}
 
-\section[正则表达式“流派”]{正则表达式“流派” Regex Flavors}
+\begin{longtable}{p{4em}p{9em}p{28em}p{15em}}
+  \toprule
+  \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
+  \midrule
+  \endfirsthead                 %
+  \multicolumn{4}{l}{（续表）} \\
+  \toprule
+  \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
+  \midrule
+  \endhead                      %
+  \midrule
+  \multicolumn{4}{c}{To be continued\ldots} \\[2ex]
+  \endfoot                      %
+  \bottomrule
+  \endlastfoot                  %
+  %--------------------
+  Unicode & & & \\
+  & & & \\
+  & & & \\
+  & & & \\
+  & & & \\
+  & & & \\
+  & & & \\
+  & & & \\
+  \midrule
+  %--------------------
+  \multirow{2}{4em}{分组与反向引用} & (regex) & & \\
+  & (?:regex) & & \\
+  & \textbackslash{}1 到 \textbackslash{}9 & & \\
+  & \textbackslash{}10 到 \textbackslash{}99 & & \\
+  & \textbackslash{}g\{1\} 到 \textbackslash{}g\{99\} & & \\
+  & \textbackslash{}g\{-1\}, \textbackslash{}g\{-2\}, etc. & & \\
+  & (?<name>regex) & & \\
+  & \textbackslash{}k<name>, \textbackslash{}g\{name\} & & \\
+  \midrule
+  %--------------------
+  高级分组 & (?\#comment) & & \\
+  & (?=Regex) & & \\
+  & (?!Regex) & & \\
+  & (?<=regex) & & \\
+  & (?<!regex) & & \\
+\end{longtable}
+
+\end{center}
+
+\section[举些栗子]{举些栗子 \textcolor{lightgray}{\textsc{Regex Examples}}}
+\label{sec:regex-examples}
+
+\begin{multicols}{2}
+一些栗子 \par
+
+
+\end{multicols}
+
+\section[正则表达式“流派”]{正则表达式“流派” \textcolor{lightgray}{\textsc{Regex Flavors}}}
 \label{sec:flavor}
 
+\begin{multicols}{2}
+流派
 
-\section[应用场景]{应用场景 Application Scenarios}
+\end{multicols}
+
+
+\section[应用场景]{应用场景 \textcolor{lightgray}{\textsc{Application Scenarios}}}
 \label{sec:scenarios}
 
+\subsection[工具箱]{工具箱 \textcolor{lightgray}{\textsc{Toolbox}}}
+\label{sec:toolbox}
+
+总有一款适合你，Windows下的记事本太鸡肋，Word处理方式主要是“通配符”而不是正则表达式。 \par
+
+\begin{multicols}{2}
+  
+\noindent\textbf{RegexBuddy} \par
+JGsoft开发的一个强大的正则表达式测试工具， \par
+
+\noindent\textbf{grep}
+
+\noindent\textbf{PowerGREP} \par
+RegexBuddy的兄弟软件，同是JGsoft开发，是grep在Windows平台的实现和增强。
+
+\noindent\textbf{UltraEdit, Notepad++}
+
+\noindent\textbf{Vim} \par
+
+\noindent\textbf{GNU Emacs} \par
+
+\noindent\textbf{sed \& awk}
+
+\end{multicols}
+
+\subsection[应用案例]{应用案例 \textcolor{lightgray}{\textsc{Application Cases}}}
+\label{sec:cases}
+
+\noindent\textbf{Dreamweaver 表格处理} \par
+
+\noindent\textbf{VBA 中使用正则表达式} \par
+
+\begin{lstlisting}[language=VBScript]
+Sub IndentParaWithRegEx()
+' PowerPoint VBA 批量给指定字符开头段落加动画
+Dim oSld As Slide
+Dim oShp As Shape
+Dim i As Integer
+' 正则相关变量
+Dim regx As Object, oMatch As Object
+
+' 这里写查找的正则，参考 http://msdn.microsoft.com/en-us/library/ms974570.aspx
+strPattern = "^开头字符串"
+
+Set regx = CreateObject("vbscript.regexp")
+With regx
+    .Global = True
+    .IgnoreCase = True
+    .Pattern = strPattern
+End With
+    
+For Each oSld In ActivePresentation.Slides
+    For Each oShp In oSld.Shapes
+        If oShp.HasTextFrame Then
+            If oShp.TextFrame2.HasText Then
+                With oShp.TextFrame2.TextRange
+                    For i = 1 To .Paragraphs.Count
+                        With .Paragraphs(i)
+                             ' 可能会出现多个匹配项的
+                            If (regx.Test(.Text) = True) Then
+                                .ParagraphFormat.FirstLineIndent = 0
+                            End If
+                        End With
+                    Next i 'para
+                End With
+            End If 'has text
+        End If 'has textframe
+    Next oShp
+Next oSld
+End Sub  
+\end{lstlisting}
+
+\noindent\textbf{InDesign GREP} \par
+
+\noindent\textbf{使用Perl正则表达式处理文件} \par
+
+\noindent\textbf{神的编辑器之正则} \par
 
 \end{document}
 
