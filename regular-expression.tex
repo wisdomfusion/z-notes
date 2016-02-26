@@ -16,6 +16,7 @@
 \usepackage{booktabs}
 \usepackage{multicol}
 \usepackage{lipsum}
+\usepackage{menukeys}
 %--------------------设定样式--------------------
 \ctexset{
   section/format+=\raggedright
@@ -102,23 +103,23 @@
   \endlastfoot                  %
   %--------------------
   字符 & 除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，\{和\}也是文字文本，除了下面说到的成对出现的量词语法，如\{n\}和\{m,n\}等。& \cbregex{a}匹配\cbstring{about}中的\cbmatch{a} \\
-  & 转义 & \cbregex{\textbackslash{}t}, \cbregex{\textbackslash{}?}, \cbregex{\textbackslash{}*}, \cbregex{\textbackslash{}+}, \cbregex{\textbackslash{}.}, \cbregex{\textbackslash{}|}, \cbregex{\textbackslash{}\{}, \cbregex{\textbackslash{}\}}, \cbregex{\textbackslash\textbackslash}, \cbregex{\textbackslash{}[}, \cbregex{\textbackslash{}]}, \cbregex{\textbackslash{}(}, \cbregex{\textbackslash{})} & \\
-  & \cbregex{\textbackslash{}n}, \cbregex{\textbackslash{}r} & Windows文件格式换行符是\textbackslash{}r\textbackslash{}n，UNIX文件格式换行符是\textbackslash{}n & \\
+  & 字符转义 & \cbregex{\textbackslash{}t}, \cbregex{\textbackslash{}?}, \cbregex{\textbackslash{}*}, \cbregex{\textbackslash{}+}, \cbregex{\textbackslash{}.}, \cbregex{\textbackslash{}|}, \cbregex{\textbackslash{}\{}, \cbregex{\textbackslash{}\}}, \cbregex{\textbackslash\textbackslash}, \cbregex{\textbackslash{}[}, \cbregex{\textbackslash{}]}, \cbregex{\textbackslash{}(}, \cbregex{\textbackslash{})} & \cbregex{\textbackslash{}+}匹配\cbmatch{+}；\cbregex{\textbackslash{}?\textbackslash{}-}匹配\cbmatch{?-} \\
+  & \cbregex{\textbackslash{}n}, \cbregex{\textbackslash{}r} 和 \cbregex{\textbackslash{}t} & Windows文件格式换行符是\textbackslash{}r\textbackslash{}n，UNIX文件格式换行符是\textbackslash{}n，\textbackslash{}t 匹配水平制表符 & \\
   & \cbregex{\textbackslash{}cA}到\cbregex{\textbackslash{}cZ}, \cbregex{\textbackslash{}ca}到\cbregex{\textbackslash{}cz} & Ctrl+A到Ctrl+Z，Ctrl+a到Ctrl+z & \\
-  & \cbregex{\textbackslash{}a} &  & \\
-  & \cbregex{\textbackslash{}f} & & \\
-  & \cbregex{\textbackslash{}v} & & \\
+  & \cbregex{\textbackslash{}a}, \cbregex{\textbackslash{e}}, \cbregex{\textbackslash{}f}, \cbregex{\textbackslash{}v} & 依次为警报（\textbackslash{}x07）、Esc字符(\textbackslash{}x1B)、进纸符（\textbackslash{}x0C）和垂直制表符（\textbackslash{}x0B） & \\
+  & \cbregex{\textbackslash{}Q}\ldots\cbregex{\textbackslash{}E} & 文字文本范围，被包含在\cbregex{\textbackslash{}Q}和\cbregex{\textbackslash{}E}之间的文字，都被视为普通文字，如[\textbackslash{}\^{}\$.|?*+()\{\}也不再用转义了，这个最早是由Perl引入正则表达式的。& \cbregex{\textbackslash{}Q+-*/\textbackslash{}E}匹配的就是\cbmatch{+-*/} \\
   \midrule
   %--------------------
   基本特性 & \cbregex{.}（点） & 匹配除换行符之外的任意字符，有些正则表达式“流派”还支持点是否匹配换行符的开关。& \cbregex{.} 匹配 about 中的任意一个字符 \\
   & \cbregex{|} & 管道，或的关系，匹配|的左侧或右侧的字符串 & \cbregex{abc|def|xyz}匹配\cbmatch{abc}或\cbmatch{def}或\cbmatch{xyz} \\
   \midrule
   %--------------------
-  字符类 & \cbregex{[abc]}, \cbregex{[\textbackslash{}\^{}\textbackslash{}]]} & & \\
-  & \cbregex{[\^{}abc]]} & & \\
-  & \cbregex{\textbackslash{}d}, \cbregex{\textbackslash{}D} & & \\
-  & \cbregex{\textbackslash{}w}, \cbregex{\textbackslash{}W} & & \\
-  & \cbregex{\textbackslash{}s}, \cbregex{\textbackslash{}S} & & \\
+  字符类 & \cbregex{[\ldots]} & 匹配字符类中列举的任意一个字符 & \cbregex{[abc]}匹配\cbmatch{a}或\cbmatch{b}或\cbmatch{c}；\cbregex{[.!?]}匹配\cbmatch{.}或\cbmatch{!}或\cbmatch{?} \\
+  & \cbregex{[\textbackslash{}\^{}\textbackslash{}]]} & 在字符类中，要匹配 \^{}-]\textbackslash{}这几字符，得使用\textbackslash{}转义 & \cbregex{[\textbackslash{}\^{}\textbackslash{}]]}匹配\cbmatch{\^{}}或\cbmatch{]} \\
+  & \cbregex{[\^{}\ldots]} & 排除型字符类，\^{}（脱字符，caret）紧跟 [ 之后，可以把字符类中列举的字符排除匹配范围，也就是所这个字符类将匹配任意一个不在列出字符范围内的字符 & \cbregex{[\^{}a-d]}匹配除了a,b,c,d之外的任意一个字符 \\
+  & \cbregex{\textbackslash{}d}, \cbregex{\textbackslash{}w}, \cbregex{\textbackslash{}s} & \cbregex{\textbackslash{}d} 匹配数字，与 \cbregex{[0-9]} 等价；\cbregex{\textbackslash{}w} 匹配任意一个字母或数字或下划线或汉字；\cbregex{\textbackslash{}s} 匹配任意一个空白符 & \cbregex{[\textbackslash{}d\textbackslash{}s]}匹配一个数字或空白符 \\
+  & \cbregex{\textbackslash{}D}, \cbregex{\textbackslash{}W}, \cbregex{\textbackslash{}S} & 是 \cbregex{\textbackslash{}d}, \cbregex{\textbackslash{}w} 和 \cbregex{\textbackslash{}s} 的反义字符类。\cbregex{\textbackslash{}D} 匹配任意非数字的字符；\cbregex{\textbackslash{}W} 匹配任意不是字母、数字、下划线、汉字的字符；\cbregex{\textbackslash{}S} 匹配任意不是空白符的字符 & \textbackslash{}D匹配任意非数字的字符 \\
+  & \cbregex{[\textbackslash{}b]} & 在字符类中，\cbregex{[\textbackslash{}b]}为\keys{Backspace}退格键字符 & \\
   \midrule
   %--------------------
   POSIX & \cbregex{[:alnum:]} & & \\
