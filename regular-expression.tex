@@ -1,10 +1,14 @@
+% WisdomFusion#gmail.com
+% 20120602
+%
 \documentclass[12pt,a4paper,twoside]{ctexart}
-\usepackage[landscape,textheight=190mm,textwidth=145mm,left=20mm,right=20mm,top=20mm,bottom=20mm]{geometry}
+%-------------------- 引用宏包--------------------
+\usepackage[landscape,textheight=190mm,textwidth=145mm,left=20mm,right=20mm,top=20mm,bottom=15mm]{geometry}
 \usepackage{fontspec}
 \usepackage{fancybox}
 \usepackage{colortbl}
 \usepackage{fancyhdr}
-\usepackage[CJKbookmarks, colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=black]{hyperref}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=black]{hyperref}
 \usepackage{tabularx}
 \usepackage{longtable}          % 自动换行用 tabularx，自动换页用 longtable，二者兼得用 ltxtable
 \usepackage{multirow}
@@ -12,6 +16,10 @@
 \usepackage{booktabs}
 \usepackage{multicol}
 \usepackage{lipsum}
+%--------------------设定样式--------------------
+\ctexset{
+  section/format+=\raggedright
+}
 
 \usepackage{listings}
 \lstset{
@@ -23,16 +31,17 @@
   numberstyle=\ttfamily\tiny,
   keywordstyle=\color{blue}\ttfamily,
   stringstyle=\color{red}\ttfamily,
-  commentstyle=\color{green}\ttfamily,
-  commentstyle=\sffamily\itshape\smaller\color{SeaGreen4},
-  emphstyle=\bfseries\color{RoyalBlue3},
-  emphstyle={[2]{\bfseries\color{Sienna2}}},
+  commentstyle=\color{teal}\ttfamily,
+  emphstyle=\color{blue}\bfseries,
   backgroundcolor=\color{yellow!5},
   frameround=ftft,
   frame=trBL
 }
+\setlength\columnsep{20pt}        % multicolumns 栏间距
+\setlength{\tabcolsep}{0.5em}     % 水平padding
+\renewcommand{\arraystretch}{1.5} % 垂直padding
 
-%--------------------
+% --------------------设定字体--------------------
 %\setmainfont{Times New Roman}   % 缺省字体
 \setmainfont{Georgia}   % 缺省字体
 \setCJKfamilyfont{song}{SimSun}
@@ -41,29 +50,19 @@
 \setCJKfamilyfont{fs}{FangSong}
 \setCJKfamilyfont{yahei}{Microsoft YaHei}
 
-\ctexset{
-  section/format+=\raggedright
-}
-
 \renewcommand\contentsname{目\qquad{} 录}
 
-\setlength\columnsep{20pt}        % multicolumns 栏间距
-
-\setlength{\tabcolsep}{0.5em}     % 水平padding
-\renewcommand{\arraystretch}{1.5} % 垂直padding
-%--------------------
-\colorlet{regexcolor}{orange!15}
-\colorlet{matchcolor}{cyan!50}
-\colorlet{stringcolor}{green!20}
-
-\newcommand{\cbregex}[1]{\colorbox{orange!30}{\strut #1}}
-\newcommand{\cbmatch}[1]{\colorbox{cyan!50}{\strut #1}}
-\newcommand{\cbstring}[1]{\colorbox{green!30}{\strut #1}}
+%--------------------新建命令--------------------
+\newcommand{\cbregex}[1]{\colorbox{orange!18}{\strut #1}}
+\newcommand{\cbmatch}[1]{\colorbox{cyan!35}{\strut #1}}
+\newcommand{\cbstring}[1]{\colorbox{green!20}{\strut #1}}
 
 \begin{document}
 
 \title{正则表达式快速参考手册}
 \author{胡志飞 <WisdomFusion\#gmail.com>}
+\date{2012年6月2日}
+
 \maketitle{}
 \thispagestyle{empty}
 \clearpage{}
@@ -77,17 +76,16 @@
 \section[简介]{简介 \textcolor{lightgray}{\textsc{Introduction}}}
 \label{sec:intro}
 
-中文文字 \par
-中文文字 \par
-\lipsum[1] \par
-\lipsum[2] \par
+正则表达式，（Regular Expression，在代码中常简写为regex、regexp或RE），计算机科学的一个概念。正则表达式使用字符来描述、匹配一系列符合某个句法规则的字符串。在很多文本编辑器里，正则表达式通常被用来检索、替换那些符合某个模式的文本。许多程序设计语言都支持利用正则表达式进行字符串操作。例如，在Perl\footnote{\href{https://www.perl.org/}{Perl}被称为“实用报表提取语言”（Practical Extraction and Report Language），正则表达式特性的推动者，文本处理非常方便。}中就内建了一个功能强大的正则表达式引擎。正则表达式这个概念最初是由Unix中的工具软件（例如sed\footnote{\href{http://www.gnu.org/software/sed/manual/sed.html}{sed}是一种UNIX/Linux平台下的轻量级流编辑器，日常一般用于处理文本文件。}和grep\footnote{grep，global search regular expression and print out the line，是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。}）普及开的。\par
+
+需要注意的是，用什么工具，用什么编辑语言，正则表达式的语法有些差别，特性的支持也参差不齐，称之为正则表达式“流派”(第\ref{sec:flavor}部分详述），所以要单独参考工具和编程语言本身的文档才行。\par
 
 \section[基本语法]{基本语法 \textcolor{lightgray}{\textsc{Basic Syntax}}}
 \label{sec:basic-syntax}
 
 \begin{center}
   
-\begin{longtable}{p{4em}p{9em}p{28em}p{15em}}
+\begin{longtable}{p{4em}p{8em}p{28em}p{16em}}
   \toprule
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
   \midrule
@@ -103,17 +101,17 @@
   \bottomrule
   \endlastfoot                  %
   %--------------------
-  字符 & 除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，{和}也是文字文本，除了下面说到的成对出现的量词语法，如{n}和{m,n}等。& \cbregex{a}匹配\cbstring{about}中的\cbmatch{a} \\
-  & 转义 & \textbackslash{}t, \textbackslash{}?, \textbackslash{}*, \textbackslash{}+, \textbackslash{}., \textbackslash{}|, \textbackslash{}\{, \textbackslash{}\}, \textbackslash{}\textbackslash{}, \textbackslash{}[, \textbackslash{}], \textbackslash{}(, \textbackslash{}) & \\
-  & \cbregex{\textbackslash{}n}, \cbregex{\textbackslash{}r} & & \\
-  & \cbregex{\textbackslash{}cA}到\cbregex{\textbackslash{}cZ}, \cbregex{\textbackslash{}ca}到\cbregex{\textbackslash{}cz} & & \\
-  & \cbregex{\textbackslash{}a} & & \\
+  字符 & 除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，\{和\}也是文字文本，除了下面说到的成对出现的量词语法，如\{n\}和\{m,n\}等。& \cbregex{a}匹配\cbstring{about}中的\cbmatch{a} \\
+  & 转义 & \cbregex{\textbackslash{}t}, \cbregex{\textbackslash{}?}, \cbregex{\textbackslash{}*}, \cbregex{\textbackslash{}+}, \cbregex{\textbackslash{}.}, \cbregex{\textbackslash{}|}, \cbregex{\textbackslash{}\{}, \cbregex{\textbackslash{}\}}, \cbregex{\textbackslash\textbackslash}, \cbregex{\textbackslash{}[}, \cbregex{\textbackslash{}]}, \cbregex{\textbackslash{}(}, \cbregex{\textbackslash{})} & \\
+  & \cbregex{\textbackslash{}n}, \cbregex{\textbackslash{}r} & Windows文件格式换行符是\textbackslash{}r\textbackslash{}n，UNIX文件格式换行符是\textbackslash{}n & \\
+  & \cbregex{\textbackslash{}cA}到\cbregex{\textbackslash{}cZ}, \cbregex{\textbackslash{}ca}到\cbregex{\textbackslash{}cz} & Ctrl+A到Ctrl+Z，Ctrl+a到Ctrl+z & \\
+  & \cbregex{\textbackslash{}a} &  & \\
   & \cbregex{\textbackslash{}f} & & \\
   & \cbregex{\textbackslash{}v} & & \\
   \midrule
   %--------------------
-  基本特性 & \cbregex{.}（点） & Matches any single character except line break characters. Most regex flavors have an option to make the dot match line break characters too. & . 匹配 about 中的任意一个字符 \\
-  & \cbregex{|} & & \\
+  基本特性 & \cbregex{.}（点） & 匹配除换行符之外的任意字符，有些正则表达式“流派”还支持点是否匹配换行符的开关。& \cbregex{.} 匹配 about 中的任意一个字符 \\
+  & \cbregex{|} & 管道，或的关系，匹配|的左侧或右侧的字符串 & \cbregex{abc|def|xyz}匹配\cbmatch{abc}或\cbmatch{def}或\cbmatch{xyz} \\
   \midrule
   %--------------------
   字符类 & \cbregex{[abc]}, \cbregex{[\textbackslash{}\^{}\textbackslash{}]]} & & \\
@@ -243,7 +241,7 @@
 \section[应用场景]{应用场景 \textcolor{lightgray}{\textsc{Application Scenarios}}}
 \label{sec:scenarios}
 
-\subsection[工具箱]{工具箱 \textcolor{lightgray}{\textsc{Toolbox}}}
+\subsection[正则表达式工具箱]{正则表达式工具箱 \textcolor{lightgray}{\textsc{Regex Toolbox}}}
 \label{sec:toolbox}
 
 总有一款适合你，Windows下的记事本太鸡肋，Word处理方式主要是“通配符”而不是正则表达式。 \par
