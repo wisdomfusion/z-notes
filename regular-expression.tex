@@ -105,7 +105,7 @@
   字符 & 除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，\{和\}也是文字文本，除了下面说到的成对出现的量词语法，如\{n\}和\{m,n\}等。& \cbregex{a}匹配\cbstring{about}中的\cbmatch{a} \\
   & 字符转义 & \cbregex{\textbackslash{}t}, \cbregex{\textbackslash{}?}, \cbregex{\textbackslash{}*}, \cbregex{\textbackslash{}+}, \cbregex{\textbackslash{}.}, \cbregex{\textbackslash{}|}, \cbregex{\textbackslash{}\{}, \cbregex{\textbackslash{}\}}, \cbregex{\textbackslash\textbackslash}, \cbregex{\textbackslash{}[}, \cbregex{\textbackslash{}]}, \cbregex{\textbackslash{}(}, \cbregex{\textbackslash{})} & \cbregex{\textbackslash{}+}匹配\cbmatch{+}；\cbregex{\textbackslash{}?\textbackslash{}-}匹配\cbmatch{?-} \\
   & \cbregex{\textbackslash{}n}, \cbregex{\textbackslash{}r} 和 \cbregex{\textbackslash{}t} & Windows文件格式换行符是\textbackslash{}r\textbackslash{}n，UNIX文件格式换行符是\textbackslash{}n，\textbackslash{}t 匹配水平制表符 & \\
-  & \cbregex{\textbackslash{}cA}到\cbregex{\textbackslash{}cZ}, \cbregex{\textbackslash{}ca}到\cbregex{\textbackslash{}cz} & Ctrl+A到Ctrl+Z，Ctrl+a到Ctrl+z & \\
+  & \cbregex{\textbackslash{}cA}到\cbregex{\textbackslash{}cZ}, \cbregex{\textbackslash{}ca}到\cbregex{\textbackslash{}cz} & \keys{Ctrl}+\keys{A} 到 \keys{Ctrl}+\keys{Z}，与ASCII字符\cbregex{\textbackslash{}x01}到\cbregex{\textbackslash{}x1A}等价 & \\
   & \cbregex{\textbackslash{}a}, \cbregex{\textbackslash{e}}, \cbregex{\textbackslash{}f}, \cbregex{\textbackslash{}v} & 依次为警报（\textbackslash{}x07）、Esc字符(\textbackslash{}x1B)、进纸符（\textbackslash{}x0C）和垂直制表符（\textbackslash{}x0B） & \\
   & \cbregex{\textbackslash{}Q}\ldots\cbregex{\textbackslash{}E} & 文字文本范围，被包含在\cbregex{\textbackslash{}Q}和\cbregex{\textbackslash{}E}之间的文字，都被视为普通文字，如[\textbackslash{}\^{}\$.|?*+()\{\}也不再用转义了，这个最早是由Perl引入正则表达式的。& \cbregex{\textbackslash{}Q+-*/\textbackslash{}E}匹配的就是\cbmatch{+-*/} \\
   \midrule
@@ -211,6 +211,14 @@
   & (?<name>regex) & & \\
   & \textbackslash{}k<name>, \textbackslash{}g\{name\} & & \\
   \midrule
+  模式修饰符 & \cbregex{(?i)} & & \\
+  & \cbregex{(?-i)} & & \\
+  & \cbregex{(?s)} & & \\
+  & \cbregex{(?-s)} & & \\
+  & \cbregex{(?m)} & & \\
+  & \cbregex{(?-m)} & & \\
+  & \cbregex{(?x)} & & \\
+  
   %--------------------
   高级分组 & (?\#comment) & & \\
   & (?=Regex) & & \\
