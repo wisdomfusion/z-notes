@@ -17,7 +17,9 @@
 \usepackage{multicol}
 \usepackage{lipsum}
 \usepackage{menukeys}
-%--------------------设定样式--------------------
+\usepackage{tcolorbox}
+\usepackage[perpage]{footmisc}  % 每页重置脚注编号
+% --------------------设定样式--------------------
 \ctexset{
   section/format+=\raggedright
 }
@@ -29,7 +31,7 @@
   columns=spaceflexible,
   numbers=left,
   basicstyle=\ttfamily\footnotesize,
-  numberstyle=\ttfamily\tiny,
+  numberstyle=\color{gray}\ttfamily\scriptsize,
   keywordstyle=\color{blue}\ttfamily,
   stringstyle=\color{red}\ttfamily,
   commentstyle=\color{teal}\ttfamily,
@@ -76,17 +78,20 @@
 
 \section[简介]{简介 \textcolor{lightgray}{\textsc{Introduction}}}
 \label{sec:intro}
-
+文字处理无处不在无时不有，日常工作和学习大多数任务都和文字息息相关，编辑们写文章、整理资料，开发人员编码、处理用户提交的数据或请求接口数据，等等，这些都是以字符和字符串相关的任务，既然如些，掌握一个快速文字处理的方法就变得很有必要。\par
 正则表达式，（Regular Expression，在代码中常简写为regex、regexp或RE），计算机科学的一个概念。正则表达式使用字符来描述、匹配一系列符合某个句法规则的字符串。在很多文本编辑器里，正则表达式通常被用来检索、替换那些符合某个模式的文本。许多程序设计语言都支持利用正则表达式进行字符串操作。例如，在Perl\footnote{\href{https://www.perl.org/}{Perl}被称为“实用报表提取语言”（Practical Extraction and Report Language），正则表达式特性的推动者，文本处理非常方便。}中就内建了一个功能强大的正则表达式引擎。正则表达式这个概念最初是由Unix中的工具软件（例如sed\footnote{\href{http://www.gnu.org/software/sed/manual/sed.html}{sed}是一种UNIX/Linux平台下的轻量级流编辑器，日常一般用于处理文本文件。}和grep\footnote{grep，global search regular expression and print out the line，是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。}）普及开的。\par
-
-需要注意的是，用什么工具，用什么编辑语言，正则表达式的语法有些差别，特性的支持也参差不齐，称之为正则表达式“流派”(第\ref{sec:flavor}部分详述），所以要单独参考工具和编程语言本身的文档才行。\par
-
+需要注意的是，用什么工具，用什么编辑语言，正则表达式的语法有些差别，特性的支持也参差不齐，称之为正则表达式“流派”(第\ref{sec:flavor}部分详述），所以要单独参考工具和编程语言本身的文档才行。本文档旨在给大家一个通用的、概括的正则表达式宏观印象，辅以实例和应用案例，同时针对个别常用但又不易理解的特性，给大家作详细说明和总结，抛砖引玉。\par
+\begin{tcolorbox}[colback=yellow!5,colframe=red!80!black,title=\textbf{说明}]
+  我对排版及专业出版了解甚微，同时专业领域知识因涉猎过多而不精，难保周全和准确，但只要在自己知识圈内，我会劲力完成尽可能规范和可靠的文档呈现给大家，并不断完善更新，请读者发现问题后联系指正，共同提高。
+\end{tcolorbox}
 \section[基本语法]{基本语法 \textcolor{lightgray}{\textsc{Basic Syntax}}}
 \label{sec:basic-syntax}
 
+语法部分结合了自己的理解和对正则表达式应用的一些心得，分类有不当之处，请指正。\par
+
 \begin{center}
   
-\begin{longtable}{p{4em}p{8em}p{28em}p{16em}}
+\begin{longtable}{p{4em}p{8em}p{25em}p{18em}}
   \toprule
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
   \midrule
@@ -96,7 +101,6 @@
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
   \midrule
   \endhead                      %
-  \midrule
   \multicolumn{4}{c}{To be continued\ldots} \\[2ex]
   \endfoot                      %
   \bottomrule
@@ -105,7 +109,7 @@
   字符 & 除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，\{和\}也是文字文本，除了下面说到的成对出现的量词语法，如\{n\}和\{m,n\}等。& \cbregex{a}匹配\cbstring{about}中的\cbmatch{a} \\
   & 字符转义 & \cbregex{\textbackslash{}t}, \cbregex{\textbackslash{}?}, \cbregex{\textbackslash{}*}, \cbregex{\textbackslash{}+}, \cbregex{\textbackslash{}.}, \cbregex{\textbackslash{}|}, \cbregex{\textbackslash{}\{}, \cbregex{\textbackslash{}\}}, \cbregex{\textbackslash\textbackslash}, \cbregex{\textbackslash{}[}, \cbregex{\textbackslash{}]}, \cbregex{\textbackslash{}(}, \cbregex{\textbackslash{})} & \cbregex{\textbackslash{}+}匹配\cbmatch{+}；\cbregex{\textbackslash{}?\textbackslash{}-}匹配\cbmatch{?-} \\
   & \cbregex{\textbackslash{}n}, \cbregex{\textbackslash{}r} 和 \cbregex{\textbackslash{}t} & Windows文件格式换行符是\textbackslash{}r\textbackslash{}n，UNIX文件格式换行符是\textbackslash{}n，\textbackslash{}t 匹配水平制表符 & \\
-  & \cbregex{\textbackslash{}cA}到\cbregex{\textbackslash{}cZ}, \cbregex{\textbackslash{}ca}到\cbregex{\textbackslash{}cz} & \keys{Ctrl}+\keys{A} 到 \keys{Ctrl}+\keys{Z}，与ASCII字符\cbregex{\textbackslash{}x01}到\cbregex{\textbackslash{}x1A}等价 & \\
+  & \cbregex{\textbackslash{}cA}到\cbregex{\textbackslash{}cZ}, \cbregex{\textbackslash{}ca}到\cbregex{\textbackslash{}cz} & \keys{Ctrl + A} 到 \keys{Ctrl + Z}，与ASCII字符\cbregex{\textbackslash{}x01}到\cbregex{\textbackslash{}x1A}等价 & \\
   & \cbregex{\textbackslash{}a}, \cbregex{\textbackslash{e}}, \cbregex{\textbackslash{}f}, \cbregex{\textbackslash{}v} & 依次为警报（\textbackslash{}x07）、Esc字符(\textbackslash{}x1B)、进纸符（\textbackslash{}x0C）和垂直制表符（\textbackslash{}x0B） & \\
   & \cbregex{\textbackslash{}Q}\ldots\cbregex{\textbackslash{}E} & 文字文本范围，被包含在\cbregex{\textbackslash{}Q}和\cbregex{\textbackslash{}E}之间的文字，都被视为普通文字，如[\textbackslash{}\^{}\$.|?*+()\{\}也不再用转义了，这个最早是由Perl引入正则表达式的。& \cbregex{\textbackslash{}Q+-*/\textbackslash{}E}匹配的就是\cbmatch{+-*/} \\
   \midrule
@@ -114,69 +118,74 @@
   & \cbregex{|} & 管道，或的关系，匹配|的左侧或右侧的字符串 & \cbregex{abc|def|xyz}匹配\cbmatch{abc}或\cbmatch{def}或\cbmatch{xyz} \\
   \midrule
   %--------------------
-  字符类 & \cbregex{[\ldots]} & 匹配字符类中列举的任意一个字符 & \cbregex{[abc]}匹配\cbmatch{a}或\cbmatch{b}或\cbmatch{c}；\cbregex{[.!?]}匹配\cbmatch{.}或\cbmatch{!}或\cbmatch{?} \\
-  & \cbregex{[\textbackslash{}\^{}\textbackslash{}]]} & 在字符类中，要匹配 \^{}-]\textbackslash{}这几字符，得使用\textbackslash{}转义 & \cbregex{[\textbackslash{}\^{}\textbackslash{}]]}匹配\cbmatch{\^{}}或\cbmatch{]} \\
+  字符类 & \cbregex{[\ldots]} & 匹配字符类中列举的任意一个字符 & \cbregex{[abc]}匹配\cbmatch{a}或\cbmatch{b}或\cbmatch{c}\newline{}\cbregex{[aeiou]}匹配任何一个英文元音字母\newline{}\cbregex{[.!?]}匹配\cbmatch{.}或\cbmatch{!}或\cbmatch{?} \\
+  & \cbregex{[\textbackslash{}\^{}\textbackslash{}]]} & 在字符类中，要匹配 \^{}-]\textbackslash{}这几字符，得使用\textbackslash{}转义 & \cbregex{[\textbackslash\^{}\textbackslash{}]]}匹配\cbmatch{\^{}}或\cbmatch{]} \\
   & \cbregex{[\^{}\ldots]} & 排除型字符类，\^{}（脱字符，caret）紧跟 [ 之后，可以把字符类中列举的字符排除匹配范围，也就是所这个字符类将匹配任意一个不在列出字符范围内的字符 & \cbregex{[\^{}a-d]}匹配除了a,b,c,d之外的任意一个字符 \\
   & \cbregex{\textbackslash{}d}, \cbregex{\textbackslash{}w}, \cbregex{\textbackslash{}s} & \cbregex{\textbackslash{}d} 匹配数字，与 \cbregex{[0-9]} 等价；\cbregex{\textbackslash{}w} 匹配任意一个字母或数字或下划线或汉字；\cbregex{\textbackslash{}s} 匹配任意一个空白符 & \cbregex{[\textbackslash{}d\textbackslash{}s]}匹配一个数字或空白符 \\
   & \cbregex{\textbackslash{}D}, \cbregex{\textbackslash{}W}, \cbregex{\textbackslash{}S} & 是 \cbregex{\textbackslash{}d}, \cbregex{\textbackslash{}w} 和 \cbregex{\textbackslash{}s} 的反义字符类。\cbregex{\textbackslash{}D} 匹配任意非数字的字符；\cbregex{\textbackslash{}W} 匹配任意不是字母、数字、下划线、汉字的字符；\cbregex{\textbackslash{}S} 匹配任意不是空白符的字符 & \textbackslash{}D匹配任意非数字的字符 \\
   & \cbregex{[\textbackslash{}b]} & 在字符类中，\cbregex{[\textbackslash{}b]}为\keys{Backspace}退格键字符 & \\
   \midrule
   %--------------------
-  POSIX & \cbregex{[:alnum:]} & & \\
-  & \cbregex{[:alpha:]} & & \\
-  & \cbregex{[:ascii:]} & & \\
-  & \cbregex{[:blank:]} & & \\
-  & \cbregex{[:cntrl:]} & & \\
-  & \cbregex{[:digit:]} & & \\
-  & \cbregex{[:graph:]} & & \\
-  & \cbregex{[:lower:]} & & \\
-  & \cbregex{[:print:]} & & \\
-  & \cbregex{[:punct:]} & & \\
-  & \cbregex{[:space:]} & & \\
-  & \cbregex{[:upper:]} & & \\
-  & \cbregex{[:word:]} & & \\
-  & \cbregex{[:xdigit:]} & & \\
+  POSIX & \cbregex{[:alnum:]} & 匹配所有大小写字母及数字 & 等价于\cbregex{[0-9a-zA-Z]} \\
+  & \cbregex{[:alpha:]} & 匹配所有大小写字母 & 等价于\cbregex{[a-zA-Z]} \\
+  & \cbregex{[:ascii:]} & 匹配所有ASCII字符，查看完整\href{http://www.asciitable.com/}{ASCII字符列表} & 等价于\cbregex{[\textbackslash{}x01-\textbackslash{}x7F]} \\
+  & \cbregex{[:blank:]} & 匹配半角空格和制表符 & 等价于\cbregex{[ \textbackslash{}t]} \\
+  & \cbregex{[:cntrl:]} & 匹配所有ASCII 0到31之间的控制符 & 等价于\cbregex{[\textbackslash{}x01-\textbackslash{}x1F]} \\
+  & \cbregex{[:digit:]} & 匹配所有数字 & 等价于\cbregex{[0-9]} \\
+  & \cbregex{[:graph:]} & 匹配所有可打印的字符 & \\
+  & \cbregex{[:lower:]} & 匹配所有小写字母 & 等价于\cbregex{[a-z]} \\
+  & \cbregex{[:print:]} & 匹配所有可打印字符和空格 & \\
+  & \cbregex{[:punct:]} & 匹配所有标点符号 & \\
+  & \cbregex{[:space:]} & 空白字符 & 等价于\cbregex{[\textbackslash{}t\textbackslash{}n\textbackslash{}r\textbackslash{}f\textbackslash{}v]} \\
+  & \cbregex{[:upper:]} & 匹配所有大写字母 & 等价于\cbregex{[A-Z]} \\
+  & \cbregex{[:word:]} & 字母、数字和下划线 & 等价于\cbregex{[a-zA-Z0-9\_]} \\
+  & \cbregex{[:xdigit:]} & 匹配所有十六进制字符 & 等价于\cbregex{[0-9a-fA-F]} \\
   \midrule
   %--------------------
-  锚点 & \cbregex{\^{}} & & \\
-  & \cbregex{\$} & & \\
-  & \cbregex{\textbackslash{}A} & & \\
-  & \cbregex{\textbackslash{}G} & & \\
-  & \cbregex{\textbackslash{}Z} & & \\
-  & \cbregex{\textbackslash{}b} & & \\
-  & \cbregex{\textbackslash{}B} & & \\
-  & \cbregex{\textbackslash{}<} & & \\
-  & \cbregex{\textbackslash{}>} & & \\
-  & \cbregex{\textbackslash{}\`{}} & & \\
-  & \cbregex{\textbackslash{}\&} & & \\
-  & \cbregex{\textbackslash{}'} & & \\
-  & & & \\
+  锚点 & \cbregex{\^{}} & 匹配字符串开始位置或行首位置 & 单行模式下 \cbregex{\^{}.} 在 \cbstring{foo\textbackslash{}nbar} 中匹配 \cbmatch{f}；在多行模式下，同时还匹配换行后的 \cbmatch{b} \\
+  & \cbregex{\$} & 匹配字符串结尾位置或行尾位置 & \cbregex{.\$} 在 \cbstring{foo\textbackslash{}nbar} 中匹配 \cbmatch{r}；在多行模式下，同时还匹配换行符前的 \cbmatch{o} \\
+  & \cbregex{\textbackslash{}A} & 字符串开头位置（类似 \^{}，但不受处理多行选项的影响）& \cbregex{\textbackslash{}Ae} 在 \cbstring{example} 这个字符串中匹配开头的 \cbmatch{e} \\
+  & \cbregex{\textbackslash{}Z} & 字符串结尾位置或行尾位置（不受处理多行选项的影响）& \cbregex{e\textbackslash{}Z} 在 \cbstring{example} 这个字符串中匹配结尾的 \cbmatch{e} \\
+  & \cbregex{\textbackslash{}b} & 单词分界位置，单词开头或结尾 & \cbregex{.\textbackslash{}b} 在字符串 \cbstring{abc} 中匹配 \cbmatch{c} \\
+  & \cbregex{\textbackslash{}B} & 匹配不是单词开头或结尾的位置 & \cbregex{\textbackslash{}B.\textbackslash{}B} 在字符串 \cbstring{abc} 中匹配 \cbmatch{b} \\
+  & \cbregex{\textbackslash{}<} & 单词开头 & \\
+  & \cbregex{\textbackslash{}>} & 单词结尾 & \\
   \midrule
   %--------------------
-  量词 & \cbregex{?} & \\
-  & \cbregex{??} & & \\
-  & \cbregex{?+} & & \\
-  & \cbregex{*} & & \\
-  & \cbregex{*?} & & \\
-  & \cbregex{*+} & & \\
-  & \cbregex{+} & & \\
-  & \cbregex{+?} & \\
-  & \cbregex{++} & & \\
-  & \cbregex{\{n\}} & & \\
-  & \cbregex{\{n,m\}} & & \\
-  & \cbregex{\{n,\}} & & \\
-  & \cbregex{\{,m\}} & & \\
-  & \cbregex{\{n,m\}?} & & \\
-  & \cbregex{\{n,m\}+} & & \\
+  量词 & \cbregex{?} & 前导字符重复零次或一次，贪婪的：当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配尽可能多的字符。& \cbregex{abc?} 匹配 \cbmatch{abc} 或 \cbmatch{ab}，如果可能，优先匹配前者 \\
+  & \cbregex{??} & 前导字符重复零次或一次，非贪婪：当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配尽可能少的字符。与贪婪相反。& \cbregex{abc??} 匹配 \cbmatch{ab} 或 \cbregex{abc} \\
+  & \cbregex{*} & 前导字符重复零次或更多次，贪婪的 & \\
+  & \cbregex{*?} & 前导字符重复零次或更多次，非贪婪 & \\
+  & \cbregex{+} & 前导字符重复一次或更多次，贪婪的 & \\
+  & \cbregex{+?} & 前导字符重复一次或更多次，非贪婪 & \\
+  & \cbregex{\{n\}} & 前导字符重复n次 & \\
+  & \cbregex{\{n,m\}} & 前导字符重复n到m次，其中$n>=0$，$m>=n$ & \\
+  & \cbregex{\{n,\}} & 前导字符重复n次或更多次，其中$n>=0$ & \\
+  & \cbregex{\{,m\}} & 前导字符最多重复m次，基中$m>=0$ & \\
+  \midrule
+  %--------------------
+  \multirow{2}{4em}{分组与\newline{}反向引用} & (regex) & 匹配regex，并捕获文本到自动命名的组里 & \cbregex{(abc)\{3\}} 匹配 \cbmatch{abcabcabc} \\
+  & (?:regex) & 匹配regex，不捕获匹配的文本，也不给此分组分配组号 & \cbregex{(?:abc)\{3\}} 匹配 \cbmatch{abcabcabc}，无分组 \\
+  & \textbackslash{}1 到 \textbackslash{}9 & 反向引用，用于重复搜索前面某个分组匹配的文本。例如，\textbackslash{}1代表分组1匹配的文本。有些与此正则表达式流派支持多于9的分组 & \cbregex{(abc|def)=\textbackslash{}1} 匹配 \cbmatch{abc=abc} 或 \cbmatch{def=def}，而不是 \cbstring{abc=def} 或 \cbstring{def=abc} \\
+  & \textbackslash{}10 到 \textbackslash{}99 & 反向引用，分组10到99 & \\
+  & \textbackslash{}g\{1\} 到 \textbackslash{}g\{99\} & Perl语法中，反向引用语法优化 & \\
+  & \textbackslash{}g\{-1\}, \textbackslash{}g\{-2\}, etc. & 倒数第1个分组，倒数第2个分组，\ldots & \\
+  & (?<name>regex) & 命令分组 & \\
+  & \textbackslash{}k<name>, \textbackslash{}g\{name\} & 反向引用命令分组 & \\
+  & \cbregex{\textbackslash{}\`{}} & Perl语言特有，对应于\texttt{\$\{\^{}PREMATCH\}} & \\
+  & \cbregex{\textbackslash{}\&} & Perl语言特有，对应于\texttt{\$\{\^{}MATCH\}} & \\
+  & \cbregex{\textbackslash{}'} & Perl语言特有，对应于\texttt{\$\{\^{}POSTMATCH\}} & \\
 \end{longtable}
 \end{center}
 
 \section[高级语法]{高级语法 \textcolor{lightgray}{\textsc{Advanced Syntax}}}
 \label{sec:adv-syntax}
 
+之所以本文档中称这些正则为“高级语法”，一是有些不常用，二是有些语法不太好理解，故有此一说。
+
 \begin{center}
 
-\begin{longtable}{p{4em}p{9em}p{28em}p{15em}}
+\begin{longtable}{p{4em}p{9em}p{25em}p{18em}}
   \toprule
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
   \midrule
@@ -186,45 +195,32 @@
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
   \midrule
   \endhead                      %
-  \midrule
   \multicolumn{4}{c}{To be continued\ldots} \\[2ex]
   \endfoot                      %
   \bottomrule
   \endlastfoot                  %
   %--------------------
-  Unicode & & & \\
-  & & & \\
-  & & & \\
-  & & & \\
-  & & & \\
-  & & & \\
-  & & & \\
-  & & & \\
+  模式\newline{}修饰符 & \cbregex{(?i)} & 打开忽略大小写模式，之后的模式不分大小写。模式修饰符有 i, s, m, x 四种，分别是忽略大小写（\textbf{I}gnoreCase）、单行模式（\textbf{S}ingleline）、多行模式（\textbf{M}ultiline）和宽松排序和注释模式 & \\
+  & \cbregex{(?-i)} & 关闭忽略大小写模式，之后的模式不分大小写 & \cbregex{(?i)te(?-i)st} 匹配 \cbmatch{TEst}，而不匹配 \cbstring{TEST} \\
+  & \cbregex{(?s)} & 打开单行模式，之后的模式不支持多行 & \\
+  & \cbregex{(?-s)} & 关闭单行模式，之后的模式支持多行 & \\
+  & \cbregex{(?m)} & 打开多行模式，之后的模式支持多行 & \\
+  & \cbregex{(?-m)} & \cbregex{\^{}} 和 \cbregex{\$} 匹配行首和行尾 & \\
+  & \cbregex{(?x)} & 打开宽松和注释模式 & \\
+  & \cbregex{(?-x)} & 关闭宽松和注释模式 & \\
+  & \cbregex{(?i-sm)} & 打开i和m模式，关闭s模式 & \\
+  & \cbregex{(?i-sm:regex)} & 在\cbregex{(?i-sm:regex)} 子模式内打开i和m模式，关闭s模式 & \\
   \midrule
   %--------------------
-  \multirow{2}{4em}{分组与反向引用} & (regex) & & \\
-  & (?:regex) & & \\
-  & \textbackslash{}1 到 \textbackslash{}9 & & \\
-  & \textbackslash{}10 到 \textbackslash{}99 & & \\
-  & \textbackslash{}g\{1\} 到 \textbackslash{}g\{99\} & & \\
-  & \textbackslash{}g\{-1\}, \textbackslash{}g\{-2\}, etc. & & \\
-  & (?<name>regex) & & \\
-  & \textbackslash{}k<name>, \textbackslash{}g\{name\} & & \\
+  注释 & (?\#comment) & 注释 & \\
   \midrule
-  模式修饰符 & \cbregex{(?i)} & & \\
-  & \cbregex{(?-i)} & & \\
-  & \cbregex{(?s)} & & \\
-  & \cbregex{(?-s)} & & \\
-  & \cbregex{(?m)} & & \\
-  & \cbregex{(?-m)} & & \\
-  & \cbregex{(?x)} & & \\
-  
   %--------------------
-  高级分组 & (?\#comment) & & \\
-  & (?=Regex) & & \\
-  & (?!Regex) & & \\
-  & (?<=regex) & & \\
-  & (?<!regex) & & \\
+  零宽断言 & (?=Regex) & 肯定顺序环视（Negative Lookahead）\newline{}子表达式 \underline{能}够匹配 \underline{右侧}文本，含以下三种些类正则被称“\textbf{环视}（Lookaround, Lookahead 和 Lookbehind 统称为 Lookaround）”，也称为“\textbf{零宽断言}”（Zero-Length Assertions） & \cbregex{\textbackslash{}b\textbackslash{}w+(?=ing\textbackslash{}b)}，匹配以\cbstring{ing}结尾的单词的前面部分（除了\cbstring{ing}以外的部分） \\
+  & (?!Regex) & 否定顺序环视（Positive Lookahead）\newline{}子表达式 \underline{不能}匹配 \underline{右侧}文本 & \cbregex{(?<=\textbackslash{}bre)\textbackslash{}w+\textbackslash{}b}会匹配以\cbstring{re}开头的单词的后半部分（除了\cbstring{re}以外的部分）\newline{}又，\cbregex{(?<=\textbackslash{}s)\textbackslash{}d+(?=\textbackslash{}s)}匹配以空白符间隔的数字（再次强调，不包括这些空白符） \\
+  & (?<=regex) & 肯定逆序环视（Positive Lookbehind）\newline{}子表达式 \underline{能}够匹配 \underline{左侧}文本 & \cbregex{\textbackslash{}d\{3\}(?!\textbackslash{}d)}匹配三位数字，而且这三位数字的后面不能是数字 \\
+  & (?<!regex) & 否定逆序环视（Negative Lookbehind）\newline{}子表达式 \underline{不能}匹配 \underline{左侧}文本 & \cbregex{(?<![a-z])\textbackslash{}d\{7\}}匹配前面不是小写字母的七位数字\newline{}又，\cbregex{(?<=<(\textbackslash{}w+)>).\*(?=<\textbackslash{}/\textbackslash{}1>)}匹配不包含属性的简单HTML标签内里的内容 \\
+  \midrule
+  固化分组 & (?>regex) & 贪婪子表达式，也称“\textbf{固化分组}”，使用它可以加快匹配失败的速度，如 \cbstring{Subject} 这个字符串，现用 \cbregex{\^{}\textbackslash{}w:} 对其进行匹配，正则表达式引擎发现 \cbstring{Subject} 不匹配，就会试图匹配 \cbstring{Subjec}，一直尝试到 \cbstring{S}，发现都不匹配才得出无法匹配的结论。如果使用固化分组 \cbregex{\^{}(?>\textbackslash{}w+):}，它会直接试图使用 \cbregex{\textbackslash{}w+} 去匹配 \cbstring{Subjec} 字符串，而不会一一回溯，发现 \cbregex{\textbackslash{}w+} 后面没有 \cbstring{:}，立即报告失败。 & 如果字符串中没有第二个 \cbstring{x} 的时候，\cbregex{x(?>\textbackslash{}w+)x} 要比 \cbregex{x\textbackslash{}w+x} 高效得多 \\
 \end{longtable}
 
 \end{center}
@@ -233,7 +229,18 @@
 \label{sec:regex-examples}
 
 \begin{multicols}{2}
-一些栗子 \par
+  一些栗子 \par
+
+  Email地址
+
+  日期
+
+  Visa MasterCard
+
+  去重
+
+
+  
 
 
 \end{multicols}
@@ -277,6 +284,30 @@ RegexBuddy的兄弟软件，同是JGsoft开发，是grep在Windows平台的实�
 
 \subsection[应用案例]{应用案例 \textcolor{lightgray}{\textsc{Application Cases}}}
 \label{sec:cases}
+
+Perl
+
+Python
+
+PHP PCRE
+
+.NET (C\# and VB.NET)
+
+sed and awk
+
+grep
+
+C++ std::regex
+
+Swift
+
+Java
+
+JavaScript
+
+PostgreSQL
+
+Windows PowerShell
 
 \noindent\textbf{Dreamweaver 表格处理} \par
 
@@ -326,7 +357,11 @@ End Sub
 
 \noindent\textbf{使用Perl正则表达式处理文件} \par
 
-\noindent\textbf{神的编辑器之正则} \par
+\noindent\textbf{神的编辑器Emacs之正则神器} \par
+
+
+参与文献
+
 
 \end{document}
 
