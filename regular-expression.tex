@@ -15,10 +15,13 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{multicol}
+\usepackage{verbatim}
 \usepackage{lipsum}
 \usepackage{menukeys}
 \usepackage{tcolorbox}
 \usepackage[perpage]{footmisc}  % 每页重置脚注编号
+\usepackage{pifont}
+\usepackage{marvosym}
 % --------------------设定样式--------------------
 \ctexset{
   section/format+=\raggedright
@@ -43,7 +46,7 @@
 \setlength\columnsep{20pt}        % multicolumns 栏间距
 \setlength{\tabcolsep}{0.5em}     % 水平padding
 \renewcommand{\arraystretch}{1.5} % 垂直padding
-
+\renewcommand\thefootnote{\ding{\numexpr171+\value{footnote}}} % 脚注编号
 % --------------------设定字体--------------------
 %\setmainfont{Times New Roman}   % 缺省字体
 \setmainfont{Georgia}   % 缺省字体
@@ -53,7 +56,7 @@
 \setCJKfamilyfont{fs}{FangSong}
 \setCJKfamilyfont{yahei}{Microsoft YaHei}
 
-\renewcommand\contentsname{目\qquad{} 录}
+\renewcommand\contentsname{目\quad{} 录}
 
 %--------------------新建命令--------------------
 \newcommand{\cbregex}[1]{\colorbox{orange!18}{\strut #1}}
@@ -62,15 +65,18 @@
 
 \begin{document}
 
-\title{正则表达式快速参考手册}
-\author{胡志飞 <WisdomFusion\#gmail.com>}
-\date{2012年6月2日}
+\title{\textbf{正则表达式快速参考手册}}
+\author{胡志飞\\<WisdomFusion\textcolor{cyan}{\small [at]}gmail\textcolor{cyan}{\small [dot]}com>}
+\date{2012年之旧文重拾于2016年2月26日\\version 0.1.0}
 
 \maketitle{}
 \thispagestyle{empty}
 \clearpage{}
 
-\tableofcontents{}
+\begin{multicols}{2}
+\tableofcontents
+\end{multicols}
+
 \thispagestyle{empty}
 \clearpage{}
 
@@ -79,15 +85,18 @@
 \section[简介]{简介 \textcolor{lightgray}{\textsc{Introduction}}}
 \label{sec:intro}
 文字处理无处不在无时不有，日常工作和学习大多数任务都和文字息息相关，编辑们写文章、整理资料，开发人员编码、处理用户提交的数据或请求接口数据，等等，这些都是以字符和字符串相关的任务，既然如些，掌握一个快速文字处理的方法就变得很有必要。\par
-正则表达式，（Regular Expression，在代码中常简写为regex、regexp或RE），计算机科学的一个概念。正则表达式使用字符来描述、匹配一系列符合某个句法规则的字符串。在很多文本编辑器里，正则表达式通常被用来检索、替换那些符合某个模式的文本。许多程序设计语言都支持利用正则表达式进行字符串操作。例如，在Perl\footnote{\href{https://www.perl.org/}{Perl}被称为“实用报表提取语言”（Practical Extraction and Report Language），正则表达式特性的推动者，文本处理非常方便。}中就内建了一个功能强大的正则表达式引擎。正则表达式这个概念最初是由Unix中的工具软件（例如sed\footnote{\href{http://www.gnu.org/software/sed/manual/sed.html}{sed}是一种UNIX/Linux平台下的轻量级流编辑器，日常一般用于处理文本文件。}和grep\footnote{grep，global search regular expression and print out the line，是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。}）普及开的。\par
+正则表达式，（Regular Expression，在代码中常简写为regex、regexp或RE）~，计算机科学的一个概念。正则表达式使用字符来描述、匹配一系列符合某个句法规则的字符串。在很多文本编辑器里，正则表达式通常被用来检索、替换那些符合某个模式的文本。许多程序设计语言都支持利用正则表达式进行字符串操作。例如，在Perl\footnote{\href{https://www.perl.org/}{Perl}被称为“实用报表提取语言”（Practical Extraction and Report Language）~，正则表达式特性的推动者，文本处理非常方便。}中就内建了一个功能强大的正则表达式引擎。正则表达式这个概念最初是由Unix中的工具软件（例如sed\footnote{\href{http://www.gnu.org/software/sed/manual/sed.html}{sed}是一种UNIX/Linux平台下的轻量级流编辑器，日常一般用于处理文本文件。}和grep\footnote{grep，global search regular expression and print out the line，是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。}）普及开的。\par
 需要注意的是，用什么工具，用什么编辑语言，正则表达式的语法有些差别，特性的支持也参差不齐，称之为正则表达式“流派”(第\ref{sec:flavor}部分详述），所以要单独参考工具和编程语言本身的文档才行。本文档旨在给大家一个通用的、概括的正则表达式宏观印象，辅以实例和应用案例，同时针对个别常用但又不易理解的特性，给大家作详细说明和总结，抛砖引玉。\par
+期望本文档能给大家一个快速的参考，快速的掌握正则表达式这个棒棒哒效率工具，让大家平时工作学习中更加得心应手！\Smiley{} \par
+
 \begin{tcolorbox}[colback=yellow!5,colframe=red!80!black,title=\textbf{说明}]
-  我对排版及专业出版了解甚微，同时专业领域知识因涉猎过多而不精，难保周全和准确，但只要在自己知识圈内，我会劲力完成尽可能规范和可靠的文档呈现给大家，并不断完善更新，请读者发现问题后联系指正，共同提高。
+  我对排版及专业出版知之甚微，只是在平时笔记和文档时，哪怕是自己写的太乱的话也不乐意翻看，印象笔记里的东东又过于零碎，故把旧文完善并整排\footnote{本文档2012年编写，现整拾，并加以完善。目前觉得Markdown, \href{http://orgmode.org/}{org-mode}适用于文本文档的快速编写，而Adobe InDesign和LaTeX适合更专业的文档和书籍的图文混排及设计。}。然而，专业领域知识因涉猎过多而不精，难保周全和准确，但只要在自己知识圈内，我会劲力完成尽可能规范和可靠的文档呈现给大家，并不断完善更新，请发现问题后联系指正，共同提高。
 \end{tcolorbox}
+
 \section[基本语法]{基本语法 \textcolor{lightgray}{\textsc{Basic Syntax}}}
 \label{sec:basic-syntax}
 
-语法部分结合了自己的理解和对正则表达式应用的一些心得，分类有不当之处，请指正。\par
+语法部分结合了自己的理解和对正则表达式应用的一些心得，分类有不当之处，请指正。因为是总结性的参考文档，所以这里使用“大表哥”形式展示，列出语法的同时，关键语法举了几个栗子加强理解。\par
 
 \begin{center}
   
@@ -152,8 +161,8 @@
   & \cbregex{\textbackslash{}>} & 单词结尾 & \\
   \midrule
   %--------------------
-  量词 & \cbregex{?} & 前导字符重复零次或一次，贪婪的：当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配尽可能多的字符。& \cbregex{abc?} 匹配 \cbmatch{abc} 或 \cbmatch{ab}，如果可能，优先匹配前者 \\
-  & \cbregex{??} & 前导字符重复零次或一次，非贪婪：当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配尽可能少的字符。与贪婪相反。& \cbregex{abc??} 匹配 \cbmatch{ab} 或 \cbregex{abc} \\
+  量词 & \cbregex{?} & 前导字符重复零次或一次，贪婪的\footnote{贪婪模式：当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配尽可能多的字符。考虑这个表达式：\cbregex{a.*b}，它将会匹配最长的以\cbmatch{a}开始，以\cbmatch{b}结束的字符串。如果用它来搜索\cbstring{aabab}的话，它会匹配整个字符串\cbmatch{aabab}。这被称为贪婪匹配。}：当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配尽可能多的字符。& \cbregex{abc?} 匹配 \cbmatch{abc} 或 \cbmatch{ab}，如果可能，优先匹配前者 \\
+  & \cbregex{??} & 前导字符重复零次或一次，非贪婪\footnote{相反，非贪婪，即匹配尽可能少的字符，只要在量词后面加上一个问号?。如\cbregex{a.*?b}匹配最短的，以\cbmatch{a}开始，以\cbmatch{b}结束的字符串。如果把它应用于\cbstring{aabab}的话，它会匹配\cbmatch{aab}（第一到第三个字符）和\cbmatch{ab}（第四到第五个字符）。}：当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配尽可能少的字符。与贪婪相反。& \cbregex{abc??} 匹配 \cbmatch{ab} 或 \cbregex{abc} \\
   & \cbregex{*} & 前导字符重复零次或更多次，贪婪的 & \\
   & \cbregex{*?} & 前导字符重复零次或更多次，非贪婪 & \\
   & \cbregex{+} & 前导字符重复一次或更多次，贪婪的 & \\
@@ -166,15 +175,15 @@
   %--------------------
   \multirow{2}{4em}{分组与\newline{}反向引用} & (regex) & 匹配regex，并捕获文本到自动命名的组里 & \cbregex{(abc)\{3\}} 匹配 \cbmatch{abcabcabc} \\
   & (?:regex) & 匹配regex，不捕获匹配的文本，也不给此分组分配组号 & \cbregex{(?:abc)\{3\}} 匹配 \cbmatch{abcabcabc}，无分组 \\
-  & \textbackslash{}1 到 \textbackslash{}9 & 反向引用，用于重复搜索前面某个分组匹配的文本。例如，\textbackslash{}1代表分组1匹配的文本。有些与此正则表达式流派支持多于9的分组 & \cbregex{(abc|def)=\textbackslash{}1} 匹配 \cbmatch{abc=abc} 或 \cbmatch{def=def}，而不是 \cbstring{abc=def} 或 \cbstring{def=abc} \\
+  & \textbackslash{}1 到 \textbackslash{}9 & 反向引用，用于重复搜索前面某个分组匹配的文本。例如，\textbackslash{}1代表分组1匹配的文本。有些与此正则表达式流派支持多于9的分组 & \multirow{2}{18em}{\cbregex{(abc|def)=\textbackslash{}1} 匹配 \cbmatch{abc=abc} 或 \cbmatch{def=def}，而不是 \cbstring{abc=def} 或 \cbstring{def=abc}} \\
   & \textbackslash{}10 到 \textbackslash{}99 & 反向引用，分组10到99 & \\
-  & \textbackslash{}g\{1\} 到 \textbackslash{}g\{99\} & Perl语法中，反向引用语法优化 & \\
+  & \textbackslash{}g\{1\} 到 \textbackslash{}g\{99\} & Perl语法中，反向引用语法优化\footnote{如果想实现类似\cbregex{(.)\textbackslash{}1}的效果，若紧跟的字符和分组号相同，如\cbregex{(.)\textbackslash{}111}，这样正则表达式引擎就不知所措，如果用\cbregex{\textbackslash{}g\{1\}11}这种语法就不会有歧义，最重要的是这种语法或以用负数分组号倒序选用分组。} & \multirow{2}{18em}{避免出现歧义，同时用负数分组还能倒序引用。} \\
   & \textbackslash{}g\{-1\}, \textbackslash{}g\{-2\}, etc. & 倒数第1个分组，倒数第2个分组，\ldots & \\
-  & (?<name>regex) & 命令分组 & \\
-  & \textbackslash{}k<name>, \textbackslash{}g\{name\} & 反向引用命令分组 & \\
-  & \cbregex{\textbackslash{}\`{}} & Perl语言特有，对应于\texttt{\$\{\^{}PREMATCH\}} & \\
-  & \cbregex{\textbackslash{}\&} & Perl语言特有，对应于\texttt{\$\{\^{}MATCH\}} & \\
-  & \cbregex{\textbackslash{}'} & Perl语言特有，对应于\texttt{\$\{\^{}POSTMATCH\}} & \\
+  & (?<name>regex) & 命令分组 & 命名分组的最大好处是反向引用时不用再怕弄错分组了。 \\
+  & \textbackslash{}k<name> & 反向引用命令分组，Perl中也可以使用\textbackslash{}g\{name\}。 & \\
+  & \cbregex{\textbackslash{}\`{}} & 正则表达式匹配部分之前的字符串，Perl语言中也作 \verb=${^PREMATCH}= & \\
+  & \cbregex{\textbackslash{}\&} & 正则表达式匹配的部分，Perl语言中也作 \verb=${^MATCH}= & \\
+  & \cbregex{\textbackslash{}'} & 正则表达式匹配部分之后的字符串，Perl语言中也作 \verb=${^POSTMATCH}= & \\
 \end{longtable}
 \end{center}
 
@@ -200,15 +209,15 @@
   \bottomrule
   \endlastfoot                  %
   %--------------------
-  模式\newline{}修饰符 & \cbregex{(?i)} & 打开忽略大小写模式，之后的模式不分大小写。模式修饰符有 i, s, m, x 四种，分别是忽略大小写（\textbf{I}gnoreCase）、单行模式（\textbf{S}ingleline）、多行模式（\textbf{M}ultiline）和宽松排序和注释模式 & \\
-  & \cbregex{(?-i)} & 关闭忽略大小写模式，之后的模式不分大小写 & \cbregex{(?i)te(?-i)st} 匹配 \cbmatch{TEst}，而不匹配 \cbstring{TEST} \\
-  & \cbregex{(?s)} & 打开单行模式，之后的模式不支持多行 & \\
+  模式\newline{}修饰符 & \cbregex{(?i)} & 打开忽略大小写模式，之后的模式不分大小写。模式修饰符有 i, s, m, x 四种，分别是忽略大小写（\textbf{I}gnoreCase）~、单行模式（\textbf{S}ingleline）~、多行模式（\textbf{M}ultiline）和注释模式 & \multirow{2}{18em}{\cbregex{(?i)te(?-i)st} 匹配 \cbmatch{TEst}，而不匹配 \cbstring{TEST}} \\
+  & \cbregex{(?-i)} & 关闭忽略大小写模式，之后的模式不分大小写 & \\
+  & \cbregex{(?s)} & 打开单行模式，之后的模式不支持多行 & \multirow{2}{18em}{默认情况下\cbregex{.}是不匹配换行的，打开该模式后，待匹配的字符将为视为“一行”。} \\
   & \cbregex{(?-s)} & 关闭单行模式，之后的模式支持多行 & \\
   & \cbregex{(?m)} & 打开多行模式，之后的模式支持多行 & \\
   & \cbregex{(?-m)} & \cbregex{\^{}} 和 \cbregex{\$} 匹配行首和行尾 & \\
-  & \cbregex{(?x)} & 打开宽松和注释模式 & \\
+  & \cbregex{(?x)} & 打开宽松和注释模式 & \multirow{2}{18em}{打开该模式后，可以在正则表达式中插和空白和换行，使正则表达式可读性增强。} \\
   & \cbregex{(?-x)} & 关闭宽松和注释模式 & \\
-  & \cbregex{(?i-sm)} & 打开i和m模式，关闭s模式 & \\
+  & \cbregex{(?i-sm)} & 打开i和m模式，关闭s模式 & \multirow{2}{18em}{以上几种模式可以组合使用} \\
   & \cbregex{(?i-sm:regex)} & 在\cbregex{(?i-sm:regex)} 子模式内打开i和m模式，关闭s模式 & \\
   \midrule
   %--------------------
@@ -225,27 +234,35 @@
 
 \end{center}
 
-\section[举些栗子]{举些栗子 \textcolor{lightgray}{\textsc{Regex Examples}}}
+\section[举些栗子]{举些例子吧！~\textcolor{lightgray}{\textsc{Regex Examples}}}
 \label{sec:regex-examples}
 
-\begin{multicols}{2}
-  一些栗子 \par
+\begin{description}
+\item[Email地址] \hfill \\
+  \verb=^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$= 匹配形如 \cbmatch{WisdomFusion@gmail.com} 的邮箱地址。
+\item[日期] \hfill \\
+  \verb=^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$= 匹配形如 yyyy-mm-dd 格式的日期。
+\item[非零负整数] \hfill \\
+  \verb=^\-[1-9][0-9]*$= 匹配如 $-2$, $-1024$, \ldots 之类的非零负整数。
+\item[匹配浮点数] \hfill \\
+  \verb=[-+]?([0-9]*\.[0-9]+|[0-9]+).= 匹配如 \cbmatch{3.1415926} 的浮点数（带小数位的）{}。
+\item[去除重复行] \hfill \\
+  查找\verb=^(.*)(\r?\n\1)+$=，替的为\verb"\1"。
+\item[匹配用户名] \hfill \\
+  \verb=^[a-z0-9_-]{3,16}$=
+\item[网址] \hfill \\
+  \verb=^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$=
+\item[IPv4地址] \hfill \\
+  \verb=^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$=
+\item[HTML标记] \hfill \\
+  \verb=<([a-z]+)([^<]+)*(?:>(.*)<\/\1>|\s+\/>)=
+\item[UBB代码清理] \hfill \\
+  把\verb=\[/?(?:font|size)([^\]]+)?\]=替换为空。
+\item[汉字] \hfill \\
+  \verb=[^u4E00-u9FA5]= 或 \verb=[一-]=
+\end{description}
 
-  Email地址
-
-  日期
-
-  Visa MasterCard
-
-  去重
-
-
-  
-
-
-\end{multicols}
-
-\section[正则表达式“流派”]{正则表达式“流派” \textcolor{lightgray}{\textsc{Regex Flavors}}}
+\section[正则表达式“流派”]{正则表达式“流派”~\textcolor{lightgray}{\textsc{Regex Flavors}}}
 \label{sec:flavor}
 
 \begin{multicols}{2}
@@ -263,55 +280,62 @@
 总有一款适合你，Windows下的记事本太鸡肋，Word处理方式主要是“通配符”而不是正则表达式。 \par
 
 \begin{multicols}{2}
-  
-\noindent\textbf{RegexBuddy} \par
-JGsoft开发的一个强大的正则表达式测试工具， \par
-
-\noindent\textbf{grep}
-
-\noindent\textbf{PowerGREP} \par
-RegexBuddy的兄弟软件，同是JGsoft开发，是grep在Windows平台的实现和增强。
-
-\noindent\textbf{UltraEdit, Notepad++}
-
-\noindent\textbf{Vim} \par
-
-\noindent\textbf{GNU Emacs} \par
-
-\noindent\textbf{sed \& awk}
-
+\begin{description}
+\item[\textcolor{red}{JGsoft RegexBuddy}] \hfill \\
+  JGsoft开发的一个强大的正则表达式测试工具，这款是正则测试界最最强大的工具了，\textbf{没有之一}，要墙裂向大家推介的哦！\Smiley
+\item[JGsoft PowerGREP] \hfill \\
+  PowerGREP RegexBuddy的兄弟软件，同是JGsoft开发，是grep在Windows平台的实现和增强。
+\item[Debuggex] \hfill \\
+  https://www.debuggex.com/
+\item[grep] \hfill \\
+  grep
+\item[UltraEdit, Notepad++] \hfill \\
+  UltraEdit, Notepad++
+\item[Vim] \hfill \\
+  编辑器之神Vim
+\item[\textcolor{red}{GNU Emacs}] \hfill \\
+  神的编辑器Emacs
+\item[sed \& awk] \hfill \\
+  sed and awk
+\end{description}
 \end{multicols}
 
 \subsection[应用案例]{应用案例 \textcolor{lightgray}{\textsc{Application Cases}}}
 \label{sec:cases}
 
-Perl
+\subsubsection{Perl正则表达式王国}
+\label{sec:perl}
 
-Python
+%\begin{lstlisting}[language=perl]
+%
+%\end{lstlisting}
 
-PHP PCRE
+\subsubsection{Python}
+\label{sec:python}
 
-.NET (C\# and VB.NET)
+\subsubsection{PHP PCRE}
+\label{sec:php-pcre}
 
-sed and awk
+\subsubsection{sed \& awk}
+\label{sec:sed-awk}
 
-grep
+\subsubsection{grep}
+\label{sec:grep}
 
-C++ std::regex
+\subsubsection{Swift}
+\label{sec:swift}
 
-Swift
+\subsubsection{Java}
+\label{sec:java}
 
-Java
+\subsubsection{JavaScript}
+\label{sec:javascript}
 
-JavaScript
+\subsubsection{Adobe Dreamweaver 表格处理}
+\label{sec:adobe-dw}
 
-PostgreSQL
-
-Windows PowerShell
-
-\noindent\textbf{Dreamweaver 表格处理} \par
-
-\noindent\textbf{VBA 中使用正则表达式} \par
+\subsubsection{VBA中使用正则表达式}
+\label{sec:vba}
 
 \begin{lstlisting}[language=VBScript]
 Sub IndentParaWithRegEx()
@@ -353,14 +377,18 @@ Next oSld
 End Sub  
 \end{lstlisting}
 
-\noindent\textbf{InDesign GREP} \par
+\subsubsection{GREP for Adobe InDesign}
+\label{sec:indesign}
 
-\noindent\textbf{使用Perl正则表达式处理文件} \par
+\subsubsection{神的编辑器GNU Emacs之正则神器}
+\label{sec:emacs}
 
-\noindent\textbf{神的编辑器Emacs之正则神器} \par
+\section{后记}
+\label{sec:postscript}
 
+后记 \par
 
-参与文献
+%参与文献
 
 
 \end{document}
