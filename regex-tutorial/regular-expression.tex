@@ -4,23 +4,22 @@
 \documentclass[12pt,a4paper,twoside]{ctexart}
 %-------------------- 引用宏包--------------------
 \usepackage[landscape,textheight=190mm,textwidth=145mm,left=20mm,right=20mm,top=20mm,bottom=15mm]{geometry}
+\usepackage{graphicx}
 \usepackage{fontspec}
 \usepackage{fancybox}
 \usepackage{colortbl}
 \usepackage{fancyhdr}
 \usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=black]{hyperref}
-\usepackage{tabularx}
-\usepackage{longtable}          % 自动换行用 tabularx，自动换页用 longtable，二者兼得用 ltxtable
-\usepackage{multirow}
+\usepackage{longtable,tabularx,booktabs}          % 自动换行用 tabularx，自动换页用 longtable，二者兼得用 ltxtable
+\usepackage{multicol,multirow}
 \usepackage{xcolor}
-\usepackage{booktabs}
-\usepackage{multicol}
-\usepackage{verbatim}
-\usepackage{lipsum}
-\usepackage{menukeys}
 \usepackage{tcolorbox}
+\usepackage{verbatim}
+\usepackage{nameref}
 \usepackage[perpage]{footmisc}  % 每页重置脚注编号
 \usepackage{pifont}
+\usepackage{menukeys}
+\usepackage{lipsum}
 \usepackage{marvosym}
 % --------------------设定样式--------------------
 \ctexset{
@@ -33,7 +32,7 @@
   keepspaces=true,
   columns=spaceflexible,
   numbers=left,
-  basicstyle=\ttfamily\footnotesize,
+  basicstyle=\ttfamily\small,
   numberstyle=\color{gray}\ttfamily\scriptsize,
   keywordstyle=\color{blue}\ttfamily,
   stringstyle=\color{red}\ttfamily,
@@ -90,7 +89,7 @@
 期望本文档能给大家一个快速的参考，快速的掌握正则表达式这个棒棒哒效率工具，让大家平时工作学习中更加得心应手！\Smiley{} \par
 
 \begin{tcolorbox}[colback=yellow!5,colframe=red!80!black,title=\textbf{说明}]
-  我对排版及专业出版知之甚微，只是在平时笔记和文档时，哪怕是自己写的太乱的话也不乐意翻看，印象笔记里的东东又过于零碎，故把旧文完善并整排\footnote{本文档2012年编写，现整拾，并加以完善。目前觉得Markdown, \href{http://orgmode.org/}{org-mode}适用于文本文档的快速编写，而Adobe InDesign和LaTeX适合更专业的文档和书籍的图文混排及设计。}。然而，专业领域知识因涉猎过多而不精，难保周全和准确，但只要在自己知识圈内，我会劲力完成尽可能规范和可靠的文档呈现给大家，并不断完善更新，请发现问题后联系指正，共同提高。
+  我对排版及专业出版知之甚微，只是在平时笔记和文档时，哪怕是自己写的太乱的话也不乐意翻看，印象笔记里的东东又过于零碎，故把旧文完善并整排\footnote{本文档2012年编写，现整拾，并加以完善。目前觉得Markdown, \href{http://orgmode.org/}{org-mode}适用于文本文档的快速编写，而Adobe InDesign和LaTeX适合更专业的文档和书籍的图文混排及设计。}。然而，专业领域知识因涉猎过多而不精，难保周全和准确，但只要在自己知识圈内，我会劲力完成尽可能规范和可靠的文档呈现给大家，并不断完善更新，请批评指正，共同提高。
 \end{tcolorbox}
 
 \section[基本语法]{基本语法 \textcolor{lightgray}{\textsc{Basic Syntax}}}
@@ -234,7 +233,7 @@
 
 \end{center}
 
-\section[举些栗子]{举些例子吧！~\textcolor{lightgray}{\textsc{Regex Examples}}}
+\section[举些例子吧！]{举些例子吧！~\textcolor{lightgray}{\textsc{Regex Examples}}}
 \label{sec:regex-examples}
 
 \begin{description}
@@ -250,7 +249,7 @@
   查找\verb=^(.*)(\r?\n\1)+$=，替的为\verb"\1"。
 \item[匹配用户名] \hfill \\
   \verb=^[a-z0-9_-]{3,16}$=
-\item[网址] \hfill \\
+\item[网址URL] \hfill \\
   \verb=^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$=
 \item[IPv4地址] \hfill \\
   \verb=^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$=
@@ -259,30 +258,79 @@
 \item[UBB代码清理] \hfill \\
   把\verb=\[/?(?:font|size)([^\]]+)?\]=替换为空。
 \item[汉字] \hfill \\
-  \verb=[^u4E00-u9FA5]= 或 \verb=[一-]=
+  \verb=[^u4E00-u9FA5]= 或 \verb=[一-龥]=
 \end{description}
 
 \section[正则表达式“流派”]{正则表达式“流派”~\textcolor{lightgray}{\textsc{Regex Flavors}}}
 \label{sec:flavor}
 
-\begin{multicols}{2}
-流派
+在标准制定之前，各家正则自成一派，不同工具不同编程语言各不相干。为了理清正则表达式的混乱局面，POSIX\footnote{诞生于1986年的POSIX是Portable Operating System Interface（可移植操作系统接口）的缩写，这是一系列标准，确保操作系统之间的移植性。}把各种常见的流派分为两大类：\textit{Basic Regular Expressions}(BREs) 和 \textit{Extended Regular Expressions}(EREs)。POSIX程序必须支持其中的任意一种标准。\par
+表\ref{tab:regex-flavor}（\nameref{tab:regex-flavor}）中列表出两大流派对正则表达式特性支持的情况，随着文档的完善和丰富，特性的总结将会更加全面。\par
 
-\end{multicols}
+\begin{table}[h]
+  \centering
+  \begin{tabularx}{.8\linewidth}{XXX}
+    \toprule
+    正则表达式特性 & BREs & EREs \\
+    \midrule
+    点、\^{}、\$、[\ldots]、[\^{}\ldots] & \ding{51} & \ding{51} \\
+    “任意数目”量词 & \texttt{*} & \texttt{*} \\
+    +和?量词 & & \texttt{+ ?} \\
+    区间量词 & \texttt{\textbackslash{}\{m,n\textbackslash{}\}} & \texttt{\{m,n\}} \\
+    分组 & \texttt{\textbackslash{}\{\ldots\textbackslash{}\}} & \\
+    量词可否作用于括号 & \ding{51} & \ding{51} \\
+    反向引用 & \texttt{\textbackslash{}1}到\texttt{\textbackslash{}9} & \\
+    多选结构 & & \ding{51} \\
+    \bottomrule
+  \end{tabularx}
+  \caption{POSIX正则表达式流派概览}
+  \label{tab:regex-flavor}
+\end{table}
 
+标准定了，流派也有了，那么各家支持的如何呢？表\ref{tab:regex-flavor-comparison}（\nameref{tab:regex-flavor-comparison}）作了简单的对比，可以看出，不同的工具和编程语言，虽没有统一语言，但相差不大，在具体使用某种工具或语言时需要单独了解和掌握。 \par
+
+\begin{table}[h]
+  \centering
+  \begin{tabularx}{.9\linewidth}{XXXXXXXX}
+    \toprule
+    特性 & grep & egrep & GNU Emacs & Tcl & Perl & .NET & Java \\
+    \midrule
+    \texttt{*}、\texttt{\^{}}、\texttt{\$}、\texttt{[\ldots]} & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} \\
+    \texttt{? + |} & \texttt{\textbackslash{}? \textbackslash{}+ \textbackslash{}|} & \texttt{? + |} & \texttt{? + \textbackslash{}|} & \texttt{? + |} & \texttt{? + |} & \texttt{? + |} & \texttt{? + |} \\
+    分组 & \texttt{\textbackslash{}(\ldots\textbackslash{})} & \texttt{(\ldots)} & \texttt{\textbackslash{}(\ldots\textbackslash{})} & \texttt{(\ldots)} & \texttt{(\ldots)} & \texttt{(\ldots)} & \texttt{(\ldots)} \\
+    \texttt{(?:\ldots)} & & & & & \ding{51} & \ding{51} & \ding{51} \\
+    单词分界符 & & \texttt{\textbackslash{}<\textbackslash{}>} & \texttt{\textbackslash{}<\textbackslash{}>}、\texttt{\textbackslash{}b\textbackslash{}B} & \texttt{\textbackslash{}n\textbackslash{}M\textbackslash{}y} & \texttt{\textbackslash{}b\textbackslash{}B} & \texttt{\textbackslash{}b\textbackslash{}B} & \texttt{\textbackslash{}b\textbackslash{}B} \\
+    \texttt{\textbackslash{}w}、\texttt{\textbackslash{}W} & & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} \\
+    反向引用 & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} \\
+    \bottomrule
+  \end{tabularx}
+  \caption{若干工具的正则表达式流派对比}
+  \label{tab:regex-flavor-comparison}
+\end{table}
+
+\clearpage{}
 
 \section[应用场景]{应用场景 \textcolor{lightgray}{\textsc{Application Scenarios}}}
 \label{sec:scenarios}
-
 \subsection[正则表达式工具箱]{正则表达式工具箱 \textcolor{lightgray}{\textsc{Regex Toolbox}}}
 \label{sec:toolbox}
+总有一款适合你，Windows下的记事本太鸡肋，Word处理方式主要是“通配符”而不是正则表达式。\par
 
-总有一款适合你，Windows下的记事本太鸡肋，Word处理方式主要是“通配符”而不是正则表达式。 \par
-
-\begin{multicols}{2}
+\clearpage{}
 \begin{description}
 \item[\textcolor{red}{JGsoft RegexBuddy}] \hfill \\
-  JGsoft开发的一个强大的正则表达式测试工具，这款是正则测试界最最强大的工具了，\textbf{没有之一}，要墙裂向大家推介的哦！\Smiley
+  JGsoft开发的一个强大的正则表达式测试工具，这款是正则测试界最最强大的工具了，\textbf{没有之一}，要墙裂向大家推介的哦！\Smiley \par
+  图\ref{fig:regexbuddy}中所示，\textcolor{red}{\textcircled{\footnotesize{1}}}正则表达式区域， \textcolor{red}{\textcircled{\footnotesize{2}}}替换字符区域，\textcolor{red}{\textcircled{\footnotesize{3}}}暂存使用的正则表达式以备后用，\textcolor{red}{\textcircled{\footnotesize{4}}}待测试的文字，\textcolor{red}{\textcircled{\footnotesize{5}}}替换后的文字。没有标注的区域还有一大堆很贴心的正则表达式创建功能，比如不同语言的选择、模式的开关、正则表达式库等等，正如其名“正则表达式好兄弟”，我平时更喜欢“正则基友”这个简称，\Smiley 建议安装长期占有之。 \par
+\end{description}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=18cm]{FIG/regexbuddy.png}
+  \caption{RegexBuddy界面}
+  \label{fig:regexbuddy}
+\end{figure}
+\clearpage{}
+
+\begin{description}
 \item[JGsoft PowerGREP] \hfill \\
   PowerGREP RegexBuddy的兄弟软件，同是JGsoft开发，是grep在Windows平台的实现和增强。
 \item[Debuggex] \hfill \\
@@ -293,18 +341,34 @@
   UltraEdit, Notepad++
 \item[Vim] \hfill \\
   编辑器之神Vim
+\end{description}
+
+\clearpage{}
+\begin{description}
 \item[\textcolor{red}{GNU Emacs}] \hfill \\
-  神的编辑器Emacs
+  GNU Emacs中正则表达式异常强大，除了基本的 正向正则查找\keys{C-M-s}、反向正则查找\keys{C-M-r}、正则替换\texttt{M-x replace-regexp}、查询式正则替换\texttt{M-x query-replace-regexp}、保留行\texttt{M-x keep-lines}、删除行\texttt{M-x flush-lines}、\ldots 等等，Emacs正则表达式替换时还能直接执行 LISP\footnote{出生自1958年，但目前仍很活跃的一门编程语言，尤其在AI领域中。} Form\footnote{简言之：可以直接执行LISP代码，利用强大的编程语言提供的函数方法去处理文本。}。详见\ref{sec:emacs}。
+\end{description}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=15cm]{FIG/emacs-re-builder.png}
+  \caption{GNU Emacs中RE-Builder模式}
+  \label{fig:emacs-re-builder}
+\end{figure}
+
+\begin{description}
 \item[sed \& awk] \hfill \\
   sed and awk
 \end{description}
-\end{multicols}
+
+\clearpage{}
 
 \subsection[应用案例]{应用案例 \textcolor{lightgray}{\textsc{Application Cases}}}
 \label{sec:cases}
 
 \subsubsection{Perl正则表达式王国}
 \label{sec:perl}
+
+
 
 %\begin{lstlisting}[language=perl]
 %
@@ -313,20 +377,38 @@
 \subsubsection{Python}
 \label{sec:python}
 
+Python
+
 \subsubsection{PHP PCRE}
 \label{sec:php-pcre}
+
+PHP中使用PCRE\footnote{PCRE, Perl Compatible Regular Expressions} \par
 
 \subsubsection{sed \& awk}
 \label{sec:sed-awk}
 
+sed \par
+
+awk \par
+
 \subsubsection{grep}
 \label{sec:grep}
+
+grep, egrep, fgrep \par
 
 \subsubsection{Swift}
 \label{sec:swift}
 
+Apple Swift
+
 \subsubsection{Java}
 \label{sec:java}
+
+\subsubsection{.NET Framework 正则表达式}
+\label{sec:dotnet-regex}
+
+\href{https://msdn.microsoft.com/zh-cn/library/az24scfc.aspx}{.NET Framework 正则表达式}
+
 
 \subsubsection{JavaScript}
 \label{sec:javascript}
@@ -336,7 +418,7 @@
 
 \subsubsection{VBA中使用正则表达式}
 \label{sec:vba}
-
+VBA\footnote{Visual Basic for Application，Microsoft Office套件宏语言。}是不直接支持正则表达式的，需要借助 VBScript RegExp Object，具体请参考\href{http://msdn.microsoft.com/en-us/library/ms974570.aspx}{Microsoft Beefs Up VBScript with Regular Expressions}。
 \begin{lstlisting}[language=VBScript]
 Sub IndentParaWithRegEx()
 ' PowerPoint VBA 批量给指定字符开头段落加动画
@@ -345,8 +427,6 @@ Dim oShp As Shape
 Dim i As Integer
 ' 正则相关变量
 Dim regx As Object, oMatch As Object
-
-' 这里写查找的正则，参考 http://msdn.microsoft.com/en-us/library/ms974570.aspx
 strPattern = "^开头字符串"
 
 Set regx = CreateObject("vbscript.regexp")
@@ -387,8 +467,6 @@ End Sub
 \label{sec:postscript}
 
 后记 \par
-
-%参与文献
 
 
 \end{document}
