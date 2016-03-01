@@ -7,12 +7,13 @@
 \usepackage{graphicx}
 \usepackage{fontspec}
 \usepackage{fancybox}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
 \usepackage{colortbl}
 \usepackage{fancyhdr}
 \usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=black]{hyperref}
 \usepackage{longtable,tabularx,booktabs}          % 自动换行用 tabularx，自动换页用 longtable，二者兼得用 ltxtable
 \usepackage{multicol,multirow}
-\usepackage{xcolor}
 \usepackage{tcolorbox}
 \usepackage{verbatim}
 \usepackage{nameref}
@@ -66,7 +67,7 @@
 
 \title{\textbf{正则表达式快速参考手册}}
 \author{胡志飞\\<WisdomFusion\textcolor{cyan}{\small [at]}gmail\textcolor{cyan}{\small [dot]}com>}
-\date{2012年之旧文重拾于2016年2月26日\\version 0.1.0}
+\date{\color{OrangeRed}2012年之旧文重拾于2016年2月26日\\version 0.1.0}
 
 \maketitle{}
 \thispagestyle{empty}
@@ -190,6 +191,13 @@
 \label{sec:adv-syntax}
 
 之所以本文档中称这些正则为“高级语法”，一是有些不常用，二是有些语法不太好理解，故有此一说。
+
+\begin{tikzpicture}
+  \node[right] at (1,0) {\huge \verb=^((\w+)(\d+)?)\1$=};
+  \draw (0,0) rectangle (6,1);
+  \draw[->] (2,0) -- (2,-1);
+  \draw (3,0) -- (3,-1);
+\end{tikzpicture}
 
 \begin{center}
 
