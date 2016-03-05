@@ -195,8 +195,7 @@
   \draw [gray,dotted] (0,0) rectangle (8,1.5);
   \draw[->,red] (0.8,0.3) -- (0.8,-1);
   \node[right] at (0.4,-1.3) {\textcolor{red}{\texttt{\textbackslash{}1}}};
-  \draw[blue] (1.3,0.3) -- (1.3,-0.6);
-  \draw[->,blue] (1.3,-0.6) -- (2,-0.6);
+  \draw[->,blue] (1.3,0.3) -- (1.3,-0.6) -- (2,-0.6);
   \node[right] at (2,-0.6) {\textcolor{blue}{\texttt{\textbackslash{}2}}};
   \draw[->,PineGreen] (3.5,0.3) -- (3.5,-1);
   \node[right,PineGreen] at (3.2,-1.3) {\textcolor{PineGreen}{\texttt{\textbackslash{}3}}};
@@ -279,7 +278,7 @@
 \item[UBB代码清理] \hfill \\
   把\verb=\[/?(?:font|size)([^\]]+)?\]=替换为空。
 \item[汉字] \hfill \\
-  \verb=[^u4E00-u9FA5]= 或 \verb=[一-龥]=
+  \verb=[^u4E00-u9FA5]=
 \end{description}
 
 \section[正则表达式“流派”]{正则表达式“流派”~\textcolor{lightgray}{\textsc{Regex Flavors}}}
