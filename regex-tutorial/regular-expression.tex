@@ -175,7 +175,7 @@
   %--------------------
   \multirow{2}{4em}{分组与\newline{}反向引用} & (regex) & 匹配regex，并捕获文本到自动命名的组里 & \cbregex{(abc)\{3\}} 匹配 \cbmatch{abcabcabc} \\
   & (?:regex) & 匹配regex，不捕获匹配的文本，也不给此分组分配组号 & \cbregex{(?:abc)\{3\}} 匹配 \cbmatch{abcabcabc}，无分组 \\
-  & \textbackslash{}1 到 \textbackslash{}9 & 反向引用，用于重复搜索前面某个分组匹配的文本。例如，\textbackslash{}1代表分组1匹配的文本。有些与此正则表达式流派支持多于9的分组 & \multirow{2}{18em}{\cbregex{(abc|def)=\textbackslash{}1} 匹配 \cbmatch{abc=abc} 或 \cbmatch{def=def}，而不是 \cbstring{abc=def} 或 \cbstring{def=abc}} \\
+  & \textbackslash{}1 到 \textbackslash{}9 & 反向引用，用于重复搜索前面某个分组匹配的文本。例如，\textbackslash{}1代表分组1匹配的文本。有些与此正则表达式流派支持多于9的分组。左括弧顺序即是分组序号的顺序。见图\ref{fig:regex-group-count}。 & \multirow{2}{18em}{\cbregex{(abc|def)=\textbackslash{}1} 匹配 \cbmatch{abc=abc} 或 \cbmatch{def=def}，而不是 \cbstring{abc=def} 或 \cbstring{def=abc}} \\
   & \textbackslash{}10 到 \textbackslash{}99 & 反向引用，分组10到99 & \\
   & \textbackslash{}g\{1\} 到 \textbackslash{}g\{99\} & Perl语法中，反向引用语法优化\footnote{如果想实现类似\cbregex{(.)\textbackslash{}1}的效果，若紧跟的字符和分组号相同，如\cbregex{(.)\textbackslash{}111}，这样正则表达式引擎就不知所措，如果用\cbregex{\textbackslash{}g\{1\}11}这种语法就不会有歧义，最重要的是这种语法或以用负数分组号倒序选用分组。} & \multirow{2}{18em}{避免出现歧义，同时用负数分组还能倒序引用。} \\
   & \textbackslash{}g\{-1\}, \textbackslash{}g\{-2\}, etc. & 倒数第1个分组，倒数第2个分组，\ldots & \\
@@ -187,17 +187,30 @@
 \end{longtable}
 \end{center}
 
+\begin{figure}[h]
+  \centering
+
+\begin{tikzpicture}[line width=1pt]
+  \node[above right,xshift=-1cm,yshift=0.2cm] at (1,0) {\huge \texttt{\^{}\textcolor{red}{(}\textcolor{blue}{(}\textbackslash{}w+\textcolor{blue}{)}\textcolor{PineGreen}{(}\textbackslash{}d+\textcolor{PineGreen}{)}?\textcolor{red}{)}\textbackslash{}1\$}};
+  \draw [gray,dotted] (0,0) rectangle (8,1.5);
+  \draw[->,red] (0.8,0.3) -- (0.8,-1);
+  \node[right] at (0.4,-1.3) {\textcolor{red}{\texttt{\textbackslash{}1}}};
+  \draw[blue] (1.3,0.3) -- (1.3,-0.6);
+  \draw[->,blue] (1.3,-0.6) -- (2,-0.6);
+  \node[right] at (2,-0.6) {\textcolor{blue}{\texttt{\textbackslash{}2}}};
+  \draw[->,PineGreen] (3.5,0.3) -- (3.5,-1);
+  \node[right,PineGreen] at (3.2,-1.3) {\textcolor{PineGreen}{\texttt{\textbackslash{}3}}};
+\end{tikzpicture}
+  
+  \caption{正则表达式分组序号}
+  \label{fig:regex-group-count}
+\end{figure}
+
+
 \section[高级语法]{高级语法 \textcolor{lightgray}{\textsc{Advanced Syntax}}}
 \label{sec:adv-syntax}
 
 之所以本文档中称这些正则为“高级语法”，一是有些不常用，二是有些语法不太好理解，故有此一说。
-
-\begin{tikzpicture}
-  \node[right] at (1,0) {\huge \verb=^((\w+)(\d+)?)\1$=};
-  \draw (0,0) rectangle (6,1);
-  \draw[->] (2,0) -- (2,-1);
-  \draw (3,0) -- (3,-1);
-\end{tikzpicture}
 
 \begin{center}
 
