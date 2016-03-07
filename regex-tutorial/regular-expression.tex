@@ -189,18 +189,13 @@
 
 \begin{figure}[h]
   \centering
-
-\begin{tikzpicture}[line width=1pt]
-  \node[above right,xshift=-1cm,yshift=0.2cm] at (1,0) {\huge \texttt{\^{}\textcolor{red}{(}\textcolor{blue}{(}\textbackslash{}w+\textcolor{blue}{)}\textcolor{PineGreen}{(}\textbackslash{}d+\textcolor{PineGreen}{)}?\textcolor{red}{)}\textbackslash{}1\$}};
-  \draw [gray,dotted] (0,0) rectangle (8,1.5);
-  \draw[->,red] (0.8,0.3) -- (0.8,-1);
-  \node[right] at (0.4,-1.3) {\textcolor{red}{\texttt{\textbackslash{}1}}};
-  \draw[->,blue] (1.3,0.3) -- (1.3,-0.6) -- (2,-0.6);
-  \node[right] at (2,-0.6) {\textcolor{blue}{\texttt{\textbackslash{}2}}};
-  \draw[->,PineGreen] (3.5,0.3) -- (3.5,-1);
-  \node[right,PineGreen] at (3.2,-1.3) {\textcolor{PineGreen}{\texttt{\textbackslash{}3}}};
-\end{tikzpicture}
-  
+  \begin{tikzpicture}[line width=1pt]
+    \node[above right,xshift=-1cm,yshift=0.2cm] at (1,0) {\huge \texttt{\^{}\textcolor{red}{(}\textcolor{blue}{(}\textbackslash{}w+\textcolor{blue}{)}\textcolor{PineGreen}{(}\textbackslash{}d+\textcolor{PineGreen}{)}?\textcolor{red}{)}\textbackslash{}1\$}};
+    \draw [gray,dotted] (0,0) rectangle (8,1.5);
+    \draw[->,red] (0.8,0.3) -- (0.8,-1) node[below] {\textcolor{red}{\texttt{\textbackslash{}1}}};
+    \draw[->,blue] (1.3,0.3) -- (1.3,-0.6) -- (2,-0.6) node[right] {\textcolor{blue}{\texttt{\textbackslash{}2}}};
+    \draw[->,PineGreen] (3.5,0.3) -- (3.5,-1) node[below] {\textcolor{PineGreen}{\texttt{\textbackslash{}3}}};
+  \end{tikzpicture}
   \caption{正则表达式分组序号}
   \label{fig:regex-group-count}
 \end{figure}
