@@ -17,6 +17,7 @@
 \usepackage{tcolorbox}
 \usepackage{verbatim}
 \usepackage{nameref}
+\usepackage{titlesec}
 \usepackage[perpage]{footmisc}  % 每页重置脚注编号
 \usepackage{pifont}
 \usepackage{menukeys}
@@ -45,6 +46,7 @@
 }
 \setlength\columnsep{20pt}        % multicolumns 栏间距
 \setlength{\tabcolsep}{0.5em}     % 水平padding
+\newcommand{\sectionbreak}{\clearpage}                         % section 换页
 \renewcommand{\arraystretch}{1.5} % 垂直padding
 \renewcommand\thefootnote{\ding{\numexpr171+\value{footnote}}} % 脚注编号
 % --------------------设定字体--------------------
@@ -110,7 +112,7 @@
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
   \midrule
   \endhead                      %
-  \multicolumn{4}{c}{To be continued\ldots} \\[2ex]
+  \multicolumn{4}{c}{\textsc{to be continued}\ldots} \\[2ex]
   \endfoot                      %
   \bottomrule
   \endlastfoot                  %
@@ -124,7 +126,7 @@
   \midrule
   %--------------------
   基本特性 & \cbregex{.}（点） & 匹配除换行符之外的任意字符，有些正则表达式“流派”还支持点是否匹配换行符的开关。& \cbregex{.} 匹配 about 中的任意一个字符 \\
-  & \cbregex{|} & 管道，或的关系，匹配|的左侧或右侧的字符串 & \cbregex{abc|def|xyz}匹配\cbmatch{abc}或\cbmatch{def}或\cbmatch{xyz} \\
+  & \cbregex{x|y} & 条件分支，匹配|的左侧或右侧的字符串。\textcolor{red}{使用条件分支特性时，要注意各个条件的顺序。} & \cbregex{abc|def|xyz}匹配\cbmatch{abc}或\cbmatch{def}或\cbmatch{xyz} \\
   \midrule
   %--------------------
   字符类 & \cbregex{[\ldots]} & 匹配字符类中列举的任意一个字符 & \cbregex{[abc]}匹配\cbmatch{a}或\cbmatch{b}或\cbmatch{c}\newline{}\cbregex{[aeiou]}匹配任何一个英文元音字母\newline{}\cbregex{[.!?]}匹配\cbmatch{.}或\cbmatch{!}或\cbmatch{?} \\
@@ -178,12 +180,18 @@
   & \textbackslash{}1 到 \textbackslash{}9 & 反向引用，用于重复搜索前面某个分组匹配的文本。例如，\textbackslash{}1代表分组1匹配的文本。有些与此正则表达式流派支持多于9的分组。左括弧顺序即是分组序号的顺序。见图\ref{fig:regex-group-count}。 & \multirow{2}{18em}{\cbregex{(abc|def)=\textbackslash{}1} 匹配 \cbmatch{abc=abc} 或 \cbmatch{def=def}，而不是 \cbstring{abc=def} 或 \cbstring{def=abc}} \\
   & \textbackslash{}10 到 \textbackslash{}99 & 反向引用，分组10到99 & \\
   & \textbackslash{}g\{1\} 到 \textbackslash{}g\{99\} & Perl语法中，反向引用语法优化\footnote{如果想实现类似\cbregex{(.)\textbackslash{}1}的效果，若紧跟的字符和分组号相同，如\cbregex{(.)\textbackslash{}111}，这样正则表达式引擎就不知所措，如果用\cbregex{\textbackslash{}g\{1\}11}这种语法就不会有歧义，最重要的是这种语法或以用负数分组号倒序选用分组。} & \multirow{2}{18em}{避免出现歧义，同时用负数分组还能倒序引用。} \\
-  & \textbackslash{}g\{-1\}, \textbackslash{}g\{-2\}, etc. & 倒数第1个分组，倒数第2个分组，\ldots & \\
+  & \textbackslash{}g\{-1\}, \textbackslash{}g\{-2\}, \ldots & 倒数第1个分组，倒数第2个分组，\ldots & \\
   & (?<name>regex) & 命令分组 & 命名分组的最大好处是反向引用时不用再怕弄错分组了。 \\
   & \textbackslash{}k<name> & 反向引用命令分组，Perl中也可以使用\textbackslash{}g\{name\}。 & \\
+  \midrule
+  %--------------------
+  \multirow{2}{4em}{替换表达式} & \textbackslash{}1 到 \textbackslash{}9 & 替换表达式中使用反向引用，和匹配表达式中用法相同。 & \\
   & \cbregex{\textbackslash{}\`{}} & 正则表达式匹配部分之前的字符串，Perl语言中也作 \verb=${^PREMATCH}= & \\
-  & \cbregex{\textbackslash{}\&} & 正则表达式匹配的部分，Perl语言中也作 \verb=${^MATCH}= & \\
+  & \cbregex{\textbackslash{}\&} & 正则表达式匹配的部分，有的流派使用 \verb=\0=，Perl语言中也作 \verb=${^MATCH}= & \\
   & \cbregex{\textbackslash{}'} & 正则表达式匹配部分之后的字符串，Perl语言中也作 \verb=${^POSTMATCH}= & \\
+  & \textbackslash{}L & 后续替换字符转换为小写 & \\
+  & \textbackslash{}U & 后续替换字符转换为大写 & \\
+  & \textbackslash{}E & 关闭前面的 \textbackslash{}L 和 \textbackslash{}U & \\
 \end{longtable}
 \end{center}
 
@@ -199,7 +207,6 @@
   \caption{正则表达式分组序号}
   \label{fig:regex-group-count}
 \end{figure}
-
 
 \section[高级语法]{高级语法 \textcolor{lightgray}{\textsc{Advanced Syntax}}}
 \label{sec:adv-syntax}
@@ -218,7 +225,7 @@
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
   \midrule
   \endhead                      %
-  \multicolumn{4}{c}{To be continued\ldots} \\[2ex]
+  \multicolumn{4}{c}{\textsc{to be continued}\ldots} \\[2ex]
   \endfoot                      %
   \bottomrule
   \endlastfoot                  %
@@ -243,7 +250,11 @@
   & (?<=regex) & 肯定逆序环视（Positive Lookbehind）\newline{}子表达式 \underline{能}够匹配 \underline{左侧}文本 & \cbregex{\textbackslash{}d\{3\}(?!\textbackslash{}d)}匹配三位数字，而且这三位数字的后面不能是数字 \\
   & (?<!regex) & 否定逆序环视（Negative Lookbehind）\newline{}子表达式 \underline{不能}匹配 \underline{左侧}文本 & \cbregex{(?<![a-z])\textbackslash{}d\{7\}}匹配前面不是小写字母的七位数字\newline{}又，\cbregex{(?<=<(\textbackslash{}w+)>).\*(?=<\textbackslash{}/\textbackslash{}1>)}匹配不包含属性的简单HTML标签内里的内容 \\
   \midrule
+  %--------------------
   固化分组 & (?>regex) & 贪婪子表达式，也称“\textbf{固化分组}”，使用它可以加快匹配失败的速度，如 \cbstring{Subject} 这个字符串，现用 \cbregex{\^{}\textbackslash{}w:} 对其进行匹配，正则表达式引擎发现 \cbstring{Subject} 不匹配，就会试图匹配 \cbstring{Subjec}，一直尝试到 \cbstring{S}，发现都不匹配才得出无法匹配的结论。如果使用固化分组 \cbregex{\^{}(?>\textbackslash{}w+):}，它会直接试图使用 \cbregex{\textbackslash{}w+} 去匹配 \cbstring{Subjec} 字符串，而不会一一回溯，发现 \cbregex{\textbackslash{}w+} 后面没有 \cbstring{:}，立即报告失败。 & 如果字符串中没有第二个 \cbstring{x} 的时候，\cbregex{x(?>\textbackslash{}w+)x} 要比 \cbregex{x\textbackslash{}w+x} 高效得多 \\
+  \midrule
+  %--------------------
+  递归 & (?R) & 递归匹配，Perl中使用 (?R) 或 (?0)，Ruby 2.0\footnote{Ruby是一门开源的动态编程语言，注重简洁和效率。重整本文档时，Ruby最新版本是 2.3.0。详见\href{http://www.ruby-lang.org/}{Ruby语言官方网站。}}中使用 \textbackslash{}g<0> & \cbregex{a(?R)?z} \\
 \end{longtable}
 
 \end{center}
@@ -274,12 +285,18 @@
   把\verb=\[/?(?:font|size)([^\]]+)?\]=替换为空。
 \item[汉字] \hfill \\
   \verb=[^u4E00-u9FA5]=
+\item[手机号码] \hfill \\
+  \verb=^(?<national>\+?(?:86)?)(?<separator>\s?-?)(?<phone>(?<vender>(13|15|18)[0-9])(?<area>\d{4})(?<id>\d{4}))$=
 \end{description}
 
 \section[正则表达式“流派”]{正则表达式“流派”~\textcolor{lightgray}{\textsc{Regex Flavors}}}
 \label{sec:flavor}
 
 在标准制定之前，各家正则自成一派，不同工具不同编程语言各不相干。为了理清正则表达式的混乱局面，POSIX\footnote{诞生于1986年的POSIX是Portable Operating System Interface（可移植操作系统接口）的缩写，这是一系列标准，确保操作系统之间的移植性。}把各种常见的流派分为两大类：\textit{Basic Regular Expressions}(BREs) 和 \textit{Extended Regular Expressions}(EREs)。POSIX程序必须支持其中的任意一种标准。\par
+
+\subsection{正则表达式流派}
+\label{sec:regex-flavor}
+
 表\ref{tab:regex-flavor}（\nameref{tab:regex-flavor}）中列表出两大流派对正则表达式特性支持的情况，随着文档的完善和丰富，特性的总结将会更加全面。\par
 
 \begin{table}[h]
@@ -323,7 +340,8 @@
   \label{tab:regex-flavor-comparison}
 \end{table}
 
-\clearpage{}
+\subsection{正则表达式引擎}
+\label{sec:regex-engine}
 
 \section[应用场景]{应用场景 \textcolor{lightgray}{\textsc{Application Scenarios}}}
 \label{sec:scenarios}
@@ -331,7 +349,6 @@
 \label{sec:toolbox}
 总有一款适合你，Windows下的记事本太鸡肋，Word处理方式主要是“通配符”而不是正则表达式。\par
 
-\clearpage{}
 \begin{description}
 \item[\textcolor{red}{JGsoft RegexBuddy}] \hfill \\
   JGsoft开发的一个强大的正则表达式测试工具，这款是正则测试界最最强大的工具了，\textbf{没有之一}，要墙裂向大家推介的哦！\Smiley \par
@@ -343,7 +360,6 @@
   \caption{RegexBuddy界面}
   \label{fig:regexbuddy}
 \end{figure}
-\clearpage{}
 
 \begin{description}
 \item[JGsoft PowerGREP] \hfill \\
@@ -358,7 +374,6 @@
   编辑器之神Vim
 \end{description}
 
-\clearpage{}
 \begin{description}
 \item[\textcolor{red}{GNU Emacs}] \hfill \\
   GNU Emacs中正则表达式异常强大，除了基本的 正向正则查找\keys{C-M-s}、反向正则查找\keys{C-M-r}、正则替换\texttt{M-x replace-regexp}、查询式正则替换\texttt{M-x query-replace-regexp}、保留行\texttt{M-x keep-lines}、删除行\texttt{M-x flush-lines}、\ldots 等等，Emacs正则表达式替换时还能直接执行 LISP\footnote{出生自1958年，但目前仍很活跃的一门编程语言，尤其在AI领域中。} Form\footnote{简言之：可以直接执行LISP代码，利用强大的编程语言提供的函数方法去处理文本。}。详见\ref{sec:emacs}。
@@ -374,8 +389,6 @@
 \item[sed \& awk] \hfill \\
   sed and awk
 \end{description}
-
-\clearpage{}
 
 \subsection[应用案例]{应用案例 \textcolor{lightgray}{\textsc{Application Cases}}}
 \label{sec:cases}
