@@ -46,7 +46,9 @@
 }
 \setlength\columnsep{20pt}        % multicolumns 栏间距
 \setlength{\tabcolsep}{0.5em}     % 水平padding
-\newcommand{\sectionbreak}{\clearpage}                         % section 换页
+% section 换页
+% 引用 titlesec 宏包，注意，subsection不能为空，否则不在新页中展示。
+\newcommand{\sectionbreak}{\clearpage}
 \renewcommand{\arraystretch}{1.5} % 垂直padding
 \renewcommand\thefootnote{\ding{\numexpr171+\value{footnote}}} % 脚注编号
 % --------------------设定字体--------------------
@@ -254,7 +256,7 @@
   固化分组 & (?>regex) & 贪婪子表达式，也称“\textbf{固化分组}”，使用它可以加快匹配失败的速度，如 \cbstring{Subject} 这个字符串，现用 \cbregex{\^{}\textbackslash{}w:} 对其进行匹配，正则表达式引擎发现 \cbstring{Subject} 不匹配，就会试图匹配 \cbstring{Subjec}，一直尝试到 \cbstring{S}，发现都不匹配才得出无法匹配的结论。如果使用固化分组 \cbregex{\^{}(?>\textbackslash{}w+):}，它会直接试图使用 \cbregex{\textbackslash{}w+} 去匹配 \cbstring{Subjec} 字符串，而不会一一回溯，发现 \cbregex{\textbackslash{}w+} 后面没有 \cbstring{:}，立即报告失败。 & 如果字符串中没有第二个 \cbstring{x} 的时候，\cbregex{x(?>\textbackslash{}w+)x} 要比 \cbregex{x\textbackslash{}w+x} 高效得多 \\
   \midrule
   %--------------------
-  递归 & (?R) & 递归匹配，Perl中使用 (?R) 或 (?0)，Ruby 2.0\footnote{Ruby是一门开源的动态编程语言，注重简洁和效率。重整本文档时，Ruby最新版本是 2.3.0。详见\href{http://www.ruby-lang.org/}{Ruby语言官方网站。}}中使用 \textbackslash{}g<0> & \cbregex{a(?R)?z} \\
+  递归匹配 & (?R) & 递归匹配，Perl中使用 (?R) 或 (?0)，Ruby 2.0\footnote{Ruby是一门开源的动态编程语言，注重简洁和效率。重整本文档时，Ruby最新版本是 2.3.0。详见\href{http://www.ruby-lang.org/}{Ruby语言官方网站。}}中使用 \textbackslash{}g<0>，PCRE 这3种都支持。\textcolor{red}{该特性适用于匹配相类似HTML标签的场合，它能匹配同等个数的开始和结束标签。} & \cbregex{a(?R)?z} 匹配 \cbmatch{az}、\cbmatch{aazz} 或 \cbmatch{aaazzz} \footnote{拿 \cbregex{a(?R)?z} 匹配 \cbstring{aaazzz} 为例，首先表达式中 \cbregex{a} 匹配第1个\cbmatch{a}，然后表达式 \cbregex{(?R)} 告诉正则引擎从头匹配整个正则表达式，进入第1层递归，\cbregex{a} 匹配到第2个\cbmatch{a}，再次遇到 \cbregex{(?R)} 使得正则进入第2层递归，再次重新匹配整个正则表达式，此时匹配到第3个\cbmatch{a}。进入第3层递归时，发现已无法匹配到\cbstring{a}字符，因为只有3个\cbstring{a}，又因为 \cbregex{?} 使得 \cbregex{(?R)} 是可选项，那么正则表达式开始匹配后面的\cbregex{z}正则字符，匹配到了第1个\cbmatch{z}字符。现在，正则引擎已到达正则表达式的结尾，跳出第3层递归，但还有2层递归需要继续匹配，同样发现后面的 \cbregex{z} 匹配到了第2个 \cbmatch{z} 字符，继续跳出第1层递归，匹配最后一个 \cbmatch{z} 字符，完成整个表达式的匹配过程。 } \newline{} \cbregex{\textbackslash{}\{([\^{}\{\}]|(?R))*\textbackslash{}\}} 匹配 \cbmatch{\{1, \{2, 3\}\}} 这种嵌套结构。 \\
 \end{longtable}
 
 \end{center}
