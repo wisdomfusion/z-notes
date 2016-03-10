@@ -106,16 +106,16 @@
   \toprule
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
   \midrule
-  \endfirsthead                 %
+  \endfirsthead                 % 首个head结束
   \multicolumn{4}{l}{（续表）} \\
   \toprule
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
   \midrule
-  \endhead                      %
+  \endhead                      % 续表head结束
   \multicolumn{4}{c}{\textsc{to be continued}\ldots} \\[2ex]
-  \endfoot                      %
+  \endfoot                      % 续表foot
   \bottomrule
-  \endlastfoot                  %
+  \endlastfoot                  % 最后一个foot
   %--------------------
   字符 & 除[\textbackslash{}\^{}\$.|?*+()以外的任意字符 & 除了[\textbackslash{}\^{}\$.|?*+()以外的任意字符，\{和\}也是文字文本，除了下面说到的成对出现的量词语法，如\{n\}和\{m,n\}等。& \cbregex{a}匹配\cbstring{about}中的\cbmatch{a} \\
   & 字符转义 & \cbregex{\textbackslash{}t}, \cbregex{\textbackslash{}?}, \cbregex{\textbackslash{}*}, \cbregex{\textbackslash{}+}, \cbregex{\textbackslash{}.}, \cbregex{\textbackslash{}|}, \cbregex{\textbackslash{}\{}, \cbregex{\textbackslash{}\}}, \cbregex{\textbackslash\textbackslash}, \cbregex{\textbackslash{}[}, \cbregex{\textbackslash{}]}, \cbregex{\textbackslash{}(}, \cbregex{\textbackslash{})} & \cbregex{\textbackslash{}+}匹配\cbmatch{+}；\cbregex{\textbackslash{}?\textbackslash{}-}匹配\cbmatch{?-} \\
@@ -219,16 +219,16 @@
   \toprule
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
   \midrule
-  \endfirsthead                 %
+  \endfirsthead
   \multicolumn{4}{l}{（续表）} \\
   \toprule
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
   \midrule
-  \endhead                      %
+  \endhead
   \multicolumn{4}{c}{\textsc{to be continued}\ldots} \\[2ex]
-  \endfoot                      %
+  \endfoot
   \bottomrule
-  \endlastfoot                  %
+  \endlastfoot
   %--------------------
   模式\newline{}修饰符 & \cbregex{(?i)} & 打开忽略大小写模式，之后的模式不分大小写。模式修饰符有 i, s, m, x 四种，分别是忽略大小写（\textbf{I}gnoreCase）~、单行模式（\textbf{S}ingleline）~、多行模式（\textbf{M}ultiline）和注释模式 & \multirow{2}{18em}{\cbregex{(?i)te(?-i)st} 匹配 \cbmatch{TEst}，而不匹配 \cbstring{TEST}} \\
   & \cbregex{(?-i)} & 关闭忽略大小写模式，之后的模式不分大小写 & \\
@@ -272,7 +272,7 @@
 \item[匹配浮点数] \hfill \\
   \verb=[-+]?([0-9]*\.[0-9]+|[0-9]+).= 匹配如 \cbmatch{3.1415926} 的浮点数（带小数位的）{}。
 \item[去除重复行] \hfill \\
-  查找\verb=^(.*)(\r?\n\1)+$=，替的为\verb"\1"。
+  查找\verb=^(.*)(\r?\n\1)+$=，替的为\verb=\1=。
 \item[匹配用户名] \hfill \\
   \verb=^[a-z0-9_-]{3,16}$=
 \item[网址URL] \hfill \\
@@ -343,10 +343,16 @@
 \subsection{正则表达式引擎}
 \label{sec:regex-engine}
 
+regex engine
+
 \section[应用场景]{应用场景 \textcolor{lightgray}{\textsc{Application Scenarios}}}
 \label{sec:scenarios}
+
+应用场景
+
 \subsection[正则表达式工具箱]{正则表达式工具箱 \textcolor{lightgray}{\textsc{Regex Toolbox}}}
 \label{sec:toolbox}
+
 总有一款适合你，Windows下的记事本太鸡肋，Word处理方式主要是“通配符”而不是正则表达式。\par
 
 \begin{description}
@@ -441,8 +447,12 @@ Apple Swift
 \subsubsection{JavaScript}
 \label{sec:javascript}
 
+javascript
+
 \subsubsection{Adobe Dreamweaver 表格处理}
 \label{sec:adobe-dw}
+
+Dw
 
 \subsubsection{VBA中使用正则表达式}
 \label{sec:vba}
@@ -488,8 +498,12 @@ End Sub
 \subsubsection{GREP for Adobe InDesign}
 \label{sec:indesign}
 
+ID
+
 \subsubsection{神的编辑器GNU Emacs之正则神器}
 \label{sec:emacs}
+
+Emacs
 
 \section{后记}
 \label{sec:postscript}
