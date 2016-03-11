@@ -350,7 +350,7 @@ regex engine
 \section[应用场景]{应用场景 \textcolor{lightgray}{\textsc{Application Scenarios}}}
 \label{sec:scenarios}
 
-应用场景
+工具$+$案例 \par
 
 \subsection[正则表达式工具箱]{正则表达式工具箱 \textcolor{lightgray}{\textsc{Regex Toolbox}}}
 \label{sec:toolbox}
@@ -379,7 +379,21 @@ regex engine
 \item[UltraEdit, Notepad++] \hfill \\
   UltraEdit, Notepad++
 \item[Vim] \hfill \\
-  编辑器之神Vim
+  编辑器之神Vim\footnote{“编辑器之神”\href{http://www.vim.org/}{Vim}和“神的编辑器”\href{http://www.gnu.org/software/emacs/}{Emacs} 粉丝之间的圣战说来也有小一二十年了，但本人对工具没有抱有任何偏见，我始终认为“用合适的工具”才是正确的做法和想法，而不是整日里争一时口舌之快，回过头来一看一事无成。}，既然十几年来一直被冠以如此美誉，可不是吃素的，文字编辑方面是当之无愧的老大，而文字编辑最不可少的就是查找替换，正则表达式自然就是最大的功臣之一。Vim有4种查找模式：\textbf{magic}（开关\verb=\m=，默认模式，无须手动添加开关）, \textbf{very magic}（开关\verb=\v=）, \textbf{nomagic}（开关\verb=\M=，类似正则表达式里的取反） 和 \textbf{very nomagic}（开关\verb=\V=）。这几种模式我会在专门的 vi/Vim 文档里详述，这里主要举一些默认的\textbf{magic}模式查找替换的实例子吧：\par
+
+  \begin{minipage}[h]{1.0\linewidth}
+    \begin{tabular}[h]{ll}
+      \toprule
+      \textbf{命令} & \textbf{说明} \\
+      \midrule
+    \verb=:%s/child/children/g= & 基本文本替换 \\
+    \verb=:%s/\<child\>/chinldren/g= & 匹配整个单词 \\
+    \verb=:%s/^V^M//g= & 把\texttt{\^{}M}替换掉\footnote{UNIX下换行符是\texttt{\textbackslash{}n}，ASCII码是\texttt{0xA}，Windows下是\texttt{\textbackslash{}r\textbackslash{}n}，\texttt{0xD}和\texttt{0xA}的组合，而\texttt{\textbackslash{}r}在Vim显示的是形如\texttt{\^{}M}的字符，输入方式是\keys{Ctrl+V}~ \keys{Ctrl+M}。} \\
+      \verb=:g/^$/d= & 删除空行 \\
+      \bottomrule
+  \end{tabular}
+  \end{minipage}  
+  
 \end{description}
 
 \begin{description}
