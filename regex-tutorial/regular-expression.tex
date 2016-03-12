@@ -350,75 +350,121 @@ regex engine
 \section[应用场景]{应用场景 \textcolor{lightgray}{\textsc{Application Scenarios}}}
 \label{sec:scenarios}
 
-工具$+$案例 \par
+学以致用这是最后的落脚点，要不我费这么大力气整理这个文档做什么呢！这部分我将从我自身角度出发，展示一下日常工作中正在用或曾用过的支持正则表达式的编辑器和编程语言们，希望能过这些更具体的实例和应用，让大家对正则表达式有更进一步的认识，培养凡事都要批量处理的“懒习惯”。\par
 
-\subsection[正则表达式工具箱]{正则表达式工具箱 \textcolor{lightgray}{\textsc{Regex Toolbox}}}
-\label{sec:toolbox}
+五花八门的工具，很多，也很杂，但总有一款适合你！小到日常用的编辑器，大到一门编程语言，如果想熟练使用正则表达式，还是需要花点儿时间细看一下本文的。用Windows的同学可能有这个感触：Windows下的记事本太鸡肋，Word处理方式主要是“通配符”而不是正则表达式，局限性太大，而且比较繁烦。而本文总结的工具和语言将让你挣脱束缚，事半功倍。\par
 
-总有一款适合你，Windows下的记事本太鸡肋，Word处理方式主要是“通配符”而不是正则表达式。\par
+\subsection{支持正则表达式的工具们}
+\label{sec:regex-tools}
 
-\begin{description}
-\item[\textcolor{red}{JGsoft RegexBuddy}] \hfill \\
-  JGsoft开发的一个强大的正则表达式测试工具，这款是正则测试界最最强大的工具了，\textbf{没有之一}，要墙裂向大家推介的哦！\Smiley \par
-  图\ref{fig:regexbuddy}中所示，\textcolor{red}{\textcircled{\footnotesize{1}}}正则表达式区域， \textcolor{red}{\textcircled{\footnotesize{2}}}替换字符区域，\textcolor{red}{\textcircled{\footnotesize{3}}}暂存使用的正则表达式以备后用，\textcolor{red}{\textcircled{\footnotesize{4}}}待测试的文字，\textcolor{red}{\textcircled{\footnotesize{5}}}替换后的文字。没有标注的区域还有一大堆很贴心的正则表达式创建功能，比如不同语言的选择、模式的开关、正则表达式库等等，正如其名“正则表达式好兄弟”，我平时更喜欢“正则基友”这个简称，\Smiley 建议安装长期占有之。 \par
-\end{description}
+首先，我们先来看看那些支持正则表达式的工具们（出场顺序不代表偏重和强弱，大家自行选用，还有众多好工具因篇幅不能一一列举）。
+
+\subsubsection{RegexBuddy}
+\label{sec:regexbuddy}
+
+JGsoft开发的一个强大的正则表达式测试工具，这款是正则测试界最最强大的工具了，\textbf{没有之一}，要墙裂向大家推介的哦！\Smiley \par
+图\ref{fig:regexbuddy}中所示，\textcolor{red}{\textcircled{\footnotesize{1}}}正则表达式区域， \textcolor{red}{\textcircled{\footnotesize{2}}}替换字符区域，\textcolor{red}{\textcircled{\footnotesize{3}}}暂存使用的正则表达式以备后用，\textcolor{red}{\textcircled{\footnotesize{4}}}待测试的文字，\textcolor{red}{\textcircled{\footnotesize{5}}}替换后的文字。没有标注的区域还有一大堆很贴心的正则表达式创建功能，比如不同语言的选择、模式的开关、不同流派正则表达式的转换、GREP、正则表达式库等等，正如其名“正则表达式好兄弟”，我平时更喜欢“正则基友”这个简称，\Smiley 建议安装长期占有之。 \par
+
+这里总结了一些功能特色：\par
+
+\begin{itemize}
+\item 特性全，而且正则流派支持很全，同一样语言的不同版本的正则特性的细微差别都研究得透透的。按 \keys{Alt + F1} 可以打开流派列表。
+\item 实时正则表达式匹配测试，正则表达式创建功能更带有正则的解释功能，不懂的正则可以看看这个功能。
+\item 可以把正则在不同流派间转换，并可以使成指定编程语言的代码。
+\item 历史功能像个正则收藏夹，创建好的正则可以保存起来以备后用。
+\item 功能强大，好处多多。你，值得拥有！
+\end{itemize}
+
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=18cm]{FIG/regexbuddy.png}
+  \includegraphics{FIG/regexbuddy.png}
   \caption{RegexBuddy界面}
   \label{fig:regexbuddy}
 \end{figure}
 
-\begin{description}
-\item[JGsoft PowerGREP] \hfill \\
-  PowerGREP RegexBuddy的兄弟软件，同是JGsoft开发，是grep在Windows平台的实现和增强。
-\item[Debuggex] \hfill \\
-  https://www.debuggex.com/
-\item[grep] \hfill \\
-  grep
-\item[UltraEdit, Notepad++] \hfill \\
-  UltraEdit, Notepad++
-\item[Vim] \hfill \\
-  编辑器之神Vim\footnote{“编辑器之神”\href{http://www.vim.org/}{Vim}和“神的编辑器”\href{http://www.gnu.org/software/emacs/}{Emacs} 粉丝之间的圣战说来也有小一二十年了，但本人对工具没有抱有任何偏见，我始终认为“用合适的工具”才是正确的做法和想法，而不是整日里争一时口舌之快，回过头来一看一事无成。}，既然十几年来一直被冠以如此美誉，可不是吃素的，文字编辑方面是当之无愧的老大，而文字编辑最不可少的就是查找替换，正则表达式自然就是最大的功臣之一。Vim有4种查找模式：\textbf{magic}（开关\verb=\m=，默认模式，无须手动添加开关）, \textbf{very magic}（开关\verb=\v=）, \textbf{nomagic}（开关\verb=\M=，类似正则表达式里的取反） 和 \textbf{very nomagic}（开关\verb=\V=）。这几种模式我会在专门的 vi/Vim 文档里详述，这里主要举一些默认的\textbf{magic}模式查找替换的实例子吧：\par
+\clearpage{}
 
-  \begin{minipage}[h]{1.0\linewidth}
-    \begin{tabular}[h]{ll}
-      \toprule
-      \textbf{命令} & \textbf{说明} \\
-      \midrule
-    \verb=:%s/child/children/g= & 基本文本替换 \\
-    \verb=:%s/\<child\>/chinldren/g= & 匹配整个单词 \\
-    \verb=:%s/^V^M//g= & 把\texttt{\^{}M}替换掉\footnote{UNIX下换行符是\texttt{\textbackslash{}n}，ASCII码是\texttt{0xA}，Windows下是\texttt{\textbackslash{}r\textbackslash{}n}，\texttt{0xD}和\texttt{0xA}的组合，而\texttt{\textbackslash{}r}在Vim显示的是形如\texttt{\^{}M}的字符，输入方式是\keys{Ctrl+V}~ \keys{Ctrl+M}。} \\
-      \verb=:g/^$/d= & 删除空行 \\
-      \bottomrule
-  \end{tabular}
-  \end{minipage}  
-  
-\end{description}
+\subsubsection{PowerGREP}
+\label{sec:powergrep}
 
-\begin{description}
-\item[\textcolor{red}{GNU Emacs}] \hfill \\
-  GNU Emacs中正则表达式异常强大，除了基本的 正向正则查找\keys{C-M-s}、反向正则查找\keys{C-M-r}、正则替换\texttt{M-x replace-regexp}、查询式正则替换\texttt{M-x query-replace-regexp}、保留行\texttt{M-x keep-lines}、删除行\texttt{M-x flush-lines}、\ldots 等等，Emacs正则表达式替换时还能直接执行 LISP\footnote{出生自1958年，但目前仍很活跃的一门编程语言，尤其在AI领域中。} Form\footnote{简言之：可以直接执行LISP代码，利用强大的编程语言提供的函数方法去处理文本。}。详见\ref{sec:emacs}。
-\end{description}
+PowerGREP 是 RegexBuddy的兄弟软件，同是JGsoft开发，是grep在Windows平台的实现和增强。\par
+图\ref{fig:powergrep}是该软件的界面展示，乍一看选项很多，简直有些杂乱无章，但细看一下就明白很有条理，而且这个最初印象是来自于它的功能强大。类UNIX系统\footnote{类Unix系统（英文：Unix-like）指各种传统的Unix系统（比如Mac OS、FreeBSD、OpenBSD、Solaris）以及各种与传统Unix类似的系统（例如Minix、Linux等）。它们虽然有的是自由软件，有的是商业软件，但都相当程度地继承了原始UNIX的特性，有许多相似处，并且都在一定程度上遵守POSIX规范。}的同学，一眼就能看出，这比grep的功能要强很大，find, sed 等命令的一些功能也都包括了。如Action Type中列出的Search（搜索）、Collect data（收集数据）、List files（列出文件）、Search and replace（查换替换）等等，左侧边栏可以针对文件的修改文期、文件大小等作搜索条件限制。可以看出，JGsoft这家厂商出的软件还是很实用的。 \par
+
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=15cm]{FIG/emacs-re-builder.png}
+  \includegraphics{FIG/powergrep.png}
+  \caption{PowerGREP界面}
+  \label{fig:powergrep}
+\end{figure}
+
+\clearpage{}
+
+\subsubsection{在线正则表达式测试工具}
+\label{sec:online-regex}
+
+https://www.debuggex.com/ \par
+目前只支持 JavaScript, Python, PCRE。 \par
+
+
+\subsubsection{grep}
+\label{sec:grep}
+
+grep, egrep, fgrep \par
+
+\subsubsection{Vim}
+\label{sec:vim}
+
+编辑器之神Vim\footnote{“编辑器之神”\href{http://www.vim.org/}{Vim}和“神的编辑器”\href{http://www.gnu.org/software/emacs/}{Emacs} 粉丝之间的圣战说来也有小一二十年了，但本人对工具没有抱有任何偏见，我始终认为“用合适的工具”才是正确的做法和想法，而不是整日里争一时口舌之快，回过头来一看一事无成。}，既然十几年来一直被冠以如此美誉，可不是吃素的，文字编辑方面是当之无愧的老大，而文字编辑最不可少的就是查找替换，正则表达式自然就是最大的功臣之一。Vim有4种查找模式：\textbf{magic}（开关\verb=\m=，默认模式，无须手动添加开关）, \textbf{very magic}（开关\verb=\v=）, \textbf{nomagic}（开关\verb=\M=，类似正则表达式里的取反） 和 \textbf{very nomagic}（开关\verb=\V=）。这几种模式我会在专门的 vi/Vim 文档里详述，这里主要举一些默认的\textbf{magic}模式查找替换的实例子吧：\par
+
+\begin{minipage}[h]{1.0\linewidth}
+  \begin{tabular}[h]{ll}
+    \toprule
+    \textbf{命令} & \textbf{说明} \\
+    \midrule
+  \verb=:%s/child/children/g= & 基本文本替换 \\
+  \verb=:%s/\<child\>/chinldren/g= & 匹配整个单词 \\
+  \verb=:%s/^V^M//g= & 把\texttt{\^{}M}替换掉\footnote{UNIX下换行符是\texttt{\textbackslash{}n}，ASCII码是\texttt{0xA}，Windows下是\texttt{\textbackslash{}r\textbackslash{}n}，\texttt{0xD}和\texttt{0xA}的组合，而\texttt{\textbackslash{}r}在Vim显示的是形如\texttt{\^{}M}的字符，输入方式是\keys{Ctrl+V}~ \keys{Ctrl+M}。} \\
+    \verb=:g/^$/d= & 删除空行 \\
+    \bottomrule
+\end{tabular}
+\end{minipage}  
+  
+\subsubsection{GNU Emacs}
+\label{sec:emacs}
+
+GNU Emacs中正则表达式异常强大，除了基本的 正向正则查找\keys{C-M-s}、反向正则查找\keys{C-M-r}、正则替换\texttt{M-x replace-regexp}、查询式正则替换\texttt{M-x query-replace-regexp}、保留行\texttt{M-x keep-lines}、删除行\texttt{M-x flush-lines}、\ldots 等等，Emacs正则表达式替换时还能直接执行 LISP\footnote{出生自1958年，但目前仍很活跃的一门编程语言，尤其在AI领域中。} Form\footnote{简言之：可以直接执行LISP代码，利用强大的编程语言提供的函数方法去处理文本。}。 \par
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{FIG/emacs-re-builder.png}
   \caption{GNU Emacs中RE-Builder模式}
   \label{fig:emacs-re-builder}
 \end{figure}
 
-\begin{description}
-\item[sed \& awk] \hfill \\
-  sed and awk
-\end{description}
+\clearpage{}
 
-\subsection[应用案例]{应用案例 \textcolor{lightgray}{\textsc{Application Cases}}}
-\label{sec:cases}
+\subsubsection{Adobe Dreamweaver 表格处理}
+\label{sec:adobe-dw}
+
+Dw
+
+\subsubsection{UltraEdit等编辑器}
+\label{sec:ultraedit}
+
+UltraEdit, EmEditor, Notepad++, Editplus, \ldots etc. \par
+
+\subsubsection{GREP for Adobe InDesign}
+\label{sec:indesign}
+
+ID
+
+\clearpage{}
+
+\subsection{猿类们经常用到的正则表达式}
+\label{sec:prog-regex}
 
 \subsubsection{Perl正则表达式王国}
 \label{sec:perl}
-
-
 
 %\begin{lstlisting}[language=perl]
 %
@@ -434,6 +480,16 @@ Python
 
 PHP中使用PCRE\footnote{PCRE, Perl Compatible Regular Expressions} \par
 
+\subsubsection{.NET Framework 正则表达式}
+\label{sec:dotnet-regex}
+
+\href{https://msdn.microsoft.com/zh-cn/library/az24scfc.aspx}{.NET Framework 正则表达式}
+
+\subsubsection{JavaScript}
+\label{sec:javascript}
+
+javascript
+
 \subsubsection{sed \& awk}
 \label{sec:sed-awk}
 
@@ -441,34 +497,6 @@ sed \par
 
 awk \par
 
-\subsubsection{grep}
-\label{sec:grep}
-
-grep, egrep, fgrep \par
-
-\subsubsection{Swift}
-\label{sec:swift}
-
-Apple Swift
-
-\subsubsection{Java}
-\label{sec:java}
-
-\subsubsection{.NET Framework 正则表达式}
-\label{sec:dotnet-regex}
-
-\href{https://msdn.microsoft.com/zh-cn/library/az24scfc.aspx}{.NET Framework 正则表达式}
-
-
-\subsubsection{JavaScript}
-\label{sec:javascript}
-
-javascript
-
-\subsubsection{Adobe Dreamweaver 表格处理}
-\label{sec:adobe-dw}
-
-Dw
 
 \subsubsection{VBA中使用正则表达式}
 \label{sec:vba}
@@ -511,15 +539,10 @@ Next oSld
 End Sub  
 \end{lstlisting}
 
-\subsubsection{GREP for Adobe InDesign}
-\label{sec:indesign}
+\subsubsection{More and more}
+\label{sec:more}
 
-ID
-
-\subsubsection{神的编辑器GNU Emacs之正则神器}
-\label{sec:emacs}
-
-Emacs
+还有更多
 
 \section{后记}
 \label{sec:postscript}
