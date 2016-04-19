@@ -1,7 +1,7 @@
-% WisdomFusion#gmail.com
+% Wisdomfusion#gmail.com
 % create_at:   20120602
 % modified_at: 20160312
-\documentclass[12pt,a4paper,twoside]{ctexart}
+\documentclass[12pt,a4paper,twoside,fontset=mac]{ctexart}
 %-------------------- 引用宏包--------------------
 \usepackage[landscape,textheight=190mm,textwidth=145mm,left=20mm,right=20mm,top=20mm,bottom=15mm]{geometry}
 \usepackage{graphicx}
@@ -34,7 +34,7 @@
   keepspaces=true,
   columns=spaceflexible,
   numbers=left,
-  basicstyle=\ttfamily\small,
+  basicstyle=\ttfamily\normalsize,
   numberstyle=\color{gray}\ttfamily\scriptsize,
   keywordstyle=\color{blue}\ttfamily,
   stringstyle=\color{red}\ttfamily,
@@ -164,6 +164,7 @@
   & \cbregex{\textbackslash{}B} & 匹配不是单词开头或结尾的位置 & \cbregex{\textbackslash{}B.\textbackslash{}B} 在字符串 \cbstring{abc} 中匹配 \cbmatch{b} \\
   & \cbregex{\textbackslash{}<} & 单词开头 & \\
   & \cbregex{\textbackslash{}>} & 单词结尾 & \\
+  & \cbregex{\textbackslash{}G} & 该锚点匹配上一个正则表达式匹配到的结尾处，通常用于实现“继续匹配”，该特性目前仅在Perl中得以实现，为了避免\cbregex{\textbackslash{}G}匹配失败后从头重新匹配重个文符串，需加\texttt{c}修饰符。 & 实例在后文中体现，见\ref{sec:perl} \\
   \midrule
   %--------------------
   量词 & \cbregex{?} & 前导字符重复零次或一次，贪婪的\footnote{贪婪模式：当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配尽可能多的字符。考虑这个表达式：\cbregex{a.*b}，它将会匹配最长的以\cbmatch{a}开始，以\cbmatch{b}结束的字符串。如果用它来搜索\cbstring{aabab}的话，它会匹配整个字符串\cbmatch{aabab}。这被称为贪婪匹配。}：当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配尽可能多的字符。& \cbregex{abc?} 匹配 \cbmatch{abc} 或 \cbmatch{ab}，如果可能，优先匹配前者 \\
@@ -198,6 +199,9 @@
 \end{longtable}
 \end{center}
 
+\clearpage{}
+
+关于正则表达式分组序号，这里有必要作一下解释，简单正则表达式，分组号很明了，但是一旦复杂起来，尤其是带有多层嵌套时，怎么解？这里有个小窍门，如图\ref{fig:regex-group-count}所示，左括号决定分组序号，也就是说，不管有多复杂，只要盯着左括号，就能很快分辨出各个分组序号。\par
 \begin{figure}[h]
   \centering
   \begin{tikzpicture}[line width=1pt]
@@ -467,19 +471,115 @@ ID
 \subsubsection{Perl正则表达式王国}
 \label{sec:perl}
 
-%\begin{lstlisting}[language=perl]
-%
-%\end{lstlisting}
+\texttt{\textbackslash{}G}锚点实例，这个特性不是很常用，只因上文中表格处不好举例，这里特添加一例作补充说明。\par
+\begin{lstlisting}[language=perl]
+while ($string =~ m/</g) {
+    if ($string =~ m/\Gb>/ic) {
+        # Bold
+    } elsif ($string =~ m/\Gi>/ic) {
+        # Italics
+    } else {
+        # ...etc...
+    }
+}
+\end{lstlisting}
 
 \subsubsection{Python}
 \label{sec:python}
 
 Python
 
+https://docs.python.org/3/library/re.html
+
+\begin{lstlisting}[language=python]
+import re
+
+fh = open("simpsons_phone_book.txt")
+for line in fh:
+    if re.search(r"J.*Neu",line):
+        print(line.rstrip())
+fh.close()
+\end{lstlisting}
+
+\begin{lstlisting}[language=python]
+import re
+
+l = ["555-8396 Neu, Allison", 
+     "Burns, C. Montgomery", 
+     "555-5299 Putz, Lionel",
+     "555-7334 Simpson, Homer Jay"]
+
+for i in l:
+    res = re.search(r"([0-9-]*)\s*([A-Za-z]+),\s+(.*)", i)
+    print(res.group(3) + " " + res.group(2) + " " + res.group(1))
+\end{lstlisting}
+
+\begin{lstlisting}[language=python]
+import re
+
+example_codes = ["SW1A 0AA", # House of Commons
+                 "SW1A 1AA", # Buckingham Palace
+                 "SW1A 2AA", # Downing Street
+                 "BX3 2BB", # Barclays Bank
+                 "DH98 1BT", # British Telecom
+                 "N1 9GU", # Guardian Newspaper
+                 "E98 1TT", # The Times
+                 "TIM E22", # a fake postcode
+                 "A B1 A22", # not a valid postcode
+                 "EC2N 2DB", # Deutsche Bank
+                 "SE9 2UG", # University of Greenwhich
+                 "N1 0UY", # Islington, London
+                 "EC1V 8DS", # Clerkenwell, London
+                 "WC1X 9DT", # WC1X 9DT
+                 "B42 1LG", # Birmingham
+                 "B28 9AD", # Birmingham
+                 "W12 7RJ", # London, BBC News Centre
+                 "BBC 007" # a fake postcode
+                ]
+
+pc_re = r"[A-z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}"
+
+for postcode in example_codes:
+    r = re.search(pc_re, postcode)
+    if r:
+        print(postcode + " matched!")
+    else:
+        print(postcode + " is not a valid postcode!")
+\end{lstlisting}
+
 \subsubsection{PHP PCRE}
 \label{sec:php-pcre}
 
 PHP中使用PCRE\footnote{PCRE, Perl Compatible Regular Expressions} \par
+
+\begin{lstlisting}[language=php]
+$subject='Give me 10 eggs';
+$pattern='~\b(\d+)\s*(\w+)$~';
+
+$success = preg_match($pattern, $subject, $match);
+if ($success) {
+    echo "Match: ".$match[0]."<br />"; 
+    echo "Group 1: ".$match[1]."<br />"; 
+    echo "Group 2: ".$match[2]."<br />"; 
+}
+\end{lstlisting}
+
+Output: 
+Match: 10 eggs
+Group 1: 10
+Group 2: eggs
+
+\begin{lstlisting}[language=php]
+$subject='Give me 12 eggs then 12 more.';
+$pattern='~\d+~';
+$newstring = preg_replace($pattern, "6", $subject);
+echo $newstring;
+\end{lstlisting}
+
+The Output:
+Give me 6 eggs then 6 more.
+
+
 
 \subsubsection{.NET Framework 正则表达式}
 \label{sec:dotnet-regex}
