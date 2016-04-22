@@ -7,48 +7,44 @@
 ```
 *emphasize* **strong**
 _emphasize_ __strong__
-~~Strikethrough~~
 ```
 *emphasize* **emphasize**
 
 _emphasize_ __strong__
 
-~~Strikethrough~~
-
 ### 链接和Email
 
 ```
-An example link to [Google](https://wwww.google.com/ "link title attr").
+链接到 [Github](https://github.com/ "Github").
 ```
 
-An example link to [Google](https://wwww.google.com/ "link title attr").
+链接到 [Github](https://github.com/ "Github").
 
 ```
-An [example][id]. Then, anywhere else in the doc, define the link:
+定义链接的ID后 [example][id]，可以在文档下方再定义链接的目标地址：
     [id]: http://example.com/  "Title"
 ```
 
-An [example][id]. Then, anywhere else in the doc, define the link:
+定义链接的ID后 [example][id]，可以在文档下方再定义链接的目标地址：
 
 [id]: http://example.com/  "Title"
 
-Email:
+电子邮件链接：
 
 ```
-An email <example@example.com> link.
+电子邮件链接实例 <example@example.com>
 ```
 
-An email <example@example.com> link.
+电子邮件链接实例 <example@example.com>
 
 ### 图片
-
-Inline (titles are optional):
 
 ```
 ![alt text](/path/img.jpg "Title")
 ```
 
-Reference-style:
+或
+
 
 ```
 ![alt text][id]
@@ -57,7 +53,6 @@ Reference-style:
 
 ### 标题
 
-Setext-style:
 
 ```
 Header 1
@@ -69,7 +64,7 @@ Header 2
 --------
 ```
 
-atx-style (closing #’s are optional):
+或
 
 ```
 # Header 1 #
@@ -79,7 +74,7 @@ atx-style (closing #’s are optional):
 
 ### 列表
 
-Ordered, without paragraphs:
+有序列表 ol ：
 
 ```
 1. Foo
@@ -90,7 +85,7 @@ Ordered, without paragraphs:
 2. Bar
 
 
-Unordered, with paragraphs:
+无序列表 ul，列表项中带有多行文字：
 
 ```
 * A list item.
@@ -104,7 +99,7 @@ Unordered, with paragraphs:
   
 * Bar
 
-You can nest them:
+有序列表和无序列表可以混合嵌套：
 
 ```
 * Abacus
@@ -152,34 +147,44 @@ You can nest them:
 #### 行内代码
 
 ```
-`<code>` spans are delimited
-by backticks.
-You can include literal backticks
-like `` `this` ``.
+行内代码 `<code>`，也可以放在反引号之间：`` code ``。
 ```
 
-`<code>` spans are delimited
-by backticks.
-
-You can include literal backticks
-like `` `this` ``.
+行内代码 `<code>`，也可以放在两对反引号之间：`` code ``。
 
 #### 代码块
 
+代码块每行前添加 缩进 4个空格 或 1个制表符：
 
-Indent every line of a code block by at least 4 spaces or 1 tab.
+    #!/usr/bin/perl
+    use strict;
+    use warnings;
 
-    This is a normal paragraph.
-
-        This is a preformatted
-        code block.
+    # first, create your message
+    use Email::MIME;
+    my $message = Email::MIME->create(
+      header_str => [
+        From    => 'you@example.com',
+        To      => 'friend@example.com',
+        Subject => 'Happy birthday!',
+      ],
+      attributes => {
+        encoding => 'quoted-printable',
+        charset  => 'ISO-8859-1',
+      },
+      body_str => "Happy birthday to you!\n",
+    );
+    
+    # send the message
+    use Email::Sender::Simple qw(sendmail);
+    sendmail($message);
 
 ### 换行
-
+两个换行符即可
 
 ### 水平线
 
-Three or more dashes or asterisks:
+3个以上短线或*号：
 
 ```
 ---
@@ -192,14 +197,14 @@ Three or more dashes or asterisks:
 ### 脚注
 
 ```
-That's some text with a footnote.[^1]
+这些文字带有脚注[^1]
 
-    [^1]: And that's the footnote.
+    [^1]: 我是脚注。
 ```
 
 ### 表格
 
-A simple table looks like this:
+简单表格：
 
 ```
 First Header | Second Header | Third Header
@@ -213,7 +218,7 @@ First Header | Second Header | Third Header
 Content Cell | Content Cell  | Content Cell
 Content Cell | Content Cell  | Content Cell
 
-If you wish, you can add a leading and tailing pipe to each line of the table:
+也可以在行首和行尾加上 | ，效果一样：
 
 ```
 | First Header | Second Header | Third Header |
@@ -227,7 +232,7 @@ If you wish, you can add a leading and tailing pipe to each line of the table:
 | Content Cell | Content Cell  | Content Cell |
 | Content Cell | Content Cell  | Content Cell |
 
-Specify alignement for each column by adding colons to separator lines:
+使用英文冒号可以给列设定对齐方式：
 
 ```
 First Header | Second Header | Third Header
@@ -243,25 +248,29 @@ Left         | Center        | Right
 
 ### 锚点
 
-You can also add an anchor for an element such as Headers, then you can link to this anchor anywhere, when you click that link in the Preview view, it'll auto scroll to the place of the destination anchor.
-
-For example below is a normal h2 Header:
+Markdown 中也可以给使用锚链接，下面这是一个普通的 H2 标题：
 
 ```
-## This is an example
+## H2 标题实例
 ```
 
-Now we add an anchor for it, here we use the name "anchor1" for the anchor, of course you can use any name you want.
+加个 id 属性就可以给标题加上锚点：
 
 ```
-## [This is an example](id:anchor1)
+## [带锚点的 H2 实例](id:anchor1)
 ```
 
-If you want to link to this anchor, simply write like this:
+链接到上面的锚点，我们只需要如下的语法即可：
 
 ```
-Click this [link](#anchor1) in the Preview view will auto scroll to the place of the destination anchor.
+预览时点击 [锚链接](#anchor1)
 ```
 
+### 删除线
 
+```
+~~Strikethrough~~
+```
+
+~~Strikethrough 实例~~
 
