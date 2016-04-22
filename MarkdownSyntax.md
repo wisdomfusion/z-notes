@@ -22,8 +22,9 @@ _emphasize_ __strong__
 
 ```
 定义链接的ID后 [example][id]，可以在文档下方再定义链接的目标地址：
-    [id]: http://example.com/  "Title"
 ```
+
+    [id]: http://example.com/  "Title"
 
 定义链接的ID后 [example][id]，可以在文档下方再定义链接的目标地址：
 
@@ -40,16 +41,18 @@ _emphasize_ __strong__
 ### 图片
 
 ```
-![alt text](/path/img.jpg "Title")
+![图片替换文本（禁止显示图片时会显示此文本）](/path/img.jpg "图片标题（鼠标放到图片上时会显示此文本）")
 ```
 
-或
+图片也可以先插入到正文，之后再根据 id 定义图片的路径和显示文本：
 
 
 ```
-![alt text][id]
-    [id]: /url/to/img.jpg "Title"
+![图片替换文本（禁止显示图片时会显示此文本）][id]
 ```
+
+    [id]: /url/to/img.jpg "图片标题（鼠标放到图片上时会显示此文本）"
+
 
 ### 标题
 
@@ -118,6 +121,7 @@ Header 2
   1. bunk
   2. bupkis
      * BELITTLER
+     * BELITTLER2
   3. burper
 * Cunning
 
@@ -192,15 +196,16 @@ Header 2
 - - - - 
 ```
 
+---
+
 ## 其他语法
 
 ### 脚注
 
 ```
 这些文字带有脚注[^1]
-
-    [^1]: 我是脚注。
 ```
+    [^1]: 我是脚注。
 
 ### 表格
 
