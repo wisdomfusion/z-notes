@@ -399,7 +399,7 @@ mojombo#1
 mojombo/github-flavored-markdown#1
 ```
 
-### `@某用户`
+### @某用户
 
 类似微博，也可以在 GitHub Markdown 文档中添加 `@WisdomFusion` 的提醒。
 
