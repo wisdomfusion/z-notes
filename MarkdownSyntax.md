@@ -6,14 +6,17 @@
 
 ```
 *emphasize* **strong**
+
 _emphasize_ __strong__
-~~Strikethrough~~
+
+_强调是可以**嵌套**的_
 ```
+
 *emphasize* **emphasize**
 
 _emphasize_ __strong__
 
-~~Strikethrough~~
+_强调是可以**嵌套**的_
 
 ### 链接和Email
 
@@ -57,74 +60,52 @@ Reference-style:
 
 ### 标题
 
-Setext-style:
-
+Markdown 最多支持6级标题：
+```
+# Header 1 #
+## Header 2 ##
+...
+###### Header 6
+```
+还有一种标题语法，不推荐，统一用上面那种形式即可：
 ```
 Header 1
 ========
-```
-
-```
 Header 2
 --------
 ```
 
-atx-style (closing #’s are optional):
-
-```
-# Header 1 #
-## Header 2 ##
-###### Header 6
-```
-
 ### 列表
 
-Ordered, without paragraphs:
+<ul> 无序列表：
 
 ```
-1. Foo
-2. Bar
+* Item 1
+* Item 2
+  * Item 2a
+  * Item 2b
 ```
 
-1. Foo
-2. Bar
+* Item 1
+* Item 2
+  * Item 2a
+  * Item 2b
 
-
-Unordered, with paragraphs:
-
-```
-* A list item.
-  With multiple paragraphs.
-* Bar
-```
-
-* A list item.
-
-  With multiple paragraphs.
-  
-* Bar
-
-You can nest them:
+<ol> 有序列表：
 
 ```
-* Abacus
-  * answer
-* Bubbles
-  1. bunk
-  2. bupkis
-     * BELITTLER
-  3. burper
-* Cunning
+1. Item 1
+2. Item 2
+3. Item 3
+   * Item 3a
+   * Item 3b
 ```
 
-* Abacus
-  * answer
-* Bubbles
-  1. bunk
-  2. bupkis
-     * BELITTLER
-  3. burper
-* Cunning
+1. Item 1
+2. Item 2
+3. Item 3
+   * Item 3a
+   * Item 3b
 
 ### 引用
 
