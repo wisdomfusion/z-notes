@@ -13,3 +13,7 @@ Personal notes structured as org-mode, Markdown, or LaTeX files. Most of them ar
 - [MongoDB 参考手册](./mongodb-tutorial/)
 - [Adobe InDesign GREP 正则表达式参考手册](./indesign-grep-reference/)
 - [DOS 批处理教程](./dos-batch-tutorial/)
+
+以下部分单独开 repo 了，请移步：
+
+- [Markdown 中文参考](https://github.com/WisdomFusion/markdown-reference)
