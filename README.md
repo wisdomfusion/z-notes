@@ -8,7 +8,6 @@ Personal notes structured as org-mode, Markdown, or LaTeX files. Most of them ar
 
 - [x] [正则表达式快速参考手册](./regex-tutorial/)
 - [ ] [LaTeX 参考手册](./latex-tutorial/)
-- [ ] [GNU Emacs 宝典](./emacs-bible/)
 - [ ] [Redis 参考手册](./redis-tutorial/)
 - [ ] [MongoDB 参考手册](./mongodb-tutorial/)
 - [ ] [Adobe InDesign GREP 正则表达式参考手册](./indesign-grep-reference/)
