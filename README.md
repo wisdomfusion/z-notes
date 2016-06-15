@@ -16,6 +16,7 @@ Personal notes structured as org-mode, Markdown, or LaTeX files. Most of them ar
 - [ ] [MongoDB notes](mongodb-notes.org)
 - [ ] [Adobe InDesign GREP 正则表达式参考手册](./indesign-grep-reference/)
 - [ ] [DOS Batch Reference](dos-batch-ref.org)
+- [ ] [ABS - Advanced Bash-Scripting Guide](./abs/)
 
 以下部分单独开 repo 了，请移步：
 
