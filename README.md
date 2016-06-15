@@ -7,11 +7,12 @@ Personal notes structured as org-mode, Markdown, or LaTeX files. Most of them ar
 包括：
 
 - [x] [正则表达式快速参考手册](./regex-tutorial/)
+- [ ] [Perl 教程](./perl-tutorial/)
+- [ ] [Perl6 教程](./perl6-tutorial/)
 - [ ] [LaTeX 参考手册](./latex-tutorial/)
-- [ ] [Redis 参考手册](./redis-tutorial/)
-- [ ] [MongoDB 参考手册](./mongodb-tutorial/)
+- [ ] [Redis notes](./redis-notes.org)
+- [ ] [MongoDB notes](./mongodb-notes.org)
 - [ ] [Adobe InDesign GREP 正则表达式参考手册](./indesign-grep-reference/)
-- [ ] [DOS 批处理教程](./dos-batch-tutorial/)
 
 以下部分单独开 repo 了，请移步：
 
