@@ -1,0 +1,8 @@
+# -*- mode: org; encoding: utf-8 -*-
+#+TITLE: The GNU Awk User's Guide
+#+AUTHOR: WisdomFusion <WisdomFusion#gmail.com>
+#+DATE: 2016-06-01
+
+
+
+

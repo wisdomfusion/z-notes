@@ -9,10 +9,13 @@ Personal notes structured as org-mode, Markdown, or LaTeX files. Most of them ar
 - [x] [正则表达式快速参考手册](./regex-tutorial/)
 - [ ] [Perl 简明教程](./perl-tutorial/)
 - [ ] [Perl6 简明教程](./perl6-tutorial/)
+- [ ] [GNU sed manual](sed-manual.org)
+- [ ] [GNU awk manual](awk-manual.org)
 - [ ] [LaTeX 参考手册](./latex-tutorial/)
-- [ ] [Redis notes](./redis-notes.org)
-- [ ] [MongoDB notes](./mongodb-notes.org)
+- [ ] [Redis notes](redis-notes.org)
+- [ ] [MongoDB notes](mongodb-notes.org)
 - [ ] [Adobe InDesign GREP 正则表达式参考手册](./indesign-grep-reference/)
+- [ ] [DOS Batch Reference](dos-batch-ref.org)
 
 以下部分单独开 repo 了，请移步：
 
