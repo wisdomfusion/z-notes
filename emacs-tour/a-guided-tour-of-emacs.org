@@ -19,7 +19,7 @@ Beyond just being able to edit plain text files, Emacs includes special features
 
 …as well as tools for compiling, running, and testing programs. Emacs integrates with GDB to provide an IDE (~M-x gdb~):
 
-[[./FIG/gdb-small.png]]
+[[./FIG/gdb-composite.png]]
 
 Emacs can compare two files and highlight their differences (~M-x ediff~):
 
@@ -367,8 +367,7 @@ Emacs is notable for its integration with many common tools. Not only can you in
 - *M-x gdb*
   Invokes gdb in a new buffer. You can use the gdb command line as usual in that buffer. However, Emacs lets you set breakpoints directly from your source buffers and shows execution by marking the active line in your source buffers. Emacs can also display breakpoints, the stack, and locals, simultaneously and each in their own window.
 
-[[./FIG/gdb-small.png
-]]
+[[./FIG/gdb-composite.png]]
 - *M-x grep*
   Invokes grep and prints results in a new buffer. Like M-x compile, when you click on a match Emacs opens the correct file and takes you to the matching line.
 
