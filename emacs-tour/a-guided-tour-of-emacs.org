@@ -283,25 +283,23 @@ Regular expressions are even more powerful in search and replace, because Emacs 
 
 Here's an example. Suppose we have a buffer containing names like this:
 
-#+RESULTS:
-#+begin_example
+#+BEGIN_VERSE
 George Washington
 John Adams
 Thomas Jefferson
 James Madison
 James Monroe
-#+end_example
+#+END_VERSE
 
 If we run ~M-x replace-regexp~ and replace the regexp =\(\w+\) \(\w+\)= with =\,(upcase \2), \1=, our buffer now looks like this:
 
-#+RESULTS:
-#+begin_example
+#+BEGIN_VERSE
 WASHINGTON, George
 ADAMS, John
 JEFFERSON, Thomas
 MADISON, James
 MONROE, James
-#+end_example
+#+END_VERSE
 
 As you can see, regexp replacement is capable of doing some pretty sophisticated transformations. (Roughly, the search expression searches for two words; the replacement string inserts an uppercased version of the second word, followed by a comma, followed by the first word.)
 
