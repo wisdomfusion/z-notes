@@ -1,6 +1,7 @@
 # -*- mode: org; coding: utf-8; -*-
 #+TITLE: A Guided Tour of Emacs
-#+AUTHOR: WisdomFusion <WisdomFusion#gmail.com>
+#+AUTHOR: WisdomFusion
+#+EMAIL: WisdomFusion#gmail.com
 #+DATE: 2016-06-16
 
 #+CAPTION: GNU Emacs
