@@ -11,7 +11,7 @@ Personal notes structured as org-mode, Markdown, or LaTeX files. Most of them ar
 - [ ] [Perl6 简明教程](./perl6-tutorial/)
 - [ ] [GNU sed manual](sed-manual.org)
 - [ ] [GNU awk manual](awk-manual.org)
-- [ ] [A Guided Tour of Emacs](./emacs-tour/)
+- [ ] [Emacs 快速入门](./emacs-tour/)
 - [ ] [LaTeX 参考手册](./latex-tutorial/)
 - [ ] [Redis notes](redis-notes.org)
 - [ ] [MongoDB notes](mongodb-notes.org)
