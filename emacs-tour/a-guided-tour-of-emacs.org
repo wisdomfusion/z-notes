@@ -284,29 +284,25 @@ Regular expressions are even more powerful in search and replace, because Emacs 
 Here's an example. Suppose we have a buffer containing names like this:
 
 #+BEGIN_QUOTE
-George Washington
 
-John Adams
-
-Thomas Jefferson
-
-James Madison
-
+George Washington\\
+John Adams\\
+Thomas Jefferson\\
+James Madison\\
 James Monroe
+
 #+END_QUOTE
 
 If we run ~M-x replace-regexp~ and replace the regexp =\(\w+\) \(\w+\)= with =\,(upcase \2), \1=, our buffer now looks like this:
 
 #+BEGIN_QUOTE
-WASHINGTON, George
 
-ADAMS, John
+WASHINGTON, George\\
+ADAMS, John\\
+JEFFERSON, Thomas\\
+MADISON, James\\
+MONROE, James\\
 
-JEFFERSON, Thomas
-
-MADISON, James
-
-MONROE, James
 #+END_QUOTE
 
 As you can see, regexp replacement is capable of doing some pretty sophisticated transformations. (Roughly, the search expression searches for two words; the replacement string inserts an uppercased version of the second word, followed by a comma, followed by the first word.)
@@ -324,7 +320,9 @@ Keyboard macros are a way to remember a fixed sequence of keys for later repetit
 For example, this sequence of keys does the exact same transformation that we did with regular expression replacement earlier, that is, it transforms a line containing George Washington to WASHINGTON, George:
 
 #+BEGIN_CENTER
+
 M-d C-d M-u , [SPC] C-y C-n C-a
+
 #+END_CENTER
 
 After we record that key sequence as a macro, we can type ~M-0 F4~ to transform the buffer pictured earlier; in this case, Emacs runs the macro repeatedly until it has reached the end of the buffer.
