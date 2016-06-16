@@ -1,5 +1,5 @@
 # -*- mode: org; coding: utf-8; -*-
-#+TITLE: A Guided Tour of Emacs
+#+TITLE: Emacs 快速入门
 #+AUTHOR: WisdomFusion
 #+EMAIL: WisdomFusion#gmail.com
 #+DATE: 2016-06-16
@@ -337,10 +337,8 @@ If you've read this far, you are probably intimidated by the thought of having t
 
 If you don't remember what a particular key or command does, you can read a description of it by using one of the following commands:
 
-- *C-h k*\\
-  Shows documentation for the command associated with any particular key.
-- *C-h f*\\
-  Shows documentation for any particular command, by name (i.e. what you would type after ~M-x~).
+- C-h k :: Shows documentation for the command associated with any particular key.
+- C-h f :: Shows documentation for any particular command, by name (i.e. what you would type after ~M-x~).
 
 For example, ~C-h k C-s~ and ~C-h f~ isearch-forward RET both display a page describing incremental search:
 
@@ -350,8 +348,7 @@ This is handy, for example, if you don't remember what ~C-s~ does, or if you rem
 
 On the other hand, if you don't remember how to invoke a particular feature, you can use apropos to search for it:
 
-- *C-h a*\\
-  Search for commands by keywords or regexp
+- C-h a :: Search for commands by keywords or regexp
 
 For example, if I remember that I want to activate narrowing, but don't remember how, I can type ~C-h a narrow RET~ which shows a brief list of commands having to do with narrow, one of which is ~M-x narrow-to-region~.
 
@@ -361,28 +358,23 @@ For example, if I remember that I want to activate narrowing, but don't remember
 
 Emacs is notable for its integration with many common tools. Not only can you invoke them from within the editor, Emacs usually helps you use their output more effectively. Here are some examples:
 
-- *M-x shell*\\
-  Starts a shell in the buffer named \star{}shell\star{}, switching to it if it already exists. Use ~C-u M-x~ shell to use a buffer with a different name.
+- M-x shell :: Starts a shell in the buffer named \star{}shell\star{}, switching to it if it already exists. Use ~C-u M-x~ shell to use a buffer with a different name.
 
 [[./FIG/shell-small.png]]
 
-- *M-x compile*\\
-  Invokes make (with targets and options of your choice) and displays output in a new buffer. Emacs identifies error lines containing filenames and line numbers, and you can click on them to jump directly to the corresponding buffer and line.
+- M-x compile :: Invokes make (with targets and options of your choice) and displays output in a new buffer. Emacs identifies error lines containing filenames and line numbers, and you can click on them to jump directly to the corresponding buffer and line.
 
 [[./FIG/compile-small.png]]
 
-- *M-x gdb*\\
-  Invokes gdb in a new buffer. You can use the ~gdb~ command line as usual in that buffer. However, Emacs lets you set breakpoints directly from your source buffers and shows execution by marking the active line in your source buffers. Emacs can also display breakpoints, the stack, and locals, simultaneously and each in their own window.
+- M-x gdb :: Invokes gdb in a new buffer. You can use the ~gdb~ command line as usual in that buffer. However, Emacs lets you set breakpoints directly from your source buffers and shows execution by marking the active line in your source buffers. Emacs can also display breakpoints, the stack, and locals, simultaneously and each in their own window.
 
 [[./FIG/gdb-composite.png]]
 
-- *M-x grep*\\
-  Invokes grep and prints results in a new buffer. Like ~M-x compile~, when you click on a match Emacs opens the correct file and takes you to the matching line.
+- M-x grep :: Invokes grep and prints results in a new buffer. Like ~M-x compile~, when you click on a match Emacs opens the correct file and takes you to the matching line.
 
 [[./FIG/grep-small.png]]
 
-- *M-x man*\\
-  Displays man pages.
+- M-x man :: Displays man pages.
 
 [[./FIG/man-small.png]]
 
@@ -396,11 +388,9 @@ Here are some more assorted tools:
 
 If you need to execute a simple shell command, these commands can save you the trouble of switching to an xterm or starting a new Emacs shell buffer:
 
-- *M-x shell-command or M-!*\\
-  Executes a command and displays the output in a new buffer.
+- M-x shell-command or M-! :: Executes a command and displays the output in a new buffer.
 
-- *M-x shell-command-on-region or M-|*\\
-  Executes a command, piping in the current region as input; displays the output in a new buffer.
+- M-x shell-command-on-region or M-| :: Executes a command, piping in the current region as input; displays the output in a new buffer.
 
 For either command, a ~C-u~ prefix will insert the output in your current buffer rather than using a temporary buffer.
 
@@ -414,17 +404,13 @@ Emacs automatically detects when a file you're editing is under version control,
 
 VC provides other commands for version control-related tasks:
 
-- *C-x v =*\\
-  Displays a diff showing the changes you've made to the current file.
+- C-x v = :: Displays a diff showing the changes you've made to the current file.
 
-- *C-x v ~*\\
-  Prompts you for a version number and shows you that version of the current file in another window.
+- C-x v ~ :: Prompts you for a version number and shows you that version of the current file in another window.
 
-- *C-x v g*\\
-  Displays an annotated version of the file showing, for each line, the commit where that line was last changed and by whom. On any line you can press ~L~ to view the log message for that commit or D to view the associated diff.
+- C-x v g :: Displays an annotated version of the file showing, for each line, the commit where that line was last changed and by whom. On any line you can press ~L~ to view the log message for that commit or D to view the associated diff.
 
-- *C-x v l*\\
-  Displays a log of previous changes to the file. When the cursor is on a particular log entry, you can press ~d~ to view the diff associated with that change or ~f~ to view that version of the file.
+- C-x v l :: Displays a log of previous changes to the file. When the cursor is on a particular log entry, you can press ~d~ to view the diff associated with that change or ~f~ to view that version of the file.
 
 See [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Version-Control.html][(info "(emacs)Version Control")]] for more information.
 
@@ -522,14 +508,11 @@ See [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Major-Modes.html]
 
 Every buffer can also have any number of minor modes, which are extra pieces of functionality you can enable, independently of each other and of the major mode. Minor modes are listed in the mode line after the major mode inside the parentheses. Here are a few commonly used ones:
 
-- *M-x auto-fill-mode*\\
-  Wraps your lines automatically when they get longer than 70 characters.
+- M-x auto-fill-mode :: Wraps your lines automatically when they get longer than 70 characters.
 
-- *M-x flyspell-mode*\\
-  Highlights misspelled words as you type.
+- M-x flyspell-mode :: Highlights misspelled words as you type.
 
-- *M-x follow-mode*\\
-  If you have a buffer displayed in two windows side by side, follow-mode forces them to scroll together such that the text displayed in the second window comes right after the text in the first window, and moving your cursor off the bottom of the left window causes it to appear at the top of the right window:
+- M-x follow-mode :: If you have a buffer displayed in two windows side by side, follow-mode forces them to scroll together such that the text displayed in the second window comes right after the text in the first window, and moving your cursor off the bottom of the left window causes it to appear at the top of the right window:
 
 [[./FIG/follow-small.png]]
 
