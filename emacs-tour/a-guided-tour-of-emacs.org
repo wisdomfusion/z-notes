@@ -3,9 +3,7 @@
 #+AUTHOR: WisdomFusion <WisdomFusion#gmail.com>
 #+DATE: 2016-06-16
 
-[[./FIG/splash-small.png]]
-
-[[./FIG/splash.png][查看大图]]
+[[./FIG/splash.png]]
 
 The [[http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html][GNU Emacs Manual]] calls Emacs /the extensible, customizable, self-documenting real-time display editor,/ but this description tells beginners little about what Emacs is capable of. To give you an idea, here is a sampling of the things you can do with Emacs:
 
@@ -276,6 +274,7 @@ Instead of jumping through matches one by one, you can also choose to display th
 Regular expressions are even more powerful in search and replace, because Emacs allows the replacement text to depend on the found text. You can control replacement by inserting special escape sequences in the replacement string, and Emacs will substitute them appropriately:
 
 | When you type this in a replacement string: | Emacs replaces it with:                                       |
+|---------------------------------------------+---------------------------------------------------------------|
 | \&                                          | the original found text                                       |
 | \1, \2, etc.                                | the 1^st, 2^nd, etc. parenthesized subgroup in the found text |
 | \#                                          | the number of replacements done so far                        |
@@ -284,23 +283,23 @@ Regular expressions are even more powerful in search and replace, because Emacs 
 
 Here's an example. Suppose we have a buffer containing names like this:
 
-#+BEGIN_VERSE
-George Washington
-John Adams
-Thomas Jefferson
-James Madison
+#+BEGIN_QUOTE
+George Washington\\
+John Adams\\
+Thomas Jefferson\\
+James Madison\\
 James Monroe
-#+END_VERSE
+#+END_QUOTE
 
 If we run ~M-x replace-regexp~ and replace the regexp =\(\w+\) \(\w+\)= with =\,(upcase \2), \1=, our buffer now looks like this:
 
-#+BEGIN_VERSE
-WASHINGTON, George
-ADAMS, John
-JEFFERSON, Thomas
-MADISON, James
+#+BEGIN_QUOTE
+WASHINGTON, George\\
+ADAMS, John\\
+JEFFERSON, Thomas\\
+MADISON, James\\
 MONROE, James
-#+END_VERSE
+#+END_QUOTE
 
 As you can see, regexp replacement is capable of doing some pretty sophisticated transformations. (Roughly, the search expression searches for two words; the replacement string inserts an uppercased version of the second word, followed by a comma, followed by the first word.)
 
@@ -582,7 +581,7 @@ You can learn more about CUA mode by typing C-h f cua-mode RET.
 
 ** Emacs for vi/vim users
 
-Viper (M-x viper-mode) is a set of modes for emulating vi editing behavior in Emacs. It provides different levels of vi-adherence, depending on how vi-like you want your Emacs to be.
+Viper (~M-x viper-mode~) is a set of modes for emulating vi editing behavior in Emacs. It provides different levels of vi-adherence, depending on how vi-like you want your Emacs to be.
 
 For more information about Viper, see [[http://www.gnu.org/software/emacs/manual/html_node/viper/index.html][(info "(viper)")]].
 
