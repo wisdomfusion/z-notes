@@ -285,10 +285,10 @@ Here's an example. Suppose we have a buffer containing names like this:
 
 #+BEGIN_QUOTE
 
-George Washington\\
-John Adams\\
-Thomas Jefferson\\
-James Madison\\
+George Washington \\ 
+John Adams \\ 
+Thomas Jefferson \\ 
+James Madison \\ 
 James Monroe
 
 #+END_QUOTE
@@ -297,11 +297,11 @@ If we run ~M-x replace-regexp~ and replace the regexp =\(\w+\) \(\w+\)= with =\,
 
 #+BEGIN_QUOTE
 
-WASHINGTON, George\\
-ADAMS, John\\
-JEFFERSON, Thomas\\
-MADISON, James\\
-MONROE, James\\
+WASHINGTON, George \\ 
+ADAMS, John \\ 
+JEFFERSON, Thomas \\ 
+MADISON, James \\ 
+MONROE, James
 
 #+END_QUOTE
 
