@@ -3,6 +3,7 @@
 #+AUTHOR: WisdomFusion <WisdomFusion#gmail.com>
 #+DATE: 2016-06-16
 
+#+CAPTION: GNU Emacs
 [[./FIG/splash.png]]
 
 The [[http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html][GNU Emacs Manual]] calls Emacs /the extensible/, /customizable/, /self-documenting real-time display editor/, but this description tells beginners little about what Emacs is capable of. To give you an idea, here is a sampling of the things you can do with Emacs:
