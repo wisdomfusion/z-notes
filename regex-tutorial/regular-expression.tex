@@ -471,7 +471,31 @@ ID
 \subsubsection{Perl正则表达式王国}
 \label{sec:perl}
 
+\verb=m/<regexp>/= \par
+
+\begin{itemize}
+\item \texttt{/i} 不区分大小写
+\item \texttt{/s}
+\item \texttt{/x}
+\item \texttt{/o}
+\end{itemize}
+
+\verb=s/<pattern>/<repacement>/= \par
+
+\begin{tabular}[h]{ll}
+  \toprule{}
+  \texttt{/g} & 全局替换 \\
+  \texttt{\textbackslash{}U} & \\
+  \texttt{\textbackslash{}L} & \\
+  \texttt{\textbackslash{}E} & \\
+  \texttt{\textbackslash{}l} 和 \texttt{\textbackslash{}u} & 只作用于下一个字符 \\
+  \bottomrule{}
+\end{tabular}
+
+\verb=tr/<pattern>/<replacement>/= \par
+
 \texttt{\textbackslash{}G}锚点实例，这个特性不是很常用，只因上文中表格处不好举例，这里特添加一例作补充说明。\par
+
 \begin{lstlisting}[language=perl]
 while ($string =~ m/</g) {
     if ($string =~ m/\Gb>/ic) {
@@ -645,17 +669,12 @@ End Sub
 
 还有更多
 
-\section{后记}
-\label{sec:postscript}
-
-后记 \par
-
 \subsection{Changelog}
 \label{sec:changelog}
 
 changelog
 
-\subsection{免责声明}
+\subsection{Disclaimer}
 \label{sec:disclaimer}
 
 本文档参考了大量参考文档及网页内容，同时，个别实例摘录自图书或网络文章，如发现雷同之处，触犯你方利益，请及时联系，我会作相应的调整和更改，谢谢合作！
