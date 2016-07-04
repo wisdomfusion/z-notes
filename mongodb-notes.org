@@ -1,0 +1,8 @@
+# -*- mode: org; coding: utf-8 -*-
+#+TITLE: MongoDB notes
+#+AUTHOR: WisdomFusion <WisdomFusion#gmail.com>
+#+DATE: 2016-06-01
+
+
+
+
