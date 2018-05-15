@@ -1,7 +1,7 @@
 % Wisdomfusion#gmail.com
 % create_at:   20120602
 % modified_at: 20160312
-\documentclass[12pt,a4paper,twoside,fontset=mac]{ctexart}
+\documentclass[12pt,a4paper,twoside]{ctexart}
 %-------------------- 引用宏包--------------------
 \usepackage[landscape,textheight=190mm,textwidth=145mm,left=20mm,right=20mm,top=20mm,bottom=15mm]{geometry}
 \usepackage{graphicx}
@@ -104,7 +104,7 @@
 语法部分结合了自己的理解和对正则表达式应用的一些心得，分类有不当之处，请指正。因为是总结性的参考文档，所以这里使用“大表哥”形式展示，列出语法的同时，关键语法举了几个栗子加强理解。\par
 
 \begin{center}
-  
+
 \begin{longtable}{p{4em}p{8em}p{25em}p{18em}}
   \toprule
   \textbf{特性} & \textbf{语法} & \textbf{描述} & \textbf{举个栗子} \\
@@ -252,10 +252,10 @@
   注释 & (?\#comment) & 注释 & \\
   \midrule
   %--------------------
-  零宽断言 & (?=Regex) & 肯定顺序环视（Negative Lookahead）\newline{}子表达式 \underline{能}够匹配 \underline{右侧}文本，含以下三种些类正则被称“\textbf{环视}（Lookaround, Lookahead 和 Lookbehind 统称为 Lookaround）”，也称为“\textbf{零宽断言}”（Zero-Length Assertions） & \cbregex{\textbackslash{}b\textbackslash{}w+(?=ing\textbackslash{}b)}，匹配以\cbstring{ing}结尾的单词的前面部分（除了\cbstring{ing}以外的部分） \\
-  & (?!Regex) & 否定顺序环视（Positive Lookahead）\newline{}子表达式 \underline{不能}匹配 \underline{右侧}文本 & \cbregex{(?<=\textbackslash{}bre)\textbackslash{}w+\textbackslash{}b}会匹配以\cbstring{re}开头的单词的后半部分（除了\cbstring{re}以外的部分）\newline{}又，\cbregex{(?<=\textbackslash{}s)\textbackslash{}d+(?=\textbackslash{}s)}匹配以空白符间隔的数字（再次强调，不包括这些空白符） \\
-  & (?<=regex) & 肯定逆序环视（Positive Lookbehind）\newline{}子表达式 \underline{能}够匹配 \underline{左侧}文本 & \cbregex{\textbackslash{}d\{3\}(?!\textbackslash{}d)}匹配三位数字，而且这三位数字的后面不能是数字 \\
-  & (?<!regex) & 否定逆序环视（Negative Lookbehind）\newline{}子表达式 \underline{不能}匹配 \underline{左侧}文本 & \cbregex{(?<![a-z])\textbackslash{}d\{7\}}匹配前面不是小写字母的七位数字\newline{}又，\cbregex{(?<=<(\textbackslash{}w+)>).*(?=<\textbackslash{}/\textbackslash{}1>)}匹配不包含属性的简单HTML标签内里的内容 \\
+  环视 & (?=Regex) & 肯定前瞻（Positive Lookahead）\newline{}子表达式\underline{能够}（肯定）匹配\underline{右侧}（前瞻）文本，该断言检查的文本和行文方向一致，故称之为\textbf{前瞻}\newline{}\textbf{前瞻}（Lookahead）和\textbf{后顾}（ Lookbehind）统称为\textbf{环视}（Lookaround），属于\textbf{零宽断言}（Zero-Length Assertions） & \cbregex{\textbackslash{}b\textbackslash{}w+(?=ing\textbackslash{}b)}，匹配以\cbstring{ing}结尾的单词的前面部分，不含\cbstring{ing}，零宽断言仅用来判断前方或后方有没有某些字符，而不包含在匹配结果中 \\
+  & (?!Regex) & 否定前瞻（Negative Lookahead）\newline{}子表达式\underline{不能}（否定）匹配\underline{右侧}（前瞻）文本 & \cbregex{\textbackslash{}d\{3\}(?!\textbackslash{}d)}匹配三位数字，而且这三位数字的后面不能是数字  \\
+  & (?<=regex) & 肯定后顾（Positive Lookbehind）\newline{}子表达式\underline{能够}（肯定）匹配 \underline{左侧}（后顾）文本，该断言检查的文本和行文方向相反，故称之为\textbf{后顾} & \cbregex{(?<=\textbackslash{}bre)\textbackslash{}w+\textbackslash{}b}会匹配以\cbstring{re}开头的单词的后半部分，不含\cbstring{re}\newline{}又，\cbregex{(?<=\textbackslash{}s)\textbackslash{}d+(?=\textbackslash{}s)}匹配前后有空白符间隔的数字，不含空白符 \\
+  & (?<!regex) & 否定后顾（Negative Lookbehind）\newline{}子表达式\underline{不能}（否定）匹配 \underline{左侧}（后顾）文本 & \cbregex{(?<![a-z])\textbackslash{}d\{7\}}匹配前面不是小写字母的七位数字\newline{}又，\cbregex{(?<=<(\textbackslash{}w+)>).*(?=<\textbackslash{}/\textbackslash{}1>)}匹配没有设置属性的  HTML 标签的内容，如 <p>\cbstring{我是要匹配的内容}</p> \\
   \midrule
   %--------------------
   固化分组 & (?>regex) & 贪婪子表达式，也称“\textbf{固化分组}”，使用它可以加快匹配失败的速度，如 \cbstring{Subject} 这个字符串，现用 \cbregex{\^{}\textbackslash{}w:} 对其进行匹配，正则表达式引擎发现 \cbstring{Subject} 不匹配，就会试图匹配 \cbstring{Subjec}，一直尝试到 \cbstring{S}，发现都不匹配才得出无法匹配的结论。如果使用固化分组 \cbregex{\^{}(?>\textbackslash{}w+):}，它会直接试图使用 \cbregex{\textbackslash{}w+} 去匹配 \cbstring{Subjec} 字符串，而不会一一回溯，发现 \cbregex{\textbackslash{}w+} 后面没有 \cbstring{:}，立即报告失败。 & 如果字符串中没有第二个 \cbstring{x} 的时候，\cbregex{x(?>\textbackslash{}w+)x} 要比 \cbregex{x\textbackslash{}w+x} 高效得多 \\
@@ -432,8 +432,8 @@ grep, egrep, fgrep \par
     \verb=:g/^$/d= & 删除空行 \\
     \bottomrule
 \end{tabular}
-\end{minipage}  
-  
+\end{minipage}
+
 \subsubsection{GNU Emacs}
 \label{sec:emacs}
 
@@ -528,8 +528,8 @@ fh.close()
 \begin{lstlisting}[language=python]
 import re
 
-l = ["555-8396 Neu, Allison", 
-     "Burns, C. Montgomery", 
+l = ["555-8396 Neu, Allison",
+     "Burns, C. Montgomery",
      "555-5299 Putz, Lionel",
      "555-7334 Simpson, Homer Jay"]
 
@@ -582,13 +582,13 @@ $pattern='~\b(\d+)\s*(\w+)$~';
 
 $success = preg_match($pattern, $subject, $match);
 if ($success) {
-    echo "Match: ".$match[0]."<br />"; 
-    echo "Group 1: ".$match[1]."<br />"; 
-    echo "Group 2: ".$match[2]."<br />"; 
+    echo "Match: ".$match[0]."<br />";
+    echo "Group 1: ".$match[1]."<br />";
+    echo "Group 2: ".$match[2]."<br />";
 }
 \end{lstlisting}
 
-Output: 
+Output:
 Match: 10 eggs
 Group 1: 10
 Group 2: eggs
@@ -642,7 +642,7 @@ With regx
     .IgnoreCase = True
     .Pattern = strPattern
 End With
-    
+
 For Each oSld In ActivePresentation.Slides
     For Each oShp In oSld.Shapes
         If oShp.HasTextFrame Then
@@ -661,7 +661,7 @@ For Each oSld In ActivePresentation.Slides
         End If 'has textframe
     Next oShp
 Next oSld
-End Sub  
+End Sub
 \end{lstlisting}
 
 \subsubsection{More and more}
